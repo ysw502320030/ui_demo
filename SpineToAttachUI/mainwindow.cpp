@@ -51,7 +51,6 @@ MainWindow::MainWindow(QWidget *parent)
 ////        SIGNAL(startWork_test()),       // signal
 ////        mspine,                                // receiver
 ////        SLOT(handleTimeout()));  // slot
-///
 }
 
 MainWindow::~MainWindow()
