@@ -20,18 +20,22 @@ QT += testlib
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    controltable.cpp \
     datathread.cpp \
     dialogspine.cpp \
     dialogtable.cpp \
     dialogtable2.cpp \
+    keyBoard.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    controltable.h \
     datathread.h \
     dialogspine.h \
     dialogtable.h \
     dialogtable2.h \
+    keyBoard.h \
     mainwindow.h \
     sharedvariable.h
 

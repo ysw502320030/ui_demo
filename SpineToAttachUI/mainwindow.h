@@ -7,6 +7,10 @@
 #include "dialogtable2.h"
 #include <QThread>
 
+#include <QKeyEvent>
+#include <linux/input.h>
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -20,15 +24,30 @@ public:
     ~MainWindow();
     int firstIndex=0;
 
+public:
+    //重写实现按键事件
+    void keyPressEvent(QKeyEvent *e);
+
 public slots:
     void ChooseWidgets();
     void pushButton2Clicked();
 
 private:
     Ui::MainWindow *ui;
+    QTimer m_timer;
 
 public:
     QThread qThread;
+
+public:
+    int fd,fd_encoder;
+    int ret = 0,ret_encoder=0;
+    struct input_event in_ev = {};
+
+private:
+    QSocketNotifier *in_fifo_notifier;
+    QSocketNotifier *in_fifo_notifier_encoder;
+    void encoder_handler();
 
 //    struct Data_to_UI ui_data;
 //    struct Data_to_UI *ui_data2;

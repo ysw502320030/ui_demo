@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialogtable2.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.9
+** Created by: Qt User Interface Compiler version 5.14.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,24 +12,144 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_DialogTable2
 {
 public:
-    QTableWidget *qTableWidget2;
+    QWidget *verticalWidget;
+    QVBoxLayout *verticalLayout;
+    QVBoxLayout *verticalLayout_5;
+    QHBoxLayout *horizontalLayout;
+    QLabel *label_3;
+    QLineEdit *lineEdit_4;
+    QLineEdit *lineEdit_5;
+    QSpacerItem *horizontalSpacer_3;
+    QVBoxLayout *verticalLayout_2;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *label;
+    QLineEdit *lineEdit_2;
+    QLineEdit *lineEdit;
+    QSpacerItem *horizontalSpacer_2;
+    QVBoxLayout *verticalLayout_4;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label_2;
+    QLineEdit *lineEdit_3;
+    QSpacerItem *horizontalSpacer;
 
     void setupUi(QDialog *DialogTable2)
     {
         if (DialogTable2->objectName().isEmpty())
             DialogTable2->setObjectName(QString::fromUtf8("DialogTable2"));
-        DialogTable2->resize(852, 300);
-        qTableWidget2 = new QTableWidget(DialogTable2);
-        qTableWidget2->setObjectName(QString::fromUtf8("qTableWidget2"));
-        qTableWidget2->setGeometry(QRect(-5, 1, 571, 301));
+        DialogTable2->resize(930, 580);
+        verticalWidget = new QWidget(DialogTable2);
+        verticalWidget->setObjectName(QString::fromUtf8("verticalWidget"));
+        verticalWidget->setGeometry(QRect(100, 50, 651, 361));
+        verticalLayout = new QVBoxLayout(verticalWidget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout_5 = new QVBoxLayout();
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        label_3 = new QLabel(verticalWidget);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        horizontalLayout->addWidget(label_3);
+
+        lineEdit_4 = new QLineEdit(verticalWidget);
+        lineEdit_4->setObjectName(QString::fromUtf8("lineEdit_4"));
+
+        horizontalLayout->addWidget(lineEdit_4);
+
+        lineEdit_5 = new QLineEdit(verticalWidget);
+        lineEdit_5->setObjectName(QString::fromUtf8("lineEdit_5"));
+
+        horizontalLayout->addWidget(lineEdit_5);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer_3);
+
+
+        verticalLayout_5->addLayout(horizontalLayout);
+
+
+        verticalLayout->addLayout(verticalLayout_5);
+
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        label = new QLabel(verticalWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
+        label->setSizePolicy(sizePolicy);
+
+        horizontalLayout_3->addWidget(label);
+
+        lineEdit_2 = new QLineEdit(verticalWidget);
+        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_3->addWidget(lineEdit_2);
+
+        lineEdit = new QLineEdit(verticalWidget);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        sizePolicy1.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
+        lineEdit->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_3->addWidget(lineEdit);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_3->addItem(horizontalSpacer_2);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_3);
+
+
+        verticalLayout->addLayout(verticalLayout_2);
+
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        label_2 = new QLabel(verticalWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        horizontalLayout_2->addWidget(label_2);
+
+        lineEdit_3 = new QLineEdit(verticalWidget);
+        lineEdit_3->setObjectName(QString::fromUtf8("lineEdit_3"));
+        sizePolicy1.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
+        lineEdit_3->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_2->addWidget(lineEdit_3);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer);
+
+
+        verticalLayout_4->addLayout(horizontalLayout_2);
+
+
+        verticalLayout->addLayout(verticalLayout_4);
+
 
         retranslateUi(DialogTable2);
 
@@ -38,7 +158,10 @@ public:
 
     void retranslateUi(QDialog *DialogTable2)
     {
-        DialogTable2->setWindowTitle(QApplication::translate("DialogTable2", "Dialog", nullptr));
+        DialogTable2->setWindowTitle(QCoreApplication::translate("DialogTable2", "Dialog", nullptr));
+        label_3->setText(QCoreApplication::translate("DialogTable2", "TextLabel", nullptr));
+        label->setText(QCoreApplication::translate("DialogTable2", "TextLabel", nullptr));
+        label_2->setText(QCoreApplication::translate("DialogTable2", "TextLabel", nullptr));
     } // retranslateUi
 
 };

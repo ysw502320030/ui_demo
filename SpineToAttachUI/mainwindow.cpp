@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->stackedWidget->setCurrentWidget(dialogSpine);
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(ChooseWidgets()));
+    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(pushButton2Clicked()));
 
 //    Datathread *mthread = new Datathread;
 //    mthread->moveToThread(&qThread);
@@ -51,11 +52,71 @@ MainWindow::MainWindow(QWidget *parent)
 ////        SIGNAL(startWork_test()),       // signal
 ////        mspine,                                // receiver
 ////        SLOT(handleTimeout()));  // slot
+
+    QObject::connect(&m_timer, &QTimer::timeout, this, &MainWindow::pushButton2Clicked);
+    m_timer.setInterval(1000);
+//    m_timer.start();
+#if __arm__
+
+//    fd=open("/dev/btn_key", O_RDWR);
+//    if(fd < 0) {
+//    qDebug() << 10 << "open failed";
+//    return;
+//    }
+
+    fd_encoder=open("/dev/input/event2", O_RDWR);
+    if(fd_encoder < 0) {
+    qDebug() << 10 << "fd_encoder open failed";
+    return;
+    }
+
+//    in_fifo_notifier = new QSocketNotifier(fd, QSocketNotifier::Read, this);
+//    connect(in_fifo_notifier, &QSocketNotifier::activated,
+//    this, &MainWindow::handle_readNotification);
+
+    in_fifo_notifier_encoder = new QSocketNotifier(fd_encoder, QSocketNotifier::Read, this);
+    connect(in_fifo_notifier_encoder, &QSocketNotifier::activated,
+    this, &MainWindow::encoder_handler);
+
+#endif
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *e)
+{
+    int i =0;
+
+    i=i+1;
+////    else if ((e->modifiers() == Qt::ControlModifier) && (e->key() == Qt::Key_Right))
+//    QLineEdit *control = table->currentContrl;
+////    control->setReadOnly(false);
+////    __super::keyPressEvent(e);
+    this->grabKeyboard();
+//    if (e->key()==Qt::Key_Up)
+//    {
+//        this->releaseKeyboard();
+//        table->toUpWhole();
+//    }
+//    else if (e->key()==Qt::Key_Down)
+//    {
+//        this->releaseKeyboard();
+//        table->toDownWhole();
+//    }
+//    else if (e->key() == Qt::Key_Left)
+//    {
+////        this->releaseKeyboard();
+////        table->toLeft();
+//    }
+//    else if (e->key() == Qt::Key_Right)
+//    {
+////        this->releaseKeyboard();
+////        table->toRight();
+//    }
+////    control->setReadOnly(true);
 }
 
 //切换页面
@@ -83,6 +144,23 @@ void MainWindow::ChooseWidgets()
 
 void MainWindow::pushButton2Clicked()
 {
+//    for(int i =0;i<10;i++)
+//    {
+//        QThread::sleep(1);
+
+//        QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+
+//        QWidget *widget1 = QApplication::focusWidget();
+
+//        QCoreApplication::postEvent ((QObject*)widget1, event);
+
+//        QCoreApplication::event(event);
+
+//        QApplication::event(event);
+
+//    }
+
+
 //    /* 字符串常量 */
 //    const QString str = "正在运行";
 
@@ -109,4 +187,42 @@ void MainWindow::pushButton2Clicked()
 
 }
 
+void MainWindow::encoder_handler()
+{
+//    for(int i =0;i<10;i++)
+//    {
+//        QThread::sleep(1);
 
+        int i =0;
+
+        i=i+1;
+
+        float databuf[16];
+    //    struct Data_to_UI ui_data;
+
+        ret_encoder = read(fd_encoder, &in_ev, sizeof(struct input_event));
+
+        if(ret_encoder >= 0){
+            qDebug() << "key is" << in_ev.value;
+        }
+
+        if(in_ev.value == 1)
+        {
+            qDebug() << "key is +" << in_ev.value;
+            QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+            QWidget *widget1 = QApplication::focusWidget();
+            QCoreApplication::postEvent ((QObject*)widget1, event);
+        }
+        else if(in_ev.value == -1)
+        {
+            qDebug() << "key is -" << in_ev.value;
+            QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+            QWidget *widget1 = QApplication::focusWidget();
+            QCoreApplication::postEvent ((QObject*)widget1, event);
+        }
+        else
+            ;
+
+
+
+}
