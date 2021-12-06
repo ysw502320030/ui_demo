@@ -25,6 +25,7 @@ SOURCES += \
     dialogspine.cpp \
     dialogtable.cpp \
     dialogtable2.cpp \
+    encoder.cpp \
     keyBoard.cpp \
     main.cpp \
     mainwindow.cpp
@@ -35,6 +36,7 @@ HEADERS += \
     dialogspine.h \
     dialogtable.h \
     dialogtable2.h \
+    encoder.h \
     keyBoard.h \
     mainwindow.h \
     sharedvariable.h

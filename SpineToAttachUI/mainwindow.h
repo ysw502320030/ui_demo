@@ -5,6 +5,7 @@
 #include "dialogspine.h"
 #include "dialogtable.h"
 #include "dialogtable2.h"
+#include "encoder.h"
 #include <QThread>
 
 #include <QKeyEvent>
@@ -24,9 +25,9 @@ public:
     ~MainWindow();
     int firstIndex=0;
 
-public:
-    //重写实现按键事件
-    void keyPressEvent(QKeyEvent *e);
+//public:
+//    //重写实现按键事件
+//    void keyPressEvent(QKeyEvent *e);
 
 public slots:
     void ChooseWidgets();
