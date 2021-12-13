@@ -6,6 +6,7 @@
 #include <QtCore/QTimer>
 #include <QtCharts/QChart>
 //#include "QChart"
+#include <QtCharts/QCategoryAxis>
 
 #include "QVBoxLayout"
 //#include "QChart"
@@ -55,6 +56,7 @@ public slots:
 //    void inform_handleTimeout();
     void enlarge_scale();
     void shrink_scale();
+    void test_label_clicked();
 
 public:
     Ui::DialogSpine *ui;
@@ -65,12 +67,27 @@ public:
 
     QTimer m_timer;
     QSplineSeries *m_series;
+
+    QSplineSeries *m_series_2;
+
     QStringList m_titles;
     QValueAxis *m_axisX;
     QValueAxis *m_axisY;
+
+    QValueAxis *m_axisX2;
+    QValueAxis *m_axisY2;
+
+    QValueAxis *m_axisY3;
+    QValueAxis *m_axisY4;
+
+//    QCategoryAxis *m_axisY;
     qreal m_step;
     qreal m_x;
     qreal m_y;
+
+    qreal m_x2,m_y2;
+
+    qreal factorCH1,factorCH2,factorCH3,factorCH4;
 
 //    struct Data_to_UI
 //    {
@@ -104,6 +121,9 @@ public:
 signals:
 //    void entry_added(QQueue<Data_to_UI > &mQueue);             // <-- the new signal
     void signal_to_handleTimeout();
+private slots:
+    void on_comboBox_4_ch1Zoom_currentIndexChanged(const QString &arg1);
+    void on_comboBox_3_ch2Zoom_currentIndexChanged(const QString &arg1);
 };
 
 #endif // DIALOGSPINE_H

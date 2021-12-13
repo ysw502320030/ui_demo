@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->stackedWidget->setCurrentWidget(dialogSpine);
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(ChooseWidgets()));
-    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(pushButton2Clicked()));
+    connect(ui->pushButton_CFM, SIGNAL(clicked()), this, SLOT(pushButton2Clicked()));
 
 //    Datathread *mthread = new Datathread;
 //    mthread->moveToThread(&qThread);
