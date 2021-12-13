@@ -68,7 +68,7 @@ public:
     QTimer m_timer;
     QSplineSeries *m_series;
 
-    QSplineSeries *m_series_2;
+    QSplineSeries *m_series_2,*m_series_3,*m_series_4;
 
     QStringList m_titles;
     QValueAxis *m_axisX;
@@ -85,7 +85,7 @@ public:
     qreal m_x;
     qreal m_y;
 
-    qreal m_x2,m_y2;
+    qreal m_x2,m_y2,m_x3,m_y3,m_x4,m_y4;
 
     qreal factorCH1,factorCH2,factorCH3,factorCH4;
 
@@ -124,6 +124,7 @@ signals:
 private slots:
     void on_comboBox_4_ch1Zoom_currentIndexChanged(const QString &arg1);
     void on_comboBox_3_ch2Zoom_currentIndexChanged(const QString &arg1);
+    void on_comboBox_2_ch3Zoom_currentIndexChanged(const QString &arg1);
 };
 
 #endif // DIALOGSPINE_H

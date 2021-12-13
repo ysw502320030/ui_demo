@@ -14,6 +14,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
     ui(new Ui::DialogSpine),
     m_series(0),
     m_series_2(0),
+    m_series_3(0),
     m_axisX(new QValueAxis()),
     m_axisY(new QValueAxis()),
     m_step(0),
@@ -45,17 +46,23 @@ DialogSpine::DialogSpine(QWidget *parent) :
 
     m_series = new QSplineSeries(this);
     chart = new QChart();
-    QPen green(Qt::red);
+    QPen green(Qt::green);
     m_series->setPen(green);
     m_series->append(m_x, m_y);
 
     m_series_2 = new QSplineSeries(this);
     QPen black(Qt::black);
     m_series_2->setPen(black);
-    m_series_2->append(m_x2, m_y2);
+    m_series_2->append(m_x, m_y);
+
+    m_series_3 = new QSplineSeries(this);
+    QPen blue(Qt::blue);
+    m_series_3->setPen(blue);
+    m_series_3->append(m_x, m_y);
 
     chart->addSeries(m_series);
     chart->addSeries(m_series_2);
+    chart->addSeries(m_series_3);
 
     chart->addAxis(m_axisX,Qt::AlignBottom);
     chart->addAxis(m_axisY,Qt::AlignLeft);
@@ -63,9 +70,9 @@ DialogSpine::DialogSpine(QWidget *parent) :
 //    chart->addAxis(m_axisX2,Qt::AlignBottom);
     chart->addAxis(m_axisY2,Qt::AlignRight);
     chart->addAxis(m_axisY3,Qt::AlignLeft);
-    chart->addAxis(m_axisY4,Qt::AlignRight);
+//    chart->addAxis(m_axisY4,Qt::AlignRight);
 
-    chart->setTitle("Dynamic spline chart");
+//    chart->setTitle("Dynamic spline chart");
     chart->legend()->hide();
 //    chart->setAnimationOptions(QChart::AllAnimations);
 
@@ -82,6 +89,9 @@ DialogSpine::DialogSpine(QWidget *parent) :
     m_series_2->attachAxis(m_axisX);
     m_series_2->attachAxis(m_axisY2);
 
+    m_series_3->attachAxis(m_axisX);
+    m_series_3->attachAxis(m_axisY3);
+
     m_axisX->setTickCount(5);
     m_axisX->setRange(0, 10);
 
@@ -94,20 +104,20 @@ DialogSpine::DialogSpine(QWidget *parent) :
     m_axisY->setLabelFormat("%.3s");
 
     m_axisY2->setRange(-0.1, 1);
-    m_axisY2->setTickCount(12);
+//    m_axisY2->setTickCount(12);
     m_axisY2->setLabelFormat("%.3s");
 
     m_axisY3->setRange(-0.1, 1);
-    m_axisY3->setTickCount(0);
+//    m_axisY3->setTickCount(12);
     m_axisY3->setLabelFormat("%.3s");
 
-    m_axisY4->setRange(-0.1, 1);
-    m_axisY4->setTickCount(0);
-    m_axisY4->setLabelFormat("%.3s");
+//    m_axisY4->setRange(-0.1, 1);
+//    m_axisY4->setTickCount(0);
+//    m_axisY4->setLabelFormat("%.3s");
 
     m_axisY2->setGridLineVisible(false);
     m_axisY3->setGridLineVisible(false);
-    m_axisY4->setGridLineVisible(false);
+//    m_axisY4->setGridLineVisible(false);
 
 //    m_axisY->setTickType(QValueAxis::TickType::TicksDynamic);
 //    m_axisY->setTickAnchor(0);
@@ -222,6 +232,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
         factorCH1=1;factorCH2=1;factorCH3=1;factorCH4=1;
         ui->comboBox_4_ch1Zoom->setCurrentText("1");
         ui->comboBox_3_ch2Zoom->setCurrentText("1");
+        ui->comboBox_2_ch3Zoom->setCurrentText("1");
 
 //        ui->toolButton->raise();
 //        ui->toolButton_2->raise();
@@ -291,10 +302,13 @@ DialogSpine::DialogSpine(QWidget *parent) :
 //          m_y = QRandomGenerator::global()->bounded(5) - 2.5;
          m_y = ui_data.rate[8];
          m_y2 = ui_data.rate[9];
+         m_y3 = ui_data.rate[7];
 //         m_y = zi+0.1;
          m_series->append(m_x, m_y);
 
          m_series_2->append(m_x2, m_y2);
+
+         m_series_3->append(m_x, m_y3);
 
          if (count++ >= m_axisX->tickCount())
              chart->scroll(x, 0);
@@ -417,7 +431,17 @@ void DialogSpine::on_comboBox_3_ch2Zoom_currentIndexChanged(const QString &arg1)
     float maxY = arg1.toFloat();
     qDebug() << 17 << maxY;
 
-    m_axisY2->setTickCount(12);
+//    m_axisY2->setTickCount(12);
 
     m_axisY2->setRange(-0.1*maxY, maxY);
+}
+
+void DialogSpine::on_comboBox_2_ch3Zoom_currentIndexChanged(const QString &arg1)
+{
+    float maxY = arg1.toFloat();
+    qDebug() << 18 << maxY;
+
+//    m_axisY3->setTickCount(12);
+
+    m_axisY3->setRange(-0.1*maxY, maxY);
 }
