@@ -109,7 +109,16 @@ public:
           double maxCurrent = 0;
     const float factor = 2;
 
-//    QQueue<Data_to_UI > q ;
+    QElapsedTimer timer_interval;
+
+    int pointsForOneMin = 375;  //  60S/0.16S = 375
+
+    enum x_time_range{x_one_min =1,x_three_min=3,x_ten_min=10,x_thirty_min=30,x_sixty_min=60,
+                      x_three_hour=180,x_ten_hour=600,x_thirty_hour=1800} xRange;
+
+    int x_range_group[8] = {x_one_min,x_three_min,x_ten_min,x_thirty_min,x_sixty_min,x_three_hour,x_ten_hour,x_thirty_hour};
+
+//    QQueue<Data_to_UI > q ;1
 
 //    DialogTable mTable;
 
@@ -125,6 +134,7 @@ private slots:
     void on_comboBox_4_ch1Zoom_currentIndexChanged(const QString &arg1);
     void on_comboBox_3_ch2Zoom_currentIndexChanged(const QString &arg1);
     void on_comboBox_2_ch3Zoom_currentIndexChanged(const QString &arg1);
+    void on_comboBox_5_change_xRange_currentIndexChanged(int index);
 };
 
 #endif // DIALOGSPINE_H

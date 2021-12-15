@@ -132,7 +132,48 @@
        <widget class="QComboBox" name="comboBox_6"/>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox_5"/>
+       <widget class="QComboBox" name="comboBox_5_change_xRange">
+        <item>
+         <property name="text">
+          <string>1 Min</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>3 Min</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10 Min</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>30 Min</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1 Hour</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>3 Hour</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10 Hour</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>30 Hour</string>
+         </property>
+        </item>
+       </widget>
       </item>
       <item>
        <widget class="QComboBox" name="comboBox_4_ch1Zoom">

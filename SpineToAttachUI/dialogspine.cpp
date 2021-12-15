@@ -92,8 +92,13 @@ DialogSpine::DialogSpine(QWidget *parent) :
     m_series_3->attachAxis(m_axisX);
     m_series_3->attachAxis(m_axisY3);
 
+    m_series->setUseOpenGL(true);
+    m_series_2->setUseOpenGL(true);
+    m_series_3->setUseOpenGL(true);
+
     m_axisX->setTickCount(5);
-    m_axisX->setRange(0, 10);
+//    m_axisX->setRange(0, 10);
+    m_axisX->setRange(0, pointsForOneMin);
 
 //    m_axisX2->setTickCount(5);
 //    m_axisX2->setRange(0, 10);
@@ -162,6 +167,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
     ui->verticalLayoutWidget->setStyleSheet("::focus{ background: black; color: white;}");
     ui->gridLayoutWidget->setStyleSheet("::focus{ background: black; color: white;}");
     setLayout(container);
+
 
 //    connect(ui->label_6, SIGNAL(clicked()), this, SLOT(test_label_clicked()));
 
@@ -251,6 +257,8 @@ DialogSpine::DialogSpine(QWidget *parent) :
         connect(ui->toolButton_2, SIGNAL(clicked()),
                          this, SLOT(shrink_scale()));
 
+        xRange = x_one_min;
+
 //        QWidget* _widgetOnTheTop1;
 //        _widgetOnTheTop1 = new QPushButton(this);
 //        _widgetOnTheTop1->setGeometry(30,30,150,150);
@@ -290,11 +298,23 @@ DialogSpine::DialogSpine(QWidget *parent) :
  //        }
  //    //    textEdit->append(QString::number(ui_data.freq_new_raw[8]));
 
+     static int interval_cout =0;
 
-         static int count =0;
-         static float zi = 0;
-         zi = zi+0.1;
-         qDebug() <<  "14 data handle" << zi;
+     interval_cout++;
+
+//     if (interval_cout == 5)
+//     {
+         interval_cout=0;
+
+         qDebug() << 19 << timer_interval.elapsed();
+         timer_interval.start();
+         qDebug() << 20 << chart->plotArea().width();
+
+
+         static ulong count =0;
+//         static float zi = 0;
+//         zi = zi+0.1;
+//         qDebug() <<  "14 data handle" << zi;
          qreal x = chart->plotArea().width() / m_axisX->tickCount();
          qreal y = (m_axisX->max() - m_axisX->min()) / m_axisX->tickCount();
          m_x += y;
@@ -304,17 +324,23 @@ DialogSpine::DialogSpine(QWidget *parent) :
          m_y2 = ui_data.rate[9];
          m_y3 = ui_data.rate[7];
 //         m_y = zi+0.1;
-         m_series->append(m_x, m_y);
+//         m_series->append(m_x, m_y);
+//         m_series_2->append(m_x2, m_y2);
+//         m_series_3->append(m_x, m_y3);
 
-         m_series_2->append(m_x2, m_y2);
+         m_series->append(count, m_y);
+         m_series_2->append(count, m_y2);
+         m_series_3->append(count, m_y3);
 
-         m_series_3->append(m_x, m_y3);
+         if (count++ >= pointsForOneMin*xRange)
+             chart->scroll(chart->plotArea().width()/pointsForOneMin/xRange, 0);
 
-         if (count++ >= m_axisX->tickCount())
-             chart->scroll(x, 0);
+//         if (count++ >= m_axisX->tickCount())
+//             chart->scroll(x, 0);
+
 //         if (m_x == 100)
 //             m_timer.stop();
-
+//      }
  }
 
 // void DialogSpine::inform_handleTimeout()
@@ -444,4 +470,10 @@ void DialogSpine::on_comboBox_2_ch3Zoom_currentIndexChanged(const QString &arg1)
 //    m_axisY3->setTickCount(12);
 
     m_axisY3->setRange(-0.1*maxY, maxY);
+}
+
+void DialogSpine::on_comboBox_5_change_xRange_currentIndexChanged(int index)
+{
+    xRange =(x_time_range) x_range_group[index];
+    m_axisX->setRange(0, pointsForOneMin*xRange);
 }
