@@ -11,6 +11,7 @@
 #include <QKeyEvent>
 #include <linux/input.h>
 
+#include <QMenu>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,6 +33,7 @@ public:
 public slots:
     void ChooseWidgets();
     void pushButton2Clicked();
+    bool eventFilter(QObject *watched, QEvent *event);
 
 private:
     Ui::MainWindow *ui;
@@ -44,6 +46,10 @@ public:
     int fd,fd_encoder;
     int ret = 0,ret_encoder=0;
     struct input_event in_ev = {};
+
+    QMenu *menu = new QMenu();
+    QMenu *menu_2 = new QMenu();
+    QMap<QMenu*, QPushButton*> map;
 
 private:
     QSocketNotifier *in_fifo_notifier;

@@ -27,6 +27,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(ChooseWidgets()));
     connect(ui->pushButton_CFM, SIGNAL(clicked()), this, SLOT(pushButton2Clicked()));
 
+//    QMenu *menu = new QMenu();
+//    menu->addAction( tr("图标视图"));
+//    menu->addAction( tr("细节视图"));
+
+//    ui->pushButton_menu->setMenu(menu);
+
 //    Datathread *mthread = new Datathread;
 //    mthread->moveToThread(&qThread);
 
@@ -57,6 +63,15 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(&m_timer, &QTimer::timeout, this, &MainWindow::pushButton2Clicked);
     m_timer.setInterval(1000);
 //    m_timer.start();
+
+    ui->pushButton_menu->setMenu(menu);
+    menu->addAction("1");
+    menu->addAction( "1");
+    menu->installEventFilter(this);
+
+    map.insert(menu,ui->pushButton_menu);
+    ui->pushButton_menu->setStyleSheet("QPushButton::menu-indicator{image:None;}");
+
 #if __arm__
 
 //    fd=open("/dev/btn_key", O_RDWR);
@@ -227,3 +242,27 @@ void MainWindow::encoder_handler()
 
 
 }
+
+bool MainWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    QPushButton* parentButton = dynamic_cast<QPushButton*>(map[dynamic_cast<QMenu*>(watched)]);
+    if (!parentButton)
+        return false;
+
+    QMenu* menu = dynamic_cast<QMenu*>(watched);
+    if (!menu)
+        return false;
+
+    if (event->type() == QEvent::Show)
+    {
+        QPoint pos = menu->pos();
+        qDebug() << "pos" << pos;
+
+        pos.setX(pos.x() + parentButton->width() - menu->width());
+        parentButton->menu()->move(parentButton->mapToGlobal(QPoint(parentButton->width(),-(menu->height()-parentButton->height())/2)));
+        return true;
+    }
+
+//    return MainWindow::eventFilter(watched,event);
+}
+

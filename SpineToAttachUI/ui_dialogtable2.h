@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialogtable2.ui'
 **
-** Created by: Qt User Interface Compiler version 5.14.2
+** Created by: Qt User Interface Compiler version 5.12.9
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -158,10 +158,10 @@ public:
 
     void retranslateUi(QDialog *DialogTable2)
     {
-        DialogTable2->setWindowTitle(QCoreApplication::translate("DialogTable2", "Dialog", nullptr));
-        label_3->setText(QCoreApplication::translate("DialogTable2", "TextLabel", nullptr));
-        label->setText(QCoreApplication::translate("DialogTable2", "TextLabel", nullptr));
-        label_2->setText(QCoreApplication::translate("DialogTable2", "TextLabel", nullptr));
+        DialogTable2->setWindowTitle(QApplication::translate("DialogTable2", "Dialog", nullptr));
+        label_3->setText(QApplication::translate("DialogTable2", "TextLabel", nullptr));
+        label->setText(QApplication::translate("DialogTable2", "TextLabel", nullptr));
+        label_2->setText(QApplication::translate("DialogTable2", "TextLabel", nullptr));
     } // retranslateUi
 
 };
