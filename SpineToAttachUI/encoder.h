@@ -31,11 +31,18 @@ public:
     int ret = 0,ret_encoder=0;
     struct input_event in_ev = {};
 
+signals:
+    void signal_LTurn();
+    void signal_RTurn();
+
 private:
     QSocketNotifier *in_fifo_notifier;
     QSocketNotifier *in_fifo_notifier_encoder;
-    void encoder_handler();
+    void encoder_handler(int socket);
+    void handle_readNotification(int socket);
 
 };
+
+extern encoder *mEncoder;
 
 #endif // ENCODER_H

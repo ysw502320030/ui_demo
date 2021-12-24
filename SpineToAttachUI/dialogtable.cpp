@@ -137,6 +137,7 @@ DialogTable::DialogTable(QWidget *parent) :
 
         ui->qTableWidget->item(1, 1)->setText(QString::number(66.62));
 //        TableNotUpdate2();
+
 }
 
 DialogTable::~DialogTable()

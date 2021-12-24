@@ -54,7 +54,7 @@ void ControlTable::setTableWhole(const ControlList &controlList)
 
 void ControlTable::toUp()
 {
-    QLineEdit *control = currentContrl;
+    QWidget *control = currentContrl;
     QLineEdit *testWidget = testContrl;
     int curRow = row(control);
     //qDebug()<<curRow;
@@ -70,7 +70,7 @@ void ControlTable::toUp()
 
 void ControlTable::toUpWhole()
 {
-    QLineEdit *control = currentContrl;
+    QWidget *control = currentContrl;
     QLineEdit *testWidget = testContrl;
     int curRow = row(control);
     //qDebug()<<curRow;
@@ -88,7 +88,7 @@ void ControlTable::toUpWhole()
 
 void ControlTable::toDownWhole()
 {
-    QLineEdit* control = currentContrl;
+    QWidget* control = currentContrl;
     int curRow = row(control);
     int curCol = col(control);
 
@@ -104,7 +104,7 @@ void ControlTable::toDownWhole()
 
 void ControlTable::toDown()
 {
-    QLineEdit* control = currentContrl;
+    QWidget* control = currentContrl;
     int curRow = row(control);
     int curCol = col(control);
 
@@ -118,7 +118,7 @@ void ControlTable::toDown()
 
 void ControlTable::toLeft()
 {
-    QLineEdit* control = currentContrl;
+    QWidget* control = currentContrl;
     int curRow = row(control);
     int curCol = col(control);
 
@@ -132,7 +132,7 @@ void ControlTable::toLeft()
 
 void ControlTable::toRight()
 {
-    QLineEdit* control = currentContrl;
+    QWidget* control = currentContrl;
     int curRow = row(control);
     int curCol = col(control);
 
@@ -165,7 +165,7 @@ ControlList ControlTable::wholeControls()
     return tableWhole;
 }
 
-int ControlTable::row(QLineEdit *control)
+int ControlTable::row(QWidget *control)
 {
     if (!control)
     {
@@ -179,7 +179,7 @@ int ControlTable::row(QLineEdit *control)
     return control->property(rowid).toInt();
 }
 
-int ControlTable::col(QLineEdit *control)
+int ControlTable::col(QWidget *control)
 {
     if (!control)
     {
@@ -193,7 +193,7 @@ int ControlTable::col(QLineEdit *control)
     return control->property(colid).toInt();
 }
 
-int ControlTable::widget_position(QLineEdit *control)
+int ControlTable::widget_position(QWidget *control)
 {
     if (!control)
     {
@@ -227,16 +227,16 @@ int ControlTable::wholeCount()
     return tableWhole.size();
 }
 
-void ControlTable::selectControl(QLineEdit *control)
+void ControlTable::selectControl(QWidget *control)
 {
-    QLineEdit* old= currentContrl;
+    QWidget* old= currentContrl;
 
     currentContrl = control;
 }
 
-QLineEdit *ControlTable::nextControl(const ControlList &controlList, int index)
+QWidget *ControlTable::nextControl(const ControlList &controlList, int index)
 {
-    QLineEdit * ret = 0;
+    QWidget * ret = 0;
     int tmp = 0;
     int size = controlList.size();
     for (int i = index+1; i <= size+index; ++i)
@@ -251,9 +251,9 @@ QLineEdit *ControlTable::nextControl(const ControlList &controlList, int index)
     return ret;
 }
 
-QLineEdit *ControlTable::preControl(const ControlList &controlList, int index)
+QWidget *ControlTable::preControl(const ControlList &controlList, int index)
 {
-    QLineEdit* ret = 0;
+    QWidget* ret = 0;
     int tmp = 0;
     int size = controlList.size();
     for (int i = index-1; i >= index-size; --i)
@@ -276,9 +276,9 @@ QLineEdit *ControlTable::preControl(const ControlList &controlList, int index)
     return ret;
 }
 
-QLineEdit *ControlTable::preControlWhole(const ControlList &controlList, int index)
+QWidget *ControlTable::preControlWhole(const ControlList &controlList, int index)
 {
-    QLineEdit* ret = 0;
+    QWidget* ret = 0;
     int tmp = 0;
     int size = controlList.size();
     int i = index-1;
@@ -302,9 +302,9 @@ QLineEdit *ControlTable::preControlWhole(const ControlList &controlList, int ind
     return ret;
 }
 
-QLineEdit *ControlTable::nextControlWhole(const ControlList &controlList, int index)
+QWidget *ControlTable::nextControlWhole(const ControlList &controlList, int index)
 {
-    QLineEdit * ret = 0;
+    QWidget * ret = 0;
     int tmp = 0;
     int size = controlList.size();
     int i = index+1;

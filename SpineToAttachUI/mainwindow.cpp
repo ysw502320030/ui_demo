@@ -2,9 +2,12 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include "datathread.h"
+//#include "dialogspine.h"
 
 Data_to_UI ui_data;
 QQueue<Data_to_UI > q;
+
+//encoder *mEncoder = new encoder;
 
 QString button_text[6]={NULL,NULL,"RNG","EDG","IG"};
 
@@ -14,16 +17,22 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    DialogSpine *dialogSpine = new DialogSpine(this);
-    DialogTable *dialogtable = new DialogTable(this);
+    DialogSpine  *dialogSpine = new DialogSpine(this);
+    DialogTable  *dialogtable = new DialogTable(this);
     DialogTable2 *dialogtable2 = new DialogTable2(this);
-    encoder *mEncoder = new encoder();
+
+//    mEncoder = new encoder();
 
     ui->stackedWidget->addWidget(dialogSpine);
     ui->stackedWidget->addWidget(dialogtable);
     ui->stackedWidget->addWidget(dialogtable2);
 
     ui->stackedWidget->setCurrentWidget(dialogSpine);
+
+//    QObject::connect(&stackWidgetInitDelay, &QTimer::timeout, this, &MainWindow::StackWidgetInit);
+//    stackWidgetInitDelay.setInterval(100);
+//    stackWidgetInitDelay.start();
+
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(ChooseWidgets()));
     connect(ui->pushButton_CFM, SIGNAL(clicked()), this, SLOT(pushButton2Clicked()));
 
@@ -66,11 +75,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->pushButton_menu->setMenu(menu);
     menu->addAction("1");
-    menu->addAction( "1");
+    menu->addAction( "2");
+    menu->addAction( "3");
     menu->installEventFilter(this);
+
+    connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(menuClicked(QAction*)));
 
     map.insert(menu,ui->pushButton_menu);
     ui->pushButton_menu->setStyleSheet("QPushButton::menu-indicator{image:None;}");
+
+    QObject::connect(&menuTimer, &QTimer::timeout, this, &MainWindow::MenuInitialStep);
+    menuTimer.setInterval(100);
+
+    qDebug() << 39 << "main constructor";
 
 #if __arm__
 
@@ -243,6 +260,12 @@ void MainWindow::encoder_handler()
 
 }
 
+void MainWindow::MenuInitialStep()
+{
+    QCoreApplication::sendEvent(menu, event_down);
+    menuTimer.stop();
+}
+
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
     QPushButton* parentButton = dynamic_cast<QPushButton*>(map[dynamic_cast<QMenu*>(watched)]);
@@ -260,9 +283,95 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 
         pos.setX(pos.x() + parentButton->width() - menu->width());
         parentButton->menu()->move(parentButton->mapToGlobal(QPoint(parentButton->width(),-(menu->height()-parentButton->height())/2)));
+//        QCoreApplication::postEvent(this, event_down);
+        menuTimer.start();
         return true;
+    }
+
+    if(event->type()==QEvent::KeyPress)
+    {
+        qDebug() << "36" << 36;
+        QKeyEvent *mKeyPress = (QKeyEvent *)event;
+
+        if(mKeyPress->key()==Qt::Key_F1)
+        {
+            qDebug() << "F1" << 36;
+            QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+            QWidget *widget1 = QApplication::focusWidget();
+            QCoreApplication::postEvent ((QObject*)widget1, event);
+            qDebug() << "focused widget " << widget1;
+        }
+
+        else if (mKeyPress->key()==Qt::Key_F2)
+        {
+            qDebug() << "F2" << 36;
+            QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+            QWidget *widget1 = QApplication::focusWidget();
+            QCoreApplication::postEvent ((QObject*)widget1, event);
+            qDebug() << "focused widget " << widget1;
+        }
     }
 
 //    return MainWindow::eventFilter(watched,event);
 }
 
+//void MainWindow::keyPressEvent(QKeyEvent *e)
+//{
+
+//    this->grabKeyboard();
+
+//    if (e->key()==Qt::Key_F1)
+//    {
+//        this->releaseKeyboard();
+//        QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+//        QWidget *widget1 = QApplication::focusWidget();
+//        QCoreApplication::postEvent ((QObject*)widget1, event);
+//    }
+
+//    else if (e->key()==Qt::Key_F2)
+//    {
+//        this->releaseKeyboard();
+//        QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+//        QWidget *widget1 = QApplication::focusWidget();
+//        QCoreApplication::postEvent ((QObject*)widget1, event);
+//    }
+//}
+
+void MainWindow::menuClicked(QAction *action)
+{
+    // do something with action
+    qDebug() << "33" << action;
+
+    if(action->text()=="1")
+    {
+        qDebug() << "34" << "1 clicked";
+    }
+
+    if(action->text()=="2")
+    {
+        qDebug() << "35" << "1 clicked";
+        emit toGraphSettingSignal();
+    }
+
+    if(action->text()=="3")
+    {
+        menu->close();
+    }
+}
+
+void MainWindow::StackWidgetInit()
+{
+//    dialogSpine = new DialogSpine(this);
+//    dialogtable = new DialogTable(this);
+//    dialogtable2 = new DialogTable2(this);
+
+////    mEncoder = new encoder();
+
+//    ui->stackedWidget->addWidget(dialogSpine);
+//    ui->stackedWidget->addWidget(dialogtable);
+//    ui->stackedWidget->addWidget(dialogtable2);
+
+//    ui->stackedWidget->setCurrentWidget(dialogSpine);
+
+//    stackWidgetInitDelay.stop();
+}

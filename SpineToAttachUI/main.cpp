@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+//#include "dialogspine.h"
+
 #include <QApplication>
 
 int main(int argc, char *argv[])

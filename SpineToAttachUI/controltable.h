@@ -10,7 +10,9 @@
 
 #include <QKeyEvent>
 
-typedef QList<QLineEdit*> ControlList;
+//typedef QList<QLineEdit*> ControlList;
+
+typedef QList<QWidget*> ControlList;
 
 class ControlTable: public QObject
 {
@@ -45,11 +47,11 @@ private:
     ControlList wholeControls();
 
     //获取控件行号
-    int row(QLineEdit* control);
+    int row(QWidget* control);
     //获取控件列号
-    int col(QLineEdit* control);
+    int col(QWidget* control);
 
-    int widget_position(QLineEdit *control);
+    int widget_position(QWidget *control);
 
     //判断行列是否都有效
     bool isValid(int r, int c);
@@ -60,18 +62,18 @@ private:
 
     int  wholeCount();
 
-    void selectControl(QLineEdit* control);
+    void selectControl(QWidget* control);
 
     //返回btnList第index索引位置的后一个按钮
     //如果btnList只有一个按钮，则返回按钮本身
-    QLineEdit* nextControl(const ControlList& controlList, int index);
+    QWidget* nextControl(const ControlList& controlList, int index);
     //返回btnList第index索引位置的前一个按钮
     //如果btnList只有一个按钮，则返回按钮本身
-    QLineEdit* preControl(const ControlList& controlList, int index);
+    QWidget* preControl(const ControlList& controlList, int index);
 
-    QLineEdit *preControlWhole(const ControlList &controlList, int index);
+    QWidget *preControlWhole(const ControlList &controlList, int index);
 
-    QLineEdit *nextControlWhole(const ControlList& controlList, int index);
+    QWidget *nextControlWhole(const ControlList& controlList, int index);
 
 
 
@@ -80,13 +82,13 @@ private:
 //    QWidget* currentContrl; //记录当前焦点所在按钮
     QLineEdit* testContrl; //记录当前焦点所在按钮
     QList<ControlList> table;//按钮表格
-    QList<QLineEdit*> tableWhole;
+    QList<QWidget*> tableWhole;
 
     const char* rowid;
     const char* colid;
     const char* widgetID;
 
 public:
-        QLineEdit* currentContrl; //记录当前焦点所在按钮
+        QWidget* currentContrl; //记录当前焦点所在按钮
 };
 #endif // CONTROLTABLE_H.

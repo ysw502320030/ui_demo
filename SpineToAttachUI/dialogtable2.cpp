@@ -5,6 +5,8 @@
 #include <QTableWidgetItem>
 #include <QDebug>
 
+//encoder *mEncoder = new encoder();
+
 DialogTable2::DialogTable2(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogTable2)
@@ -16,6 +18,22 @@ DialogTable2::DialogTable2(QWidget *parent) :
     setWindowTitle(tr("TableWidget"));//设置对话框的标题
 
     newKeyBoard = new keyBoard(this);
+
+    this->setFocusPolicy(Qt::StrongFocus);
+    setFocus( Qt::PopupFocusReason );
+    setEnabled( true );
+
+    mEncoder = new encoder;
+
+    connect(mEncoder,                             // emitter
+            &encoder::signal_LTurn,       // signal
+            this,                                // receiver
+            &DialogTable2::LeftStepMove);  // slot
+
+    connect(mEncoder,                             // emitter
+            &encoder::signal_RTurn,       // signal
+            this,                                // receiver
+            &DialogTable2::RightStepMove);  // slot
 
 //    ui->qTableWidget2->setColumnCount(4);//设置列数
 //    ui->qTableWidget2->setRowCount(10);//设置行数
@@ -101,7 +119,7 @@ DialogTable2::~DialogTable2()
 void DialogTable2::keyPressEvent(QKeyEvent *e)
 {
 //    else if ((e->modifiers() == Qt::ControlModifier) && (e->key() == Qt::Key_Right))
-    QLineEdit *control = table->currentContrl;
+    QWidget *control = table->currentContrl;
 //    control->setReadOnly(false);
 //    __super::keyPressEvent(e);
     this->grabKeyboard();
@@ -128,13 +146,23 @@ void DialogTable2::keyPressEvent(QKeyEvent *e)
 //    control->setReadOnly(true);
 }
 
+void DialogTable2::LeftStepMove()
+{
+    table->toUpWhole();
+}
+
+void DialogTable2::RightStepMove()
+{
+    table->toDownWhole();
+}
+
 void DialogTable2::createTable()
 {
     ControlList wholeLineEdit;
 
     wholeLineEdit << ui->lineEdit_4 << ui->lineEdit_5
                   << ui->lineEdit_2 << ui->lineEdit
-                  << ui->lineEdit_3;
+                   << ui->pushButton_2;
 
     table = new ControlTable(this);
     table->setTableWhole(wholeLineEdit);

@@ -8,6 +8,8 @@
 
 #include "keyBoard.h"
 
+#include "encoder.h"
+
 namespace Ui {
 class DialogTable2;
 }
@@ -22,6 +24,10 @@ public:
 
 public:
     void keyPressEvent(QKeyEvent *e);
+
+public slots:
+    void LeftStepMove();
+    void RightStepMove();
 
 private:
     void createTable();

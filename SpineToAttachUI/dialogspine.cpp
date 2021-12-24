@@ -259,6 +259,10 @@ DialogSpine::DialogSpine(QWidget *parent) :
 
         xRange = x_one_min;
 
+        createList();
+
+        ui->comboBox_4_ch1Zoom->view()->installEventFilter(this);
+
 //        QWidget* _widgetOnTheTop1;
 //        _widgetOnTheTop1 = new QPushButton(this);
 //        _widgetOnTheTop1->setGeometry(30,30,150,150);
@@ -477,3 +481,102 @@ void DialogSpine::on_comboBox_5_change_xRange_currentIndexChanged(int index)
     xRange =(x_time_range) x_range_group[index];
     m_axisX->setRange(0, pointsForOneMin*xRange);
 }
+
+void DialogSpine::createList()
+{
+    ControlList graphSettingList;
+
+    graphSettingList  << ui->comboBox_yRangeSel << ui->comboBox_deviation
+                      << ui->comboBox_5_change_xRange
+                      << ui->comboBox_4_ch1Zoom << ui->comboBox_3_ch2Zoom
+                      << ui->comboBox_2_ch3Zoom << ui->comboBox_ch4Zoom
+                      << ui->pushButton_clr << ui->pushButton_exit;
+
+    table = new ControlTable(this);
+    table->setTableWhole(graphSettingList);
+
+    ui->horizontalLayout_graphics->installEventFilter(this);
+//    ui->comboBox_4_ch1Zoom->view()->setMin
+//    ui->hori
+}
+
+void DialogSpine::keyPressEvent(QKeyEvent *e)
+{
+    this->grabKeyboard();
+    if (e->key()==Qt::Key_F1)
+    {
+        this->releaseKeyboard();
+
+        QWidget *widget2 = QApplication::focusWidget();
+        QString widgetName = widget2->metaObject()->className();
+        if(QString("QComboBoxListView") == widget2->metaObject()->className())
+        {
+            qDebug() << "37" << 37;
+            QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+            QWidget *widget1 = QApplication::focusWidget();
+            QCoreApplication::postEvent ((QObject*)widget1, event);
+            return;
+        }
+
+        table->toUpWhole();
+    }
+    else if (e->key()==Qt::Key_F2)
+    {
+        this->releaseKeyboard();
+
+        QWidget *widget2 = QApplication::focusWidget();
+        QString widgetName = widget2->metaObject()->className();
+        if(QString("QComboBoxListView") == widget2->metaObject()->className())
+        {
+            qDebug() << "37" << 37;
+            QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+            QWidget *widget1 = QApplication::focusWidget();
+            QCoreApplication::postEvent ((QObject*)widget1, event);
+            return;
+        }
+
+        table->toDownWhole();
+    }
+}
+
+bool DialogSpine::eventFilter(QObject *watched, QEvent *event)
+{
+    if(QString("QComboBoxListView") == watched->metaObject()->className())
+    {
+        if(event->type()==QEvent::KeyPress)
+        {
+            qDebug() << "38" << 38;
+            KeyRemapping((QKeyEvent *)event);
+        }
+    }
+}
+
+void DialogSpine::KeyRemapping(QKeyEvent *event)
+{
+    this->grabKeyboard();
+    QKeyEvent *mKeyPress = (QKeyEvent *)event;
+    if(mKeyPress->key()==Qt::Key_F1)
+    {
+//        this->releaseKeyboard();
+        qDebug() << "F1" << 36;
+        QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+        QWidget *widget1 = QApplication::focusWidget();
+        QCoreApplication::postEvent ((QObject*)widget1, event);
+        qDebug() << "focused widget " << widget1;
+    }
+
+    else if (mKeyPress->key()==Qt::Key_F2)
+    {
+//        this->releaseKeyboard();
+        qDebug() << "F2" << 36;
+        QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+        QWidget *widget1 = QApplication::focusWidget();
+        QCoreApplication::postEvent ((QObject*)widget1, event);
+        qDebug() << "focused widget " << widget1;
+    }
+}
+
+//void DialogSpine::FocusFirstWidget()
+//{
+
+//}

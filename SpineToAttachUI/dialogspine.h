@@ -30,12 +30,20 @@
 #include "sharedvariable.h"
 #include "datathread.h"
 
+#include "controltable.h"
+
+#include <QAbstractItemView>
+
+
+
 using namespace QtCharts;
 using namespace std;
 
 namespace Ui {
 class DialogSpine;
 }
+
+//class MainWindow;
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QSplineSeries;
@@ -118,6 +126,8 @@ public:
 
     int x_range_group[8] = {x_one_min,x_three_min,x_ten_min,x_thirty_min,x_sixty_min,x_three_hour,x_ten_hour,x_thirty_hour};
 
+//    MainWindow *mWindow;
+
 //    QQueue<Data_to_UI > q ;1
 
 //    DialogTable mTable;
@@ -126,6 +136,15 @@ public:
 
 public:
 //    void init_display_queue(QQueue<Data_to_UI> &myQueue);
+
+private:
+    ControlTable * table;
+
+private:
+    void createList();
+    void keyPressEvent(QKeyEvent *e);
+    bool eventFilter(QObject *watched, QEvent *event);
+    void KeyRemapping(QKeyEvent *event);
 
 signals:
 //    void entry_added(QQueue<Data_to_UI > &mQueue);             // <-- the new signal
@@ -136,5 +155,7 @@ private slots:
     void on_comboBox_2_ch3Zoom_currentIndexChanged(const QString &arg1);
     void on_comboBox_5_change_xRange_currentIndexChanged(int index);
 };
+
+//#include <mainwindow.h>
 
 #endif // DIALOGSPINE_H

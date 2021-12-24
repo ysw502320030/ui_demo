@@ -17,6 +17,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class DialogSpine;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -34,10 +36,12 @@ public slots:
     void ChooseWidgets();
     void pushButton2Clicked();
     bool eventFilter(QObject *watched, QEvent *event);
+    void menuClicked(QAction *action);
+    void StackWidgetInit();
 
 private:
     Ui::MainWindow *ui;
-    QTimer m_timer;
+    QTimer m_timer,menuTimer,stackWidgetInitDelay;
 
 public:
     QThread qThread;
@@ -51,10 +55,18 @@ public:
     QMenu *menu_2 = new QMenu();
     QMap<QMenu*, QPushButton*> map;
 
+    QKeyEvent *event_down = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+
+//    DialogSpine  *dialogSpine ;
+//    DialogTable  *dialogtable ;
+//    DialogTable2 *dialogtable2;
+
 private:
     QSocketNotifier *in_fifo_notifier;
     QSocketNotifier *in_fifo_notifier_encoder;
     void encoder_handler();
+//    void keyPressEvent(QKeyEvent *e);
+    void MenuInitialStep();
 
 //    struct Data_to_UI ui_data;
 //    struct Data_to_UI *ui_data2;
@@ -70,5 +82,6 @@ signals:
     /* 工人开始工作（做些耗时的操作 ） */
     void startWork(const QString &);
     void startWork_test();
+    void toGraphSettingSignal();
 };
 #endif // MAINWINDOW_H

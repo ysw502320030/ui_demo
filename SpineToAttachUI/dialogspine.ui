@@ -10,6 +10,9 @@
     <height>580</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
@@ -126,10 +129,10 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_graphics">
       <item>
-       <widget class="QComboBox" name="comboBox_7"/>
+       <widget class="QComboBox" name="comboBox_yRangeSel"/>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox_6"/>
+       <widget class="QComboBox" name="comboBox_deviation"/>
       </item>
       <item>
        <widget class="QComboBox" name="comboBox_5_change_xRange">
@@ -328,14 +331,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="pushButton_clr">
         <property name="text">
          <string>PushButton</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="pushButton_exit">
         <property name="text">
          <string>PushButton</string>
         </property>
