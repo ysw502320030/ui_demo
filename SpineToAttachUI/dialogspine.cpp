@@ -21,6 +21,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
     m_x(0),
     m_y(1)
 {
+
     qDebug() << "spine" << "";
     ui->setupUi(this);
 
@@ -267,6 +268,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
 //        _widgetOnTheTop1 = new QPushButton(this);
 //        _widgetOnTheTop1->setGeometry(30,30,150,150);
 //        _widgetOnTheTop1->show();
+//        FocusFirstWidget();
  }
 
  DialogSpine::~DialogSpine()
@@ -576,7 +578,12 @@ void DialogSpine::KeyRemapping(QKeyEvent *event)
     }
 }
 
-//void DialogSpine::FocusFirstWidget()
-//{
+void DialogSpine::FocusFirstWidget()
+{
+  ui->comboBox_4_ch1Zoom->setFocus();
+}
 
-//}
+void DialogSpine::on_pushButton_clr_clicked()
+{
+    ui->comboBox_4_ch1Zoom->setFocus();
+}

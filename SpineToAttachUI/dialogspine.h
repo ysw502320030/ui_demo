@@ -65,6 +65,7 @@ public slots:
     void enlarge_scale();
     void shrink_scale();
     void test_label_clicked();
+    void FocusFirstWidget();
 
 public:
     Ui::DialogSpine *ui;
@@ -154,8 +155,11 @@ private slots:
     void on_comboBox_3_ch2Zoom_currentIndexChanged(const QString &arg1);
     void on_comboBox_2_ch3Zoom_currentIndexChanged(const QString &arg1);
     void on_comboBox_5_change_xRange_currentIndexChanged(int index);
+    void on_pushButton_clr_clicked();
 };
 
 //#include <mainwindow.h>
+
+extern DialogSpine *dialogSpine;
 
 #endif // DIALOGSPINE_H

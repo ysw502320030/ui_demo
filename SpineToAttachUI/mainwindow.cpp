@@ -7,6 +7,8 @@
 Data_to_UI ui_data;
 QQueue<Data_to_UI > q;
 
+DialogSpine *dialogSpine;
+
 //encoder *mEncoder = new encoder;
 
 QString button_text[6]={NULL,NULL,"RNG","EDG","IG"};
@@ -17,16 +19,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    DialogSpine  *dialogSpine = new DialogSpine(this);
+    dialogSpine = new DialogSpine(this);
     DialogTable  *dialogtable = new DialogTable(this);
     DialogTable2 *dialogtable2 = new DialogTable2(this);
 
 //    mEncoder = new encoder();
-
     ui->stackedWidget->addWidget(dialogSpine);
     ui->stackedWidget->addWidget(dialogtable);
     ui->stackedWidget->addWidget(dialogtable2);
-
     ui->stackedWidget->setCurrentWidget(dialogSpine);
 
 //    QObject::connect(&stackWidgetInitDelay, &QTimer::timeout, this, &MainWindow::StackWidgetInit);
@@ -88,6 +88,8 @@ MainWindow::MainWindow(QWidget *parent)
     menuTimer.setInterval(100);
 
     qDebug() << 39 << "main constructor";
+
+    QObject::connect(this, &MainWindow::toGraphSettingSignal, dialogSpine, &DialogSpine::FocusFirstWidget);
 
 #if __arm__
 
