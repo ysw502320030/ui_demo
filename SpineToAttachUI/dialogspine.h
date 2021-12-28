@@ -137,6 +137,7 @@ public:
 
 public:
 //    void init_display_queue(QQueue<Data_to_UI> &myQueue);
+    void EventFilterInit();
 
 private:
     ControlTable * table;

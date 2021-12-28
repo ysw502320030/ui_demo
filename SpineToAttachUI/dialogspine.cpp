@@ -262,7 +262,9 @@ DialogSpine::DialogSpine(QWidget *parent) :
 
         createList();
 
-        ui->comboBox_4_ch1Zoom->view()->installEventFilter(this);
+        EventFilterInit();
+
+//        ui->comboBox_4_ch1Zoom->view()->installEventFilter(this);
 
 //        QWidget* _widgetOnTheTop1;
 //        _widgetOnTheTop1 = new QPushButton(this);
@@ -586,4 +588,16 @@ void DialogSpine::FocusFirstWidget()
 void DialogSpine::on_pushButton_clr_clicked()
 {
     ui->comboBox_4_ch1Zoom->setFocus();
+    qDebug() << "CLR button been clicked ";
+}
+
+void DialogSpine::EventFilterInit()
+{
+    ui->comboBox_yRangeSel->view()->installEventFilter(this);
+    ui->comboBox_deviation->view()->installEventFilter(this);
+    ui->comboBox_5_change_xRange->view()->installEventFilter(this);
+    ui->comboBox_4_ch1Zoom->view()->installEventFilter(this);
+    ui->comboBox_3_ch2Zoom->view()->installEventFilter(this);
+    ui->comboBox_2_ch3Zoom->view()->installEventFilter(this);
+    ui->comboBox_ch4Zoom->view()->installEventFilter(this);
 }

@@ -38,9 +38,30 @@ void encoder::handle_readNotification(int /*socket*/)
 
     if(ret >= 0){
         qDebug() << "button key is" << data;
-        QMouseEvent *mouseClick = new QMouseEvent(QEvent::MouseButtonPress, QCursor::pos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-        QWidget *widget1 = QApplication::focusWidget();
-        QCoreApplication::postEvent ((QObject*)widget1, mouseClick);
+//        QMouseEvent *mouseClick = new QMouseEvent(QEvent::MouseButtonPress, QCursor::pos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+//        QWidget *widget1 = QApplication::focusWidget();
+//        QCoreApplication::postEvent ((QObject*)widget1, mouseClick);
+
+//        QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Enter, Qt::NoModifier);
+//        QWidget *widget1 = QApplication::focusWidget();
+//        QCoreApplication::postEvent ((QObject*)widget1, event);
+
+        qDebug() << "widget is " << QApplication::focusWidget();
+
+        if(QApplication::focusWidget()->metaObject()->className() == QString("QComboBoxListView") ||
+           QApplication::focusWidget()->metaObject()->className() == QString("QMenu")             ||
+           QApplication::focusWidget()->metaObject()->className() == QString("QPushButton")          )
+        {
+            QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Enter, Qt::NoModifier);
+            QWidget *widget1 = QApplication::focusWidget();
+            QCoreApplication::postEvent ((QObject*)widget1, event);
+        }
+        else
+        {
+            QMouseEvent *mouseClick = new QMouseEvent(QEvent::MouseButtonPress, QCursor::pos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+            QWidget *widget1 = QApplication::focusWidget();
+            QCoreApplication::postEvent ((QObject*)widget1, mouseClick);
+        }
     }
 }
 
