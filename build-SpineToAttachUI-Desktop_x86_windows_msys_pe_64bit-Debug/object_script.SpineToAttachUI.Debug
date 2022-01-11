@@ -1,0 +1,17 @@
+debug/controltable.o
+debug/datathread.o
+debug/dialogspine.o
+debug/dialogtable.o
+debug/dialogtable2.o
+debug/encoder.o
+debug/keyBoard.o
+debug/main.o
+debug/mainwindow.o
+debug/moc_controltable.o
+debug/moc_datathread.o
+debug/moc_dialogspine.o
+debug/moc_dialogtable.o
+debug/moc_dialogtable2.o
+debug/moc_encoder.o
+debug/moc_keyBoard.o
+debug/moc_mainwindow.o

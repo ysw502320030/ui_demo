@@ -361,19 +361,51 @@ DialogSpine::DialogSpine(QWidget *parent) :
 //         m_series_2->append(m_x2, m_y2);
 //         m_series_3->append(m_x, m_y3);
 
-         m_series->append(count, m_y);
-         m_series_2->append(count, m_y2);
-         m_series_3->append(count, m_y3);
 
-         if (count++ >= pointsForOneMin*xRange)
-             chart->scroll(chart->plotArea().width()/pointsForOneMin/xRange, 0);
+         y_list.append(m_y);
+         y_list_2.append(m_y2);
+         y_list_3.append(m_y3);
 
-//         if (count++ >= m_axisX->tickCount())
-//             chart->scroll(x, 0);
+         if(y_list.length()>pointsForOneMin+1)
+         {
+             y_list.removeFirst();
+             y_list_2.removeFirst();
+             y_list_3.removeFirst();
+         }
 
-//         if (m_x == 100)
-//             m_timer.stop();
-//      }
+         QList<QPointF> points,points_2,points_3;
+         points.clear();
+         points_2.clear();
+         points_3.clear();
+
+         for(int i=0;i<y_list.length();i++)
+         {
+
+             points.append(QPointF(i,y_list.at(i)));
+             points_2.append(QPointF(i,y_list_2.at(i)));
+             points_3.append(QPointF(i,y_list_3.at(i)));
+
+//             queuePoints.enqueue(QPointF(i,q.at(i)));
+         }
+
+         m_series->replace(points);
+         m_series_2->replace(points_2);
+         m_series_3->replace(points_3);
+
+
+//         m_series->append(count, m_y);
+//         m_series_2->append(count, m_y2);
+//         m_series_3->append(count, m_y3);
+
+//         if (count++ >= pointsForOneMin*xRange)
+//             chart->scroll(chart->plotArea().width()/pointsForOneMin/xRange, 0);
+
+////         if (count++ >= m_axisX->tickCount())
+////             chart->scroll(x, 0);
+
+////         if (m_x == 100)
+////             m_timer.stop();
+////      }
 
          UpdateTextLabel();
 

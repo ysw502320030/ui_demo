@@ -142,6 +142,8 @@ public:
 
     float setRate[4],biasPercent[4],biasPencentGroup[5] = {0, 0.1, 0.5, 1, 1};
 
+    QList<float> y_list, y_list_2,y_list_3,y_list_4;
+
 //    MainWindow *mWindow;
 
 //    QQueue<Data_to_UI > q ;1

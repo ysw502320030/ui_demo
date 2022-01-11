@@ -1,0 +1,16 @@
+release/controltable.o
+release/datathread.o
+release/dialogspine.o
+release/dialogtable.o
+release/dialogtable2.o
+release/encoder.o
+release/keyBoard.o
+release/main.o
+release/mainwindow.o
+release/moc_controltable.o
+release/moc_datathread.o
+release/moc_dialogspine.o
+release/moc_dialogtable.o
+release/moc_dialogtable2.o
+release/moc_keyBoard.o
+release/moc_mainwindow.o

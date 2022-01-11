@@ -165,10 +165,10 @@ void DialogTable::DataToTable()
 
         for(int i=0;i<3;i++)
         {
-            ui->qTableWidget->item(i, 0)->setText(QString::number(q[3-i].thA[8]));
-            ui->qTableWidget->item(i,1)->setText(QString::number(q[3-i].thA[8] - q[3-i-1].thA[8]));
-            ui->qTableWidget->item(i,2)->setText(QString::number(q[3-i].delta_time));
-            ui->qTableWidget->item(i,3)->setText(QString::number(q[3-i].rate[8]));
+            ui->qTableWidget->item(i, 0)->setText(QString::number(q[3-i].thA[8], 'f', 2));
+            ui->qTableWidget->item(i,1)->setText(QString::number(q[3-i].thA[8] - q[3-i-1].thA[8], 'f', 2));
+            ui->qTableWidget->item(i,2)->setText(QString::number(q[3-i].delta_time, 'f', 2));
+            ui->qTableWidget->item(i,3)->setText(QString::number(q[3-i].rate[8], 'f', 2));
 
 //            ui->qTableWidget->item(i, 0)->setText(QString::number(2.2));
 //            ui->qTableWidget->item(i,1)->setText(QString::number(3.3));
