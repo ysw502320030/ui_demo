@@ -95,7 +95,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>-20</y>
      <width>931</width>
      <height>81</height>
     </rect>
@@ -129,10 +129,42 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_graphics">
       <item>
-       <widget class="QComboBox" name="comboBox_yRangeSel"/>
+       <widget class="QComboBox" name="comboBox_yRangeSel">
+        <item>
+         <property name="text">
+          <string>Auto/ON</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Auto/OFF</string>
+         </property>
+        </item>
+       </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox_deviation"/>
+       <widget class="QComboBox" name="comboBox_deviation">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <item>
+         <property name="text">
+          <string>Dev/OFF</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Dev/10%</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Dev/50%</string>
+         </property>
+        </item>
+       </widget>
       </item>
       <item>
        <widget class="QComboBox" name="comboBox_5_change_xRange">
@@ -326,21 +358,21 @@
          <enum>QFrame::Panel</enum>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string>A/sec</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_clr">
         <property name="text">
-         <string>PushButton</string>
+         <string>CLR</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_exit">
         <property name="text">
-         <string>PushButton</string>
+         <string>EXIT</string>
         </property>
        </widget>
       </item>
@@ -375,21 +407,21 @@
     <item>
      <widget class="QLabel" name="label_19">
       <property name="text">
-       <string>TextLabel</string>
+       <string>Src</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_20">
       <property name="text">
-       <string>TextLabel</string>
+       <string>Sens</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_18">
       <property name="text">
-       <string>TextLabel</string>
+       <string>Material</string>
       </property>
      </widget>
     </item>
@@ -403,21 +435,21 @@
     <item>
      <widget class="QLabel" name="label_16">
       <property name="text">
-       <string>TextLabel</string>
+       <string>R [A/S]</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_14">
       <property name="text">
-       <string>TextLabel</string>
+       <string>SV</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_13">
       <property name="text">
-       <string>TextLabel</string>
+       <string>PWR [%]</string>
       </property>
      </widget>
     </item>
@@ -447,15 +479,15 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>340</y>
+     <x>90</x>
+     <y>260</y>
      <width>931</width>
      <height>201</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayoutInfoContent">
     <item row="2" column="7">
-     <widget class="QLabel" name="label_51">
+     <widget class="QLabel" name="label_51_SettingRateCH3">
       <property name="text">
        <string/>
       </property>
@@ -476,7 +508,7 @@
      </widget>
     </item>
     <item row="1" column="6">
-     <widget class="QLabel" name="label_63">
+     <widget class="QLabel" name="label_63_RateCH2">
       <property name="text">
        <string/>
       </property>
@@ -616,7 +648,7 @@
      </widget>
     </item>
     <item row="0" column="7">
-     <widget class="QLabel" name="label_28">
+     <widget class="QLabel" name="label_28_SettingRateCH1">
       <property name="text">
        <string/>
       </property>
@@ -637,7 +669,7 @@
      </widget>
     </item>
     <item row="3" column="6">
-     <widget class="QLabel" name="label_40">
+     <widget class="QLabel" name="label_40_RateCH4">
       <property name="text">
        <string/>
       </property>
@@ -658,7 +690,7 @@
      </widget>
     </item>
     <item row="1" column="7">
-     <widget class="QLabel" name="label_64">
+     <widget class="QLabel" name="label_64_SettingRateCH2">
       <property name="text">
        <string/>
       </property>
@@ -679,9 +711,9 @@
      </widget>
     </item>
     <item row="0" column="6">
-     <widget class="QLabel" name="label_29">
+     <widget class="QLabel" name="label_29_RateCH1">
       <property name="text">
-       <string/>
+       <string>1.22</string>
       </property>
      </widget>
     </item>
@@ -714,7 +746,7 @@
      </widget>
     </item>
     <item row="2" column="6">
-     <widget class="QLabel" name="label_50">
+     <widget class="QLabel" name="label_50_RateCH3">
       <property name="text">
        <string/>
       </property>
@@ -756,7 +788,7 @@
      </widget>
     </item>
     <item row="3" column="7">
-     <widget class="QLabel" name="label_36">
+     <widget class="QLabel" name="label_36_SettingRateCH4">
       <property name="text">
        <string/>
       </property>
@@ -797,7 +829,7 @@
     <rect>
      <x>30</x>
      <y>470</y>
-     <width>250</width>
+     <width>258</width>
      <height>80</height>
     </rect>
    </property>
@@ -1791,7 +1823,133 @@ T
 E</string>
    </property>
   </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_4">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>60</y>
+     <width>288</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_3_deviation">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <item>
+     <widget class="DeviationLabel" name="label_deviation1">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="DeviationLabel" name="label_deviation2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="DeviationLabel" name="label_deviation3">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="DeviationLabel" name="label_deviation4">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="DeviationLabel" name="label_deviation_test">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>80</y>
+     <width>16</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="DeviationLabel" name="label_deviation_test_2">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>80</y>
+     <width>16</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="DeviationLabel" name="label_deviation_test_3">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>80</y>
+     <width>16</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="DeviationLabel" name="label_deviation_test_4">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>80</y>
+     <width>16</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DeviationLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">deviationlabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

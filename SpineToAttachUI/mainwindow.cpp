@@ -91,6 +91,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     QObject::connect(this, &MainWindow::toGraphSettingSignal, dialogSpine, &DialogSpine::FocusFirstWidget);
 
+    QObject::connect(dialogSpine, &DialogSpine::CloseGraphSetting, this, &MainWindow::OutGraphSetting);
+
 #if __arm__
 
 //    fd=open("/dev/btn_key", O_RDWR);
@@ -376,4 +378,9 @@ void MainWindow::StackWidgetInit()
 //    ui->stackedWidget->setCurrentWidget(dialogSpine);
 
 //    stackWidgetInitDelay.stop();
+}
+
+void MainWindow::OutGraphSetting()
+{
+    ui->pushButton_start->setFocus();
 }

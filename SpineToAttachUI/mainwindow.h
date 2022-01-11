@@ -38,6 +38,7 @@ public slots:
     bool eventFilter(QObject *watched, QEvent *event);
     void menuClicked(QAction *action);
     void StackWidgetInit();
+    void OutGraphSetting();
 
 private:
     Ui::MainWindow *ui;

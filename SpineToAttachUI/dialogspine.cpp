@@ -165,8 +165,9 @@ DialogSpine::DialogSpine(QWidget *parent) :
 
 
 //    ui->verticalLayoutWidget->setStyleSheet("QComboBox::focus{ background: black; color: white;}");
-    ui->verticalLayoutWidget->setStyleSheet("::focus{ background: black; color: white;}");
-    ui->gridLayoutWidget->setStyleSheet("::focus{ background: black; color: white;}");
+
+    ui->verticalLayoutWidget->setStyleSheet("::focus{ background: gray; color: white;}");
+    ui->gridLayoutWidget->setStyleSheet("::focus{ background: gray; color: white;}");
     setLayout(container);
 
 
@@ -264,6 +265,30 @@ DialogSpine::DialogSpine(QWidget *parent) :
 
         EventFilterInit();
 
+        yRangeWidgetList<< ui->comboBox_4_ch1Zoom << ui->comboBox_3_ch2Zoom
+                     << ui->comboBox_2_ch3Zoom << ui->comboBox_ch4Zoom;
+
+        ui->comboBox_yRangeSel->setCurrentText("Auto/OFF");
+
+//        ui->horizontalLayoutWidget_4->raise();
+        ui->label_deviation1->raise();
+
+        ui->label_deviation_test->raise();
+        ui->label_deviation_test_2->raise();
+        ui->label_deviation_test_3->raise();
+        ui->label_deviation_test_4->raise();
+
+//        RevealDeviationLabel();
+
+        ui->label_28_SettingRateCH1->setText("2");
+        ui->label_64_SettingRateCH2->setText("11");
+        ui->label_51_SettingRateCH3->setText("21");
+//        ui->label_36_SettingRateCH4->setText();
+
+        setRate[0] = ui->label_28_SettingRateCH1->text().toFloat();
+        setRate[1] = ui->label_64_SettingRateCH2->text().toFloat();
+        setRate[2] = ui->label_51_SettingRateCH3->text().toFloat();
+
 //        ui->comboBox_4_ch1Zoom->view()->installEventFilter(this);
 
 //        QWidget* _widgetOnTheTop1;
@@ -349,6 +374,15 @@ DialogSpine::DialogSpine(QWidget *parent) :
 //         if (m_x == 100)
 //             m_timer.stop();
 //      }
+
+         UpdateTextLabel();
+
+         if(ui->comboBox_yRangeSel->currentIndex() == 0)    //AutoRangeYIsON
+            CheckYRange(ui_data.rate[8],ui_data.rate[9],ui_data.rate[7],0);
+
+         if(ui->comboBox_deviation->currentIndex() != 0)
+            UpdateDeviationLabel();
+
  }
 
 // void DialogSpine::inform_handleTimeout()
@@ -431,9 +465,10 @@ void DialogSpine::test_label_clicked()
     qDebug() << 16 << "label + clicked";
 }
 
-void DialogSpine::on_comboBox_4_ch1Zoom_currentIndexChanged(const QString &arg1)
+void DialogSpine::on_comboBox_4_ch1Zoom_currentIndexChanged(int index)
 {
-    float maxY = arg1.toFloat();
+//    float maxY = arg1.toFloat();
+    float maxY = yRangeGroup[index];
     qDebug() << 16 << maxY;
 
     m_axisY->setTickCount(12);
@@ -460,9 +495,10 @@ void DialogSpine::on_comboBox_4_ch1Zoom_currentIndexChanged(const QString &arg1)
 
 }
 
-void DialogSpine::on_comboBox_3_ch2Zoom_currentIndexChanged(const QString &arg1)
+void DialogSpine::on_comboBox_3_ch2Zoom_currentIndexChanged(int index)
 {
-    float maxY = arg1.toFloat();
+//    float maxY = arg1.toFloat();
+    float maxY = yRangeGroup[index];
     qDebug() << 17 << maxY;
 
 //    m_axisY2->setTickCount(12);
@@ -470,9 +506,10 @@ void DialogSpine::on_comboBox_3_ch2Zoom_currentIndexChanged(const QString &arg1)
     m_axisY2->setRange(-0.1*maxY, maxY);
 }
 
-void DialogSpine::on_comboBox_2_ch3Zoom_currentIndexChanged(const QString &arg1)
+void DialogSpine::on_comboBox_2_ch3Zoom_currentIndexChanged(int index)
 {
-    float maxY = arg1.toFloat();
+//    float maxY = arg1.toFloat();
+    float maxY = yRangeGroup[index];
     qDebug() << 18 << maxY;
 
 //    m_axisY3->setTickCount(12);
@@ -488,8 +525,6 @@ void DialogSpine::on_comboBox_5_change_xRange_currentIndexChanged(int index)
 
 void DialogSpine::createList()
 {
-    ControlList graphSettingList;
-
     graphSettingList  << ui->comboBox_yRangeSel << ui->comboBox_deviation
                       << ui->comboBox_5_change_xRange
                       << ui->comboBox_4_ch1Zoom << ui->comboBox_3_ch2Zoom
@@ -582,12 +617,12 @@ void DialogSpine::KeyRemapping(QKeyEvent *event)
 
 void DialogSpine::FocusFirstWidget()
 {
-  ui->comboBox_4_ch1Zoom->setFocus();
+  ui->comboBox_yRangeSel->setFocus();
 }
 
 void DialogSpine::on_pushButton_clr_clicked()
 {
-    ui->comboBox_4_ch1Zoom->setFocus();
+//    ui->comboBox_4_ch1Zoom->setFocus();
     qDebug() << "CLR button been clicked ";
 }
 
@@ -601,3 +636,92 @@ void DialogSpine::EventFilterInit()
     ui->comboBox_2_ch3Zoom->view()->installEventFilter(this);
     ui->comboBox_ch4Zoom->view()->installEventFilter(this);
 }
+
+void DialogSpine::on_pushButton_exit_clicked()
+{
+    table->selectControl(graphSettingList[0]);
+    emit CloseGraphSetting();
+}
+
+void DialogSpine::UpdateTextLabel()
+{
+    ui->label_29_RateCH1->setText(QString::number(ui_data.rate[8], 'f', 2));
+    ui->label_63_RateCH2->setText(QString::number(ui_data.rate[9], 'f', 2));
+    ui->label_50_RateCH3->setText(QString::number(ui_data.rate[7], 'f', 2));
+}
+
+void DialogSpine::CheckYRange(float rate1, float rate2, float rate3, float rate4)
+{
+    CheckYRangeSub(rate1,0);
+    CheckYRangeSub(rate2,1);
+    CheckYRangeSub(rate3,2);
+}
+
+void DialogSpine::CheckYRangeSub(float rate, int nIndex)
+{
+    autoYRangePreLocation[nIndex] = yRangeWidgetList[nIndex]->currentIndex();
+
+    for(int i = 0; i < yRangeTotalTypes; i++)
+    {
+        if(rate > yRangeFactor*yRangeGroup[i] && rate < yRangeFactor*yRangeGroup[i+1])
+        {
+            if(i+1 != autoYRangePreLocation[nIndex])
+            {
+                yRangeWidgetList[nIndex]->setCurrentIndex(i+1);
+                autoYRangePreLocation[nIndex] = i+1;
+                break;
+            }
+
+        }
+        else if(i ==7 && rate > yRangeGroup[i])
+        {
+            yRangeWidgetList[nIndex]->setCurrentIndex(i);
+            autoYRangePreLocation[nIndex] = i;
+        }
+
+        else if(i ==0 && rate < yRangeGroup[i])
+        {
+            yRangeWidgetList[nIndex]->setCurrentIndex(i);
+            autoYRangePreLocation[nIndex] = i;
+            break;
+        }
+
+    }
+}
+
+void DialogSpine::UpdateDeviationLabel()
+{
+    float currentRate[4];
+
+    currentRate[0] = ui_data.rate[8];
+    currentRate[1] = ui_data.rate[9];
+    currentRate[2] = ui_data.rate[7];
+
+    int nIdx = ui->comboBox_deviation->currentIndex();
+    float biasPercentFull =biasPencentGroup[nIdx];
+
+    for(int i =0; i <3; i++)                                //CurrentTestFor3Channels
+    {
+        biasPercent[i] = (currentRate[i] -setRate[i])/(biasPercentFull*setRate[i]);
+
+        if(qAbs(currentRate[i] -setRate[i]) > biasPercentFull*setRate[i])
+        {
+            if(biasPercent[i] > 0)
+                biasPercent[i] = 1;
+            else if(biasPercent[i] < 0)
+            {
+                biasPercent[i] = -1;
+            }
+        }
+    }
+
+    ui->label_deviation_test->setValue(biasPercent[0]);
+    ui->label_deviation_test_2->setValue(biasPercent[1]);
+    ui->label_deviation_test_3->setValue(biasPercent[2]);
+}
+
+
+//void DialogSpine::on_comboBox_4_ch1Zoom_currentIndexChanged(int index)
+//{
+
+//}

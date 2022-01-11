@@ -38,6 +38,8 @@ public:
 
     void toDownWhole();
 
+    void selectControl(QWidget* control);
+
 private:
     //返回表格第r行所有按钮列表
     ControlList rowControls(int r);
@@ -62,7 +64,7 @@ private:
 
     int  wholeCount();
 
-    void selectControl(QWidget* control);
+
 
     //返回btnList第index索引位置的后一个按钮
     //如果btnList只有一个按钮，则返回按钮本身

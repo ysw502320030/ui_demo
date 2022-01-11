@@ -34,7 +34,9 @@
 
 #include <QAbstractItemView>
 
+#include <QComboBox>
 
+#include "deviationlabel.h"
 
 using namespace QtCharts;
 using namespace std;
@@ -44,6 +46,8 @@ class DialogSpine;
 }
 
 //class MainWindow;
+
+typedef QList<QComboBox*> ComboBoxList;
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QSplineSeries;
@@ -127,6 +131,17 @@ public:
 
     int x_range_group[8] = {x_one_min,x_three_min,x_ten_min,x_thirty_min,x_sixty_min,x_three_hour,x_ten_hour,x_thirty_hour};
 
+    ControlList graphSettingList;
+    ComboBoxList yRangeWidgetList;
+
+    int autoYRangePreLocation[4]={0};
+
+    float yRangeFactor =0.9;
+    int yRangeTotalTypes = 8;
+    float yRangeGroup[8] = {0.1,0.3,1,3,10,30,100,300};
+
+    float setRate[4],biasPercent[4],biasPencentGroup[5] = {0, 0.1, 0.5, 1, 1};
+
 //    MainWindow *mWindow;
 
 //    QQueue<Data_to_UI > q ;1
@@ -138,6 +153,10 @@ public:
 public:
 //    void init_display_queue(QQueue<Data_to_UI> &myQueue);
     void EventFilterInit();
+    void UpdateTextLabel();
+    void CheckYRange(float rate1, float rate2, float rate3, float rate4);
+    void CheckYRangeSub(float rate, int nIndex);
+    void UpdateDeviationLabel();
 
 private:
     ControlTable * table;
@@ -151,12 +170,16 @@ private:
 signals:
 //    void entry_added(QQueue<Data_to_UI > &mQueue);             // <-- the new signal
     void signal_to_handleTimeout();
+    void CloseGraphSetting();
+
 private slots:
-    void on_comboBox_4_ch1Zoom_currentIndexChanged(const QString &arg1);
-    void on_comboBox_3_ch2Zoom_currentIndexChanged(const QString &arg1);
-    void on_comboBox_2_ch3Zoom_currentIndexChanged(const QString &arg1);
+    void on_comboBox_4_ch1Zoom_currentIndexChanged(int index);
+    void on_comboBox_3_ch2Zoom_currentIndexChanged(int index);
+    void on_comboBox_2_ch3Zoom_currentIndexChanged(int index);
     void on_comboBox_5_change_xRange_currentIndexChanged(int index);
     void on_pushButton_clr_clicked();
+    void on_pushButton_exit_clicked();
+//    void on_comboBox_4_ch1Zoom_currentIndexChanged(int index);
 };
 
 //#include <mainwindow.h>

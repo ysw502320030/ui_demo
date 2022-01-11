@@ -22,6 +22,7 @@ QT += testlib
 SOURCES += \
     controltable.cpp \
     datathread.cpp \
+    deviationlabel.cpp \
     dialogspine.cpp \
     dialogtable.cpp \
     dialogtable2.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 HEADERS += \
     controltable.h \
     datathread.h \
+    deviationlabel.h \
     dialogspine.h \
     dialogtable.h \
     dialogtable2.h \
