@@ -70,6 +70,7 @@ public slots:
     void shrink_scale();
     void test_label_clicked();
     void FocusFirstWidget();
+    void UpdateSpine();
 
 public:
     Ui::DialogSpine *ui;
@@ -126,6 +127,8 @@ public:
 
     int pointsForOneMin = 375;  //  60S/0.16S = 375
 
+    int pointsNumForOneLine = 500;
+
     enum x_time_range{x_one_min =1,x_three_min=3,x_ten_min=10,x_thirty_min=30,x_sixty_min=60,
                       x_three_hour=180,x_ten_hour=600,x_thirty_hour=1800} xRange;
 
@@ -143,6 +146,8 @@ public:
     float setRate[4],biasPercent[4],biasPencentGroup[5] = {0, 0.1, 0.5, 1, 1};
 
     QList<float> y_list, y_list_2,y_list_3,y_list_4;
+
+    QTimer xRangeTimer;
 
 //    MainWindow *mWindow;
 
@@ -182,6 +187,7 @@ private slots:
     void on_pushButton_clr_clicked();
     void on_pushButton_exit_clicked();
 //    void on_comboBox_4_ch1Zoom_currentIndexChanged(int index);
+    void on_comboBox_ch4Zoom_currentIndexChanged(int index);
 };
 
 //#include <mainwindow.h>

@@ -52,7 +52,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
     m_series->append(m_x, m_y);
 
     m_series_2 = new QSplineSeries(this);
-    QPen black(Qt::black);
+    QPen black(Qt::gray);
     m_series_2->setPen(black);
     m_series_2->append(m_x, m_y);
 
@@ -61,9 +61,15 @@ DialogSpine::DialogSpine(QWidget *parent) :
     m_series_3->setPen(blue);
     m_series_3->append(m_x, m_y);
 
+    m_series_4 = new QSplineSeries(this);
+    QPen yellow(Qt::cyan);
+    m_series_4->setPen(yellow);
+    m_series_4->append(m_x, m_y);
+
     chart->addSeries(m_series);
     chart->addSeries(m_series_2);
     chart->addSeries(m_series_3);
+    chart->addSeries(m_series_4);
 
     chart->addAxis(m_axisX,Qt::AlignBottom);
     chart->addAxis(m_axisY,Qt::AlignLeft);
@@ -71,7 +77,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
 //    chart->addAxis(m_axisX2,Qt::AlignBottom);
     chart->addAxis(m_axisY2,Qt::AlignRight);
     chart->addAxis(m_axisY3,Qt::AlignLeft);
-//    chart->addAxis(m_axisY4,Qt::AlignRight);
+    chart->addAxis(m_axisY4,Qt::AlignRight);
 
 //    chart->setTitle("Dynamic spline chart");
     chart->legend()->hide();
@@ -93,13 +99,17 @@ DialogSpine::DialogSpine(QWidget *parent) :
     m_series_3->attachAxis(m_axisX);
     m_series_3->attachAxis(m_axisY3);
 
+    m_series_4->attachAxis(m_axisX);
+    m_series_4->attachAxis(m_axisY4);
+
     m_series->setUseOpenGL(true);
     m_series_2->setUseOpenGL(true);
     m_series_3->setUseOpenGL(true);
+    m_series_4->setUseOpenGL(true);
 
     m_axisX->setTickCount(5);
 //    m_axisX->setRange(0, 10);
-    m_axisX->setRange(0, pointsForOneMin);
+    m_axisX->setRange(0, pointsNumForOneLine);
 
 //    m_axisX2->setTickCount(5);
 //    m_axisX2->setRange(0, 10);
@@ -117,13 +127,13 @@ DialogSpine::DialogSpine(QWidget *parent) :
 //    m_axisY3->setTickCount(12);
     m_axisY3->setLabelFormat("%.3s");
 
-//    m_axisY4->setRange(-0.1, 1);
+    m_axisY4->setRange(-0.1, 1);
 //    m_axisY4->setTickCount(0);
-//    m_axisY4->setLabelFormat("%.3s");
+    m_axisY4->setLabelFormat("%.3s");
 
     m_axisY2->setGridLineVisible(false);
     m_axisY3->setGridLineVisible(false);
-//    m_axisY4->setGridLineVisible(false);
+    m_axisY4->setGridLineVisible(false);
 
 //    m_axisY->setTickType(QValueAxis::TickType::TicksDynamic);
 //    m_axisY->setTickAnchor(0);
@@ -283,11 +293,19 @@ DialogSpine::DialogSpine(QWidget *parent) :
         ui->label_28_SettingRateCH1->setText("2");
         ui->label_64_SettingRateCH2->setText("11");
         ui->label_51_SettingRateCH3->setText("21");
+        ui->label_36_SettingRateCH4->setText("25");
 //        ui->label_36_SettingRateCH4->setText();
 
         setRate[0] = ui->label_28_SettingRateCH1->text().toFloat();
         setRate[1] = ui->label_64_SettingRateCH2->text().toFloat();
         setRate[2] = ui->label_51_SettingRateCH3->text().toFloat();
+        setRate[3] = ui->label_36_SettingRateCH4->text().toFloat();
+
+        ui->comboBox_5_change_xRange->setCurrentIndex(2);
+
+        QObject::connect(&xRangeTimer, &QTimer::timeout, this, &DialogSpine::UpdateSpine);
+        xRangeTimer.setInterval(120*10);
+        xRangeTimer.start();
 
 //        ui->comboBox_4_ch1Zoom->view()->installEventFilter(this);
 
@@ -551,8 +569,43 @@ void DialogSpine::on_comboBox_2_ch3Zoom_currentIndexChanged(int index)
 
 void DialogSpine::on_comboBox_5_change_xRange_currentIndexChanged(int index)
 {
-    xRange =(x_time_range) x_range_group[index];
-    m_axisX->setRange(0, pointsForOneMin*xRange);
+//    xRange =(x_time_range) x_range_group[index];
+//    m_axisX->setRange(0, pointsForOneMin*xRange);
+    xRangeTimer.stop();
+
+    UpdateSpine();
+
+    switch (index) {
+    case 0:
+        xRangeTimer.setInterval(120);
+        break;
+    case 1:
+        xRangeTimer.setInterval(360);
+        break;
+    case 2:
+        xRangeTimer.setInterval(1200);
+        break;
+    case 3:
+        xRangeTimer.setInterval(3600);
+        break;
+    case 4:
+        xRangeTimer.setInterval(7200);
+        break;
+    case 5:
+        xRangeTimer.setInterval(120*180);
+        break;
+    case 6:
+        xRangeTimer.setInterval(120*600);
+        break;
+    case 7:
+        xRangeTimer.setInterval(120*1800);
+        break;
+    default:
+        qDebug() << "abnormal selection";
+        break;
+    }
+
+    xRangeTimer.start();
 }
 
 void DialogSpine::createList()
@@ -680,6 +733,7 @@ void DialogSpine::UpdateTextLabel()
     ui->label_29_RateCH1->setText(QString::number(ui_data.rate[8], 'f', 2));
     ui->label_63_RateCH2->setText(QString::number(ui_data.rate[9], 'f', 2));
     ui->label_50_RateCH3->setText(QString::number(ui_data.rate[7], 'f', 2));
+    ui->label_40_RateCH4->setText(QString::number(ui_data.rate[6], 'f', 2));
 }
 
 void DialogSpine::CheckYRange(float rate1, float rate2, float rate3, float rate4)
@@ -687,6 +741,7 @@ void DialogSpine::CheckYRange(float rate1, float rate2, float rate3, float rate4
     CheckYRangeSub(rate1,0);
     CheckYRangeSub(rate2,1);
     CheckYRangeSub(rate3,2);
+    CheckYRangeSub(rate4,3);
 }
 
 void DialogSpine::CheckYRangeSub(float rate, int nIndex)
@@ -728,11 +783,12 @@ void DialogSpine::UpdateDeviationLabel()
     currentRate[0] = ui_data.rate[8];
     currentRate[1] = ui_data.rate[9];
     currentRate[2] = ui_data.rate[7];
+    currentRate[3] = ui_data.rate[6];
 
     int nIdx = ui->comboBox_deviation->currentIndex();
     float biasPercentFull =biasPencentGroup[nIdx];
 
-    for(int i =0; i <3; i++)                                //CurrentTestFor3Channels
+    for(int i =0; i <channelNum; i++)                                //CurrentTestFor3Channels
     {
         biasPercent[i] = (currentRate[i] -setRate[i])/(biasPercentFull*setRate[i]);
 
@@ -750,10 +806,106 @@ void DialogSpine::UpdateDeviationLabel()
     ui->label_deviation_test->setValue(biasPercent[0]);
     ui->label_deviation_test_2->setValue(biasPercent[1]);
     ui->label_deviation_test_3->setValue(biasPercent[2]);
+    ui->label_deviation_test_4->setValue(biasPercent[3]);
 }
 
+void DialogSpine::UpdateSpine()
+{
+    QList<QPointF> points[4];
+
+    for(int i=0;i<channelNum;i++)
+        points[i].clear();
+
+    int index = ui->comboBox_5_change_xRange->currentIndex();
+
+    switch (index) {
+    case 0:
+        for(int i=0; i < bufferOneMin[0].length(); i++)
+        {
+//            points[0].append(QPointF(i,bufferOneMin[0].at(i)));
+//            points[1].append(QPointF(i,bufferOneMin[1].at(i)));
+//            points[2].append(QPointF(i,bufferOneMin[2].at(i)));
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferOneMin[j].at(i)));
+        }
+        break;
+    case 1:
+        for(int i=0; i < bufferThreeMin[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferThreeMin[j].at(i)));
+        }
+        break;
+    case 2:
+        for(int i=0; i < bufferTenMin[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferTenMin[j].at(i)));
+        }
+        break;
+    case 3:
+        for(int i=0; i < bufferThirtyMin[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferThirtyMin[j].at(i)));
+        }
+        break;
+    case 4:
+        for(int i=0; i < bufferSixtyMin[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferSixtyMin[j].at(i)));
+        }
+        break;
+    case 5:
+        for(int i=0; i < bufferThreeHour[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferThreeHour[j].at(i)));
+        }
+        break;
+    case 6:
+        for(int i=0; i < bufferTenHour[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferTenHour[j].at(i)));
+        }
+        break;
+    case 7:
+        for(int i=0; i < bufferThirtyHour[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferThirtyHour[j].at(i)));
+        }
+        break;
+    default:
+        qDebug() << "abnormal selection";
+        break;
+    }
+
+    m_series->replace(points[0]);
+    m_series_2->replace(points[1]);
+    m_series_3->replace(points[2]);
+    m_series_4->replace(points[3]);
+
+    UpdateTextLabel();
+
+    if(ui->comboBox_yRangeSel->currentIndex() == 0)    //AutoRangeYIsON
+       CheckYRange(ui_data.rate[8],ui_data.rate[9],ui_data.rate[7],ui_data.rate[6]);
+
+    if(ui->comboBox_deviation->currentIndex() != 0)
+       UpdateDeviationLabel();
+}
 
 //void DialogSpine::on_comboBox_4_ch1Zoom_currentIndexChanged(int index)
 //{
 
 //}
+
+void DialogSpine::on_comboBox_ch4Zoom_currentIndexChanged(int index)
+{
+        float maxY = yRangeGroup[index];
+        qDebug() << 18 << maxY;
+
+        m_axisY4->setRange(-0.1*maxY, maxY);
+}

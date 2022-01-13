@@ -7,6 +7,11 @@
 Data_to_UI ui_data;
 QQueue<Data_to_UI > q;
 
+QList<float> bufferOneMin[4],  bufferThreeMin[4], bufferTenMin[4], bufferThirtyMin[4],
+             bufferSixtyMin[4],bufferThreeHour[4],bufferTenHour[4],bufferThirtyHour[4];
+
+int channelNum = 4;
+
 DialogSpine *dialogSpine;
 
 //encoder *mEncoder = new encoder;

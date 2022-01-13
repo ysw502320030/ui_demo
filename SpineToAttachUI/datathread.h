@@ -26,8 +26,10 @@ public:
 public slots:
     void dataObtained();
     void init_notifier();
+    void DataSamplingTimerFunc();
+
 public:
-    QTimer m_timer;
+    QTimer *m_timer;
 
 //    struct Data_to_UI ui_data;
 //    struct Data_to_UI *ui_data2;
@@ -36,6 +38,7 @@ public:
 
     int ret = 0;
     int fd;
+    int pointsNumForOneLine = 500;
 
 //    QQueue<Data_to_UI > q ;
 

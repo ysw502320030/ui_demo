@@ -277,6 +277,14 @@ public:
         horizontalLayout_graphics->addWidget(comboBox_2_ch3Zoom);
 
         comboBox_ch4Zoom = new QComboBox(verticalLayoutWidget);
+        comboBox_ch4Zoom->addItem(QString());
+        comboBox_ch4Zoom->addItem(QString());
+        comboBox_ch4Zoom->addItem(QString());
+        comboBox_ch4Zoom->addItem(QString());
+        comboBox_ch4Zoom->addItem(QString());
+        comboBox_ch4Zoom->addItem(QString());
+        comboBox_ch4Zoom->addItem(QString());
+        comboBox_ch4Zoom->addItem(QString());
         comboBox_ch4Zoom->setObjectName(QString::fromUtf8("comboBox_ch4Zoom"));
         comboBox_ch4Zoom->setFocusPolicy(Qt::StrongFocus);
 
@@ -907,6 +915,15 @@ public:
         comboBox_2_ch3Zoom->setItemText(5, QApplication::translate("DialogSpine", "30", nullptr));
         comboBox_2_ch3Zoom->setItemText(6, QApplication::translate("DialogSpine", "100", nullptr));
         comboBox_2_ch3Zoom->setItemText(7, QApplication::translate("DialogSpine", "300", nullptr));
+
+        comboBox_ch4Zoom->setItemText(0, QApplication::translate("DialogSpine", "0.1", nullptr));
+        comboBox_ch4Zoom->setItemText(1, QApplication::translate("DialogSpine", "0.3", nullptr));
+        comboBox_ch4Zoom->setItemText(2, QApplication::translate("DialogSpine", "1", nullptr));
+        comboBox_ch4Zoom->setItemText(3, QApplication::translate("DialogSpine", "3", nullptr));
+        comboBox_ch4Zoom->setItemText(4, QApplication::translate("DialogSpine", "10", nullptr));
+        comboBox_ch4Zoom->setItemText(5, QApplication::translate("DialogSpine", "30", nullptr));
+        comboBox_ch4Zoom->setItemText(6, QApplication::translate("DialogSpine", "100", nullptr));
+        comboBox_ch4Zoom->setItemText(7, QApplication::translate("DialogSpine", "300", nullptr));
 
         label_6->setText(QApplication::translate("DialogSpine", "A/sec", nullptr));
         pushButton_clr->setText(QApplication::translate("DialogSpine", "CLR", nullptr));
