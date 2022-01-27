@@ -35,6 +35,10 @@ DialogTable2::DialogTable2(QWidget *parent) :
             this,                                // receiver
             &DialogTable2::RightStepMove);  // slot
 
+//#if __arm__
+//    mEncoder->InitFunc();
+//#endif
+
 //    ui->qTableWidget2->setColumnCount(4);//设置列数
 //    ui->qTableWidget2->setRowCount(10);//设置行数
 //    ui->qTableWidget2->setWindowTitle("qTableWidget2");

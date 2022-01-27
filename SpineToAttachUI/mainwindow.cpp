@@ -12,6 +12,8 @@ QList<float> bufferOneMin[4],  bufferThreeMin[4], bufferTenMin[4], bufferThirtyM
 
 int channelNum = 4;
 
+QList<QPointF> points[4];
+
 DialogSpine *dialogSpine;
 
 //encoder *mEncoder = new encoder;
@@ -97,6 +99,10 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(this, &MainWindow::toGraphSettingSignal, dialogSpine, &DialogSpine::FocusFirstWidget);
 
     QObject::connect(dialogSpine, &DialogSpine::CloseGraphSetting, this, &MainWindow::OutGraphSetting);
+
+    QObject::connect(this, &MainWindow::ToPreWidget, dialogSpine, &DialogSpine::FocusToPreWidget);
+
+    QObject::connect(this, &MainWindow::ToNextWidget, dialogSpine, &DialogSpine::FocusToNextWidget);
 
 #if __arm__
 
@@ -321,6 +327,8 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
         }
     }
 
+//    return true;
+
 //    return MainWindow::eventFilter(watched,event);
 }
 
@@ -388,4 +396,14 @@ void MainWindow::StackWidgetInit()
 void MainWindow::OutGraphSetting()
 {
     ui->pushButton_start->setFocus();
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    emit ToPreWidget();
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    emit ToNextWidget();
 }

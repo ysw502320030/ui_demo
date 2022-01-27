@@ -38,6 +38,10 @@
 
 #include "deviationlabel.h"
 
+#include <QtCharts/QLineSeries>
+
+QT_CHARTS_USE_NAMESPACE
+
 using namespace QtCharts;
 using namespace std;
 
@@ -71,18 +75,22 @@ public slots:
     void test_label_clicked();
     void FocusFirstWidget();
     void UpdateSpine();
+    void FocusToPreWidget();
+    void FocusToNextWidget();
 
 public:
     Ui::DialogSpine *ui;
     QChart *chart;
     QChartView *ChartView;
-    QSplineSeries *series;
+//    QSplineSeries *series;
     QWidget *vWidget;
 
     QTimer m_timer;
-    QSplineSeries *m_series;
 
-    QSplineSeries *m_series_2,*m_series_3,*m_series_4;
+//    QSplineSeries *m_series;
+//    QSplineSeries *m_series_2,*m_series_3,*m_series_4;
+
+    QLineSeries *m_series, *m_series_2, *m_series_3, *m_series_4;
 
     QStringList m_titles;
     QValueAxis *m_axisX;
@@ -149,6 +157,8 @@ public:
 
     QTimer xRangeTimer;
 
+    int movingIDX;
+
 //    MainWindow *mWindow;
 
 //    QQueue<Data_to_UI > q ;1
@@ -164,6 +174,7 @@ public:
     void CheckYRange(float rate1, float rate2, float rate3, float rate4);
     void CheckYRangeSub(float rate, int nIndex);
     void UpdateDeviationLabel();
+    int  GetXRangeIndex();
 
 private:
     ControlTable * table;
@@ -178,6 +189,7 @@ signals:
 //    void entry_added(QQueue<Data_to_UI > &mQueue);             // <-- the new signal
     void signal_to_handleTimeout();
     void CloseGraphSetting();
+    void XRangeChangeSignal();
 
 private slots:
     void on_comboBox_4_ch1Zoom_currentIndexChanged(int index);

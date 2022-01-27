@@ -45,23 +45,27 @@ DialogSpine::DialogSpine(QWidget *parent) :
     m_axisY3 = new QValueAxis();
     m_axisY4 = new QValueAxis();
 
-    m_series = new QSplineSeries(this);
+//    m_series = new QSplineSeries(this);
+    m_series = new QLineSeries(this);
     chart = new QChart();
     QPen green(Qt::green);
     m_series->setPen(green);
     m_series->append(m_x, m_y);
 
-    m_series_2 = new QSplineSeries(this);
+//    m_series_2 = new QSplineSeries(this);
+    m_series_2 = new QLineSeries(this);
     QPen black(Qt::gray);
     m_series_2->setPen(black);
     m_series_2->append(m_x, m_y);
 
-    m_series_3 = new QSplineSeries(this);
+//    m_series_3 = new QSplineSeries(this);
+    m_series_3 = new QLineSeries(this);
     QPen blue(Qt::blue);
     m_series_3->setPen(blue);
     m_series_3->append(m_x, m_y);
 
-    m_series_4 = new QSplineSeries(this);
+//    m_series_4 = new QSplineSeries(this);
+    m_series_4 = new QLineSeries(this);
     QPen yellow(Qt::cyan);
     m_series_4->setPen(yellow);
     m_series_4->append(m_x, m_y);
@@ -102,10 +106,10 @@ DialogSpine::DialogSpine(QWidget *parent) :
     m_series_4->attachAxis(m_axisX);
     m_series_4->attachAxis(m_axisY4);
 
-    m_series->setUseOpenGL(true);
-    m_series_2->setUseOpenGL(true);
-    m_series_3->setUseOpenGL(true);
-    m_series_4->setUseOpenGL(true);
+//    m_series->setUseOpenGL(true);
+//    m_series_2->setUseOpenGL(true);
+//    m_series_3->setUseOpenGL(true);
+//    m_series_4->setUseOpenGL(true);
 
     m_axisX->setTickCount(5);
 //    m_axisX->setRange(0, 10);
@@ -233,6 +237,11 @@ DialogSpine::DialogSpine(QWidget *parent) :
             SIGNAL(test_signal()),       // signal
             this,                                // receiver
             SLOT(handleTimeout()));  // slot
+
+        connect(this, SIGNAL(XRangeChangeSignal()),worker, SLOT(OnXRangeChanged()));
+
+        connect(worker, SIGNAL(CoordinateDataPrepared()),this, SLOT(UpdateSpine()));
+
 //        if(!mthread->isRunning())
         mthread->start();
 
@@ -252,16 +261,11 @@ DialogSpine::DialogSpine(QWidget *parent) :
         ui->comboBox_3_ch2Zoom->setCurrentText("1");
         ui->comboBox_2_ch3Zoom->setCurrentText("1");
 
-//        ui->toolButton->raise();
-//        ui->toolButton_2->raise();
-
-
         ui->widget->setStyleSheet("background-color:white;");
         ui->widget->raise();
         ui->widget_2->setStyleSheet("background-color:white;");
         ui->widget_2->raise();
         ui->label_72->raise();
-
         ui->label_73_YAxis->raise();
 
         connect(ui->toolButton, SIGNAL(clicked()),
@@ -288,6 +292,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
         ui->label_deviation_test_3->raise();
         ui->label_deviation_test_4->raise();
 
+
 //        RevealDeviationLabel();
 
         ui->label_28_SettingRateCH1->setText("2");
@@ -303,9 +308,11 @@ DialogSpine::DialogSpine(QWidget *parent) :
 
         ui->comboBox_5_change_xRange->setCurrentIndex(2);
 
-        QObject::connect(&xRangeTimer, &QTimer::timeout, this, &DialogSpine::UpdateSpine);
-        xRangeTimer.setInterval(120*10);
-        xRangeTimer.start();
+        movingIDX = 0;
+
+//        QObject::connect(&xRangeTimer, &QTimer::timeout, this, &DialogSpine::UpdateSpine);
+//        xRangeTimer.setInterval(120*10);
+//        xRangeTimer.start();
 
 //        ui->comboBox_4_ch1Zoom->view()->installEventFilter(this);
 
@@ -571,41 +578,44 @@ void DialogSpine::on_comboBox_5_change_xRange_currentIndexChanged(int index)
 {
 //    xRange =(x_time_range) x_range_group[index];
 //    m_axisX->setRange(0, pointsForOneMin*xRange);
-    xRangeTimer.stop();
 
-    UpdateSpine();
+//    xRangeTimer.stop();
 
-    switch (index) {
-    case 0:
-        xRangeTimer.setInterval(120);
-        break;
-    case 1:
-        xRangeTimer.setInterval(360);
-        break;
-    case 2:
-        xRangeTimer.setInterval(1200);
-        break;
-    case 3:
-        xRangeTimer.setInterval(3600);
-        break;
-    case 4:
-        xRangeTimer.setInterval(7200);
-        break;
-    case 5:
-        xRangeTimer.setInterval(120*180);
-        break;
-    case 6:
-        xRangeTimer.setInterval(120*600);
-        break;
-    case 7:
-        xRangeTimer.setInterval(120*1800);
-        break;
-    default:
-        qDebug() << "abnormal selection";
-        break;
-    }
+//    UpdateSpine();
 
-    xRangeTimer.start();
+//    switch (index) {
+//    case 0:
+//        xRangeTimer.setInterval(120);
+//        break;
+//    case 1:
+//        xRangeTimer.setInterval(360);
+//        break;
+//    case 2:
+//        xRangeTimer.setInterval(1200);
+//        break;
+//    case 3:
+//        xRangeTimer.setInterval(3600);
+//        break;
+//    case 4:
+//        xRangeTimer.setInterval(7200);
+//        break;
+//    case 5:
+//        xRangeTimer.setInterval(120*180);
+//        break;
+//    case 6:
+//        xRangeTimer.setInterval(120*600);
+//        break;
+//    case 7:
+//        xRangeTimer.setInterval(120*1800);
+//        break;
+//    default:
+//        qDebug() << "abnormal selection";
+//        break;
+//    }
+
+//    xRangeTimer.start();
+
+    emit XRangeChangeSignal();
 }
 
 void DialogSpine::createList()
@@ -811,77 +821,77 @@ void DialogSpine::UpdateDeviationLabel()
 
 void DialogSpine::UpdateSpine()
 {
-    QList<QPointF> points[4];
+//    QList<QPointF> points[4];
 
-    for(int i=0;i<channelNum;i++)
-        points[i].clear();
+//    for(int i=0;i<channelNum;i++)
+//        points[i].clear();
 
-    int index = ui->comboBox_5_change_xRange->currentIndex();
+//    int index = ui->comboBox_5_change_xRange->currentIndex();
 
-    switch (index) {
-    case 0:
-        for(int i=0; i < bufferOneMin[0].length(); i++)
-        {
-//            points[0].append(QPointF(i,bufferOneMin[0].at(i)));
-//            points[1].append(QPointF(i,bufferOneMin[1].at(i)));
-//            points[2].append(QPointF(i,bufferOneMin[2].at(i)));
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferOneMin[j].at(i)));
-        }
-        break;
-    case 1:
-        for(int i=0; i < bufferThreeMin[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferThreeMin[j].at(i)));
-        }
-        break;
-    case 2:
-        for(int i=0; i < bufferTenMin[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferTenMin[j].at(i)));
-        }
-        break;
-    case 3:
-        for(int i=0; i < bufferThirtyMin[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferThirtyMin[j].at(i)));
-        }
-        break;
-    case 4:
-        for(int i=0; i < bufferSixtyMin[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferSixtyMin[j].at(i)));
-        }
-        break;
-    case 5:
-        for(int i=0; i < bufferThreeHour[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferThreeHour[j].at(i)));
-        }
-        break;
-    case 6:
-        for(int i=0; i < bufferTenHour[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferTenHour[j].at(i)));
-        }
-        break;
-    case 7:
-        for(int i=0; i < bufferThirtyHour[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferThirtyHour[j].at(i)));
-        }
-        break;
-    default:
-        qDebug() << "abnormal selection";
-        break;
-    }
+//    switch (index) {
+//    case 0:
+//        for(int i=0; i < bufferOneMin[0].length(); i++)
+//        {
+////            points[0].append(QPointF(i,bufferOneMin[0].at(i)));
+////            points[1].append(QPointF(i,bufferOneMin[1].at(i)));
+////            points[2].append(QPointF(i,bufferOneMin[2].at(i)));
+//            for(int j=0; j<channelNum;j++)
+//                points[j].append(QPointF(i,bufferOneMin[j].at(i)));
+//        }
+//        break;
+//    case 1:
+//        for(int i=0; i < bufferThreeMin[0].length(); i++)
+//        {
+//            for(int j=0; j<channelNum;j++)
+//                points[j].append(QPointF(i,bufferThreeMin[j].at(i)));
+//        }
+//        break;
+//    case 2:
+//        for(int i=0; i < bufferTenMin[0].length(); i++)
+//        {
+//            for(int j=0; j<channelNum;j++)
+//                points[j].append(QPointF(i,bufferTenMin[j].at(i)));
+//        }
+//        break;
+//    case 3:
+//        for(int i=0; i < bufferThirtyMin[0].length(); i++)
+//        {
+//            for(int j=0; j<channelNum;j++)
+//                points[j].append(QPointF(i,bufferThirtyMin[j].at(i)));
+//        }
+//        break;
+//    case 4:
+//        for(int i=0; i < bufferSixtyMin[0].length(); i++)
+//        {
+//            for(int j=0; j<channelNum;j++)
+//                points[j].append(QPointF(i,bufferSixtyMin[j].at(i)));
+//        }
+//        break;
+//    case 5:
+//        for(int i=0; i < bufferThreeHour[0].length(); i++)
+//        {
+//            for(int j=0; j<channelNum;j++)
+//                points[j].append(QPointF(i,bufferThreeHour[j].at(i)));
+//        }
+//        break;
+//    case 6:
+//        for(int i=0; i < bufferTenHour[0].length(); i++)
+//        {
+//            for(int j=0; j<channelNum;j++)
+//                points[j].append(QPointF(i,bufferTenHour[j].at(i)));
+//        }
+//        break;
+//    case 7:
+//        for(int i=0; i < bufferThirtyHour[0].length(); i++)
+//        {
+//            for(int j=0; j<channelNum;j++)
+//                points[j].append(QPointF(i,bufferThirtyHour[j].at(i)));
+//        }
+//        break;
+//    default:
+//        qDebug() << "abnormal selection";
+//        break;
+//    }
 
     m_series->replace(points[0]);
     m_series_2->replace(points[1]);
@@ -908,4 +918,87 @@ void DialogSpine::on_comboBox_ch4Zoom_currentIndexChanged(int index)
         qDebug() << 18 << maxY;
 
         m_axisY4->setRange(-0.1*maxY, maxY);
+}
+
+int DialogSpine::GetXRangeIndex()
+{
+    return ui->comboBox_5_change_xRange->currentIndex();
+}
+
+void DialogSpine::FocusToPreWidget()
+{
+    movingIDX = movingIDX -1 ;
+
+    switch (movingIDX) {
+        case 0:
+            ui->comboBox_yRangeSel->setFocus();
+            break;
+        case 1:
+            ui->comboBox_deviation->setFocus();
+            break;
+        case 2:
+            ui->comboBox_5_change_xRange->setFocus();
+            break;
+        case 3:
+            ui->comboBox_4_ch1Zoom->setFocus();
+            break;
+        case 4:
+            ui->comboBox_3_ch2Zoom->setFocus();
+            break;
+        case 5:
+            ui->comboBox_2_ch3Zoom->setFocus();
+            break;
+        case 6:
+            ui->comboBox_ch4Zoom->setFocus();
+            break;
+        case 7:
+            ui->pushButton_clr->setFocus();
+            break;
+        case 8:
+            ui->pushButton_exit->setFocus();
+            break;
+        default:
+            break;
+    }
+
+//    table->toUpWhole();
+}
+
+void DialogSpine::FocusToNextWidget()
+{
+    movingIDX = movingIDX + 1 ;
+
+    switch (movingIDX) {
+        case 0:
+            ui->comboBox_yRangeSel->setFocus();
+            break;
+        case 1:
+            ui->comboBox_deviation->setFocus();
+            break;
+        case 2:
+            ui->comboBox_5_change_xRange->setFocus();
+            break;
+        case 3:
+            ui->comboBox_4_ch1Zoom->setFocus();
+            break;
+        case 4:
+            ui->comboBox_3_ch2Zoom->setFocus();
+            break;
+        case 5:
+            ui->comboBox_2_ch3Zoom->setFocus();
+            break;
+        case 6:
+            ui->comboBox_ch4Zoom->setFocus();
+            break;
+        case 7:
+            ui->pushButton_clr->setFocus();
+            break;
+        case 8:
+            ui->pushButton_exit->setFocus();
+            break;
+        default:
+            break;
+    }
+//    table->toDownWhole();
+
 }

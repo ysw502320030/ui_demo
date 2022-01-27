@@ -1,4 +1,5 @@
 #include "datathread.h"
+#include "dialogspine.h"
 
 Datathread *worker = new Datathread;
 QThread *mthread = new QThread();
@@ -18,6 +19,11 @@ Datathread::Datathread(): QObject()
 //    Datathread *worker = new Datathread;
 //    QThread *mthread = new QThread();
 //    worker->moveToThread(mthread);
+
+//    m_timer = new QTimer(this);
+//    QObject::connect(m_timer, &QTimer::timeout, this, &Datathread::DataSamplingTimerFunc);
+//    m_timer->setInterval(120);
+//    m_timer->start();
 }
 
 void Datathread::dataObtained()
@@ -84,6 +90,13 @@ void Datathread::init_notifier()
     QObject::connect(m_timer, &QTimer::timeout, this, &Datathread::DataSamplingTimerFunc);
     m_timer->setInterval(120);
     m_timer->start();
+
+    xRangeTimer = new QTimer(this);
+    QObject::connect(xRangeTimer, &QTimer::timeout, this, &Datathread::PrepareCoordinateData);
+    xRangeTimer->setInterval(120*10);
+    xRangeTimer->start();
+
+//    connect(this, SIGNAL(CoordinateDataPrepared()),dialogSpine, SLOT(UpdateSpine()));
 
 //    while(1)
 //    {
@@ -260,3 +273,121 @@ void Datathread::DataSamplingTimerFunc()
 
 }
 
+void Datathread::OnXRangeChanged()
+{
+    xRangeTimer->stop();
+
+//    dialogSpine->UpdateSpine();
+    PrepareCoordinateData();
+
+    int index = dialogSpine->GetXRangeIndex();
+
+    switch (index) {
+    case 0:
+        xRangeTimer->setInterval(120);
+        break;
+    case 1:
+        xRangeTimer->setInterval(360);
+        break;
+    case 2:
+        xRangeTimer->setInterval(1200);
+        break;
+    case 3:
+        xRangeTimer->setInterval(3600);
+        break;
+    case 4:
+        xRangeTimer->setInterval(7200);
+        break;
+    case 5:
+        xRangeTimer->setInterval(120*180);
+        break;
+    case 6:
+        xRangeTimer->setInterval(120*600);
+        break;
+    case 7:
+        xRangeTimer->setInterval(120*1800);
+        break;
+    default:
+        qDebug() << "abnormal selection";
+        break;
+    }
+
+    xRangeTimer->start();
+}
+
+void Datathread::PrepareCoordinateData()
+{
+    for(int i=0;i<channelNum;i++)
+        points[i].clear();
+
+    int index = dialogSpine->GetXRangeIndex();
+
+    qDebug() << "XRangeIndex" << index;
+
+    switch (index) {
+    case 0:
+        for(int i=0; i < bufferOneMin[0].length(); i++)
+        {
+//            points[0].append(QPointF(i,bufferOneMin[0].at(i)));
+//            points[1].append(QPointF(i,bufferOneMin[1].at(i)));
+//            points[2].append(QPointF(i,bufferOneMin[2].at(i)));
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferOneMin[j].at(i)));
+        }
+        break;
+    case 1:
+        for(int i=0; i < bufferThreeMin[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferThreeMin[j].at(i)));
+        }
+        break;
+    case 2:
+        for(int i=0; i < bufferTenMin[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferTenMin[j].at(i)));
+        }
+        break;
+    case 3:
+        for(int i=0; i < bufferThirtyMin[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferThirtyMin[j].at(i)));
+        }
+        break;
+    case 4:
+        for(int i=0; i < bufferSixtyMin[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferSixtyMin[j].at(i)));
+        }
+        break;
+    case 5:
+        for(int i=0; i < bufferThreeHour[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferThreeHour[j].at(i)));
+        }
+        break;
+    case 6:
+        for(int i=0; i < bufferTenHour[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferTenHour[j].at(i)));
+        }
+        break;
+    case 7:
+        for(int i=0; i < bufferThirtyHour[0].length(); i++)
+        {
+            for(int j=0; j<channelNum;j++)
+                points[j].append(QPointF(i,bufferThirtyHour[j].at(i)));
+        }
+        break;
+    default:
+        qDebug() << "abnormal selection";
+        break;
+    }
+
+    emit CoordinateDataPrepared();
+}

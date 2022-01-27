@@ -84,5 +84,10 @@ signals:
     void startWork(const QString &);
     void startWork_test();
     void toGraphSettingSignal();
+    void ToPreWidget();
+    void ToNextWidget();
+private slots:
+    void on_pushButton_3_clicked();
+    void on_pushButton_4_clicked();
 };
 #endif // MAINWINDOW_H

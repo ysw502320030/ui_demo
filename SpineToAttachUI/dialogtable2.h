@@ -36,6 +36,8 @@ private:
     Ui::DialogTable2 *ui;
     ControlTable * table;
     keyBoard *newKeyBoard;
+    QTimer encoderTimer;
+    QTimer btnKeyTimer;
 };
 
 #endif // DIALOGTABLE2_H

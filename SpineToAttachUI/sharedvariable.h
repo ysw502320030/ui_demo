@@ -20,4 +20,6 @@ extern QList<float> bufferOneMin[4],  bufferThreeMin[4], bufferTenMin[4], buffer
 
 extern int channelNum;
 
+extern QList<QPointF> points[4];
+
 #endif // SHAREDVARIABLE_H

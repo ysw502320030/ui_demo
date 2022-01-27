@@ -27,6 +27,8 @@ public slots:
     void dataObtained();
     void init_notifier();
     void DataSamplingTimerFunc();
+    void OnXRangeChanged();
+    void PrepareCoordinateData();
 
 public:
     QTimer *m_timer;
@@ -46,12 +48,14 @@ public:
 
 public:
     void init_display_queue(QQueue<Data_to_UI> &myQueue);
+    QTimer *xRangeTimer;
 
 signals:
     void entry_data_to_spine();
     void test_signal();
 //    void signal_to_table(QQueue<Data_to_UI> &myQueue);
     void signal_to_table();
+    void CoordinateDataPrepared();
 
 };
 
