@@ -1,6 +1,8 @@
 #include "encoder.h"
 #include <QDebug>
 
+#include "sharedvariable.h"
+
 encoder *mEncoder;
 
 encoder::encoder()
@@ -9,13 +11,13 @@ encoder::encoder()
 
     fd=open("/dev/btn_key", O_RDWR);
     if(fd < 0) {
-        qDebug() << 10 << "open failed";
+        OutPutInfo( "open failed");
         return;
     }
 
     fd_encoder=open("/dev/input/event2", O_RDWR);
     if(fd_encoder < 0) {
-        qDebug() << 10 << "fd_encoder open failed";
+        OutPutInfo( "fd_encoder open failed");
         return;
     }
 
@@ -66,7 +68,7 @@ void encoder::InitFunc()
 //    connect(encoderTimer, &QTimer::timeout, mEncoder, &encoder::encoder_handler);
 //    encoderTimer->setInterval(200);
 //    encoderTimer->start();
-    qDebug() << "you test here" << "data";
+    OutPutInfo("you test here data");
 
 //    ret_encoder = read(fd_encoder, &in_ev, sizeof(struct input_event));
 //    if(ret_encoder >= 0){
@@ -105,7 +107,7 @@ void encoder::handle_readNotification()
     ret = read(fd, &data, sizeof(data));
 
     if(ret >= 0){
-        qDebug() << "button key is" << data;
+        OutPutInfo("button key is %d",data);
 //        QMouseEvent *mouseClick = new QMouseEvent(QEvent::MouseButtonPress, QCursor::pos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
 //        QWidget *widget1 = QApplication::focusWidget();
 //        QCoreApplication::postEvent ((QObject*)widget1, mouseClick);
@@ -131,7 +133,7 @@ void encoder::handle_readNotification()
             QCoreApplication::postEvent ((QObject*)widget1, mouseClick);
         }
 
-        qDebug() << "program reach here " << "65";
+        OutPutInfo("program reach here ");
     }
 }
 
@@ -152,11 +154,11 @@ void encoder::encoder_handler()
         ret_encoder = read(fd_encoder, &in_ev, sizeof(struct input_event));
 
         if(ret_encoder >= 0){
-            qDebug() << "key is" << in_ev.value;
+            OutPutInfo("key is %d" , in_ev.value);
 
             if(in_ev.value == 1)
             {
-                qDebug() << "key is +" << in_ev.value;
+                OutPutInfo("key is +%d",in_ev.value);
                 QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_F2, Qt::NoModifier);
                 QWidget *widget1 = QApplication::focusWidget();
                 QCoreApplication::postEvent ((QObject*)widget1, event);
@@ -164,7 +166,7 @@ void encoder::encoder_handler()
             }
             else if(in_ev.value == -1)
             {
-                qDebug() << "key is -" << in_ev.value;
+                OutPutInfo("key is -%d", in_ev.value);
                 QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_F1, Qt::NoModifier);
                 QWidget *widget1 = QApplication::focusWidget();
                 QCoreApplication::postEvent ((QObject*)widget1, event);

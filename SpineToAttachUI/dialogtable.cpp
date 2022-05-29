@@ -11,7 +11,7 @@ DialogTable::DialogTable(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogTable)
 {
-    qDebug() << "table1" << "";
+    OutPutInfo("table1");
     ui->setupUi(this);
     setWindowTitle(tr("TableWidget"));//设置对话框的标题
     ui->qTableWidget->setColumnCount(4);//设置列数
@@ -73,7 +73,7 @@ DialogTable::DialogTable(QWidget *parent) :
     //ui->qTableWidget->resizeRowsToContents();
 
     QString strText = ui->qTableWidget->item(1, 1)->text();//获取单元格的内容
-    qDebug()<<"content:"<<strText;//输出单元格内容
+    OutPutInfo("content: %s",strText);//输出单元格内容
 
     //设置列标签
     QStringList HStrList;
@@ -151,24 +151,18 @@ void DialogTable::DataToTable()
     if(q.size()<=3)
     {
         q.enqueue(ui_data);
-        qDebug() << 12 << &q.head();
+        //OutPutInfo() << 12 << &q.head();
     }
 
     if(q.size() == 4)
     {
-        qDebug() << 13 << q[0].delta_time;
-        qDebug() << 13 << q[1].delta_time;
-        qDebug() << 13 << q[2].delta_time;
-        qDebug() << 13 << q[3].delta_time;
-
-        qDebug() << 13 << "";
 
         for(int i=0;i<3;i++)
         {
-            ui->qTableWidget->item(i, 0)->setText(QString::number(q[3-i].thA[8], 'f', 2));
-            ui->qTableWidget->item(i,1)->setText(QString::number(q[3-i].thA[8] - q[3-i-1].thA[8], 'f', 2));
+            ui->qTableWidget->item(i, 0)->setText(QString::number(q[3-i].thA[1], 'f', 2));
+            ui->qTableWidget->item(i,1)->setText(QString::number(q[3-i].thA[1] - q[3-i-1].thA[1], 'f', 2));
             ui->qTableWidget->item(i,2)->setText(QString::number(q[3-i].delta_time, 'f', 2));
-            ui->qTableWidget->item(i,3)->setText(QString::number(q[3-i].rate[8], 'f', 2));
+            ui->qTableWidget->item(i,3)->setText(QString::number(q[3-i].rate[1], 'f', 2));
 
 //            ui->qTableWidget->item(i, 0)->setText(QString::number(2.2));
 //            ui->qTableWidget->item(i,1)->setText(QString::number(3.3));

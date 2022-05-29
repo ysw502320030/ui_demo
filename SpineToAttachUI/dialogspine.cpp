@@ -22,7 +22,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
     m_y(1)
 {
 
-    qDebug() << "spine" << "";
+    OutPutInfo("spine");
     ui->setupUi(this);
 
 //    QObject::connect(&m_timer, &QTimer::timeout, this, &DialogSpine::handleTimeout);
@@ -201,10 +201,10 @@ DialogSpine::DialogSpine(QWidget *parent) :
 //        this, &DialogSpine::handleTimeout);
 //    m_timer.start();
 //#endif
-    qDebug() << 9 << sizeof(float);
+    OutPutInfo("sizeof(float) %d", sizeof(float));
     if(fd < 0) {
-        qDebug() << 10 << "open failed";
-        qDebug() << "err" << strerror(errno);
+        OutPutInfo("open failed");
+        OutPutInfo("err %s", strerror(errno));
         return;
     }
 
@@ -248,7 +248,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
 //        connect(worker, SIGNAL(finished()), worker, SLOT(deleteLater()));
 //        connect(worker, SIGNAL(finished()), mthread, SLOT(quit()));
 //        connect(mthread, SIGNAL(finished()), mthread, SLOT(deleteLater()));
-        qDebug() << "spine end" << "";
+        OutPutInfo("spine end");
 //        ui_data = {0};
 
 //        QLabel* _widgetOnTheTop;
@@ -295,13 +295,13 @@ DialogSpine::DialogSpine(QWidget *parent) :
 
 //        RevealDeviationLabel();
 
-        ui->label_28_SettingRateCH1->setText("2");
+        ui->label_setRate1->setText("2");
         ui->label_64_SettingRateCH2->setText("11");
         ui->label_51_SettingRateCH3->setText("21");
         ui->label_36_SettingRateCH4->setText("25");
 //        ui->label_36_SettingRateCH4->setText();
 
-        setRate[0] = ui->label_28_SettingRateCH1->text().toFloat();
+        setRate[0] = ui->label_setRate1->text().toFloat();
         setRate[1] = ui->label_64_SettingRateCH2->text().toFloat();
         setRate[2] = ui->label_51_SettingRateCH3->text().toFloat();
         setRate[3] = ui->label_36_SettingRateCH4->text().toFloat();
@@ -309,6 +309,12 @@ DialogSpine::DialogSpine(QWidget *parent) :
         ui->comboBox_5_change_xRange->setCurrentIndex(2);
 
         movingIDX = 0;
+
+        ui->label_layer_th_setval->setText("15");
+
+        qDebug("size of data_to_ui is %d \n", sizeof(ui_data));
+
+        thState = th_normal;
 
 //        QObject::connect(&xRangeTimer, &QTimer::timeout, this, &DialogSpine::UpdateSpine);
 //        xRangeTimer.setInterval(120*10);
@@ -364,9 +370,9 @@ DialogSpine::DialogSpine(QWidget *parent) :
 //     {
          interval_cout=0;
 
-         qDebug() << 19 << timer_interval.elapsed();
-         timer_interval.start();
-         qDebug() << 20 << chart->plotArea().width();
+         //qDebug() << 19 << timer_interval.elapsed();
+         //timer_interval.start();
+         OutPutInfo("chart->plotArea().width() .2f" ,chart->plotArea().width());
 
 
          static ulong count =0;
@@ -378,7 +384,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
          m_x += y;
          m_x2 += y;
 //          m_y = QRandomGenerator::global()->bounded(5) - 2.5;
-         m_y = ui_data.rate[8];
+         m_y = ui_data.rate[1];
          m_y2 = ui_data.rate[9];
          m_y3 = ui_data.rate[7];
 //         m_y = zi+0.1;
@@ -435,7 +441,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
          UpdateTextLabel();
 
          if(ui->comboBox_yRangeSel->currentIndex() == 0)    //AutoRangeYIsON
-            CheckYRange(ui_data.rate[8],ui_data.rate[9],ui_data.rate[7],0);
+            CheckYRange(ui_data.rate[1],ui_data.rate[9],ui_data.rate[7],0);
 
          if(ui->comboBox_deviation->currentIndex() != 0)
             UpdateDeviationLabel();
@@ -505,7 +511,7 @@ DialogSpine::DialogSpine(QWidget *parent) :
  void DialogSpine::enlarge_scale()
  {
 
-    qDebug() << 15 << "enlarge lable + clicked";
+    OutPutInfo("enlarge lable + clicked");
     maxCurrent = m_axisY->max()/factor;
     chart->axisY()->setRange(minCurrent, maxCurrent);
  }
@@ -513,20 +519,20 @@ DialogSpine::DialogSpine(QWidget *parent) :
  void DialogSpine::shrink_scale()
  {
 
-    qDebug() << 15 << "shrink lable + clicked";
+    OutPutInfo( "shrink lable + clicked");
     maxCurrent = m_axisY->max()*factor;
     chart->axisY()->setRange(minCurrent, maxCurrent);
  }
 void DialogSpine::test_label_clicked()
 {
-    qDebug() << 16 << "label + clicked";
+    OutPutInfo( "label + clicked");
 }
 
 void DialogSpine::on_comboBox_4_ch1Zoom_currentIndexChanged(int index)
 {
 //    float maxY = arg1.toFloat();
     float maxY = yRangeGroup[index];
-    qDebug() << 16 << maxY;
+    OutPutInfo("maxY %.2f", maxY);
 
     m_axisY->setTickCount(12);
 
@@ -556,7 +562,7 @@ void DialogSpine::on_comboBox_3_ch2Zoom_currentIndexChanged(int index)
 {
 //    float maxY = arg1.toFloat();
     float maxY = yRangeGroup[index];
-    qDebug() << 17 << maxY;
+    OutPutInfo("maxY %.2f", maxY);
 
 //    m_axisY2->setTickCount(12);
 
@@ -567,7 +573,7 @@ void DialogSpine::on_comboBox_2_ch3Zoom_currentIndexChanged(int index)
 {
 //    float maxY = arg1.toFloat();
     float maxY = yRangeGroup[index];
-    qDebug() << 18 << maxY;
+    OutPutInfo("maxY %.2f", maxY);
 
 //    m_axisY3->setTickCount(12);
 
@@ -609,7 +615,7 @@ void DialogSpine::on_comboBox_5_change_xRange_currentIndexChanged(int index)
 //        xRangeTimer.setInterval(120*1800);
 //        break;
 //    default:
-//        qDebug() << "abnormal selection";
+//        OutPutInfo() << "abnormal selection";
 //        break;
 //    }
 
@@ -645,7 +651,7 @@ void DialogSpine::keyPressEvent(QKeyEvent *e)
         QString widgetName = widget2->metaObject()->className();
         if(QString("QComboBoxListView") == widget2->metaObject()->className())
         {
-            qDebug() << "37" << 37;
+            OutPutInfo("37");
             QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
             QWidget *widget1 = QApplication::focusWidget();
             QCoreApplication::postEvent ((QObject*)widget1, event);
@@ -662,7 +668,7 @@ void DialogSpine::keyPressEvent(QKeyEvent *e)
         QString widgetName = widget2->metaObject()->className();
         if(QString("QComboBoxListView") == widget2->metaObject()->className())
         {
-            qDebug() << "37" << 37;
+            OutPutInfo("37");
             QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
             QWidget *widget1 = QApplication::focusWidget();
             QCoreApplication::postEvent ((QObject*)widget1, event);
@@ -679,7 +685,7 @@ bool DialogSpine::eventFilter(QObject *watched, QEvent *event)
     {
         if(event->type()==QEvent::KeyPress)
         {
-            qDebug() << "38" << 38;
+            OutPutInfo("38");
             KeyRemapping((QKeyEvent *)event);
         }
     }
@@ -692,7 +698,7 @@ void DialogSpine::KeyRemapping(QKeyEvent *event)
     if(mKeyPress->key()==Qt::Key_F1)
     {
 //        this->releaseKeyboard();
-        qDebug() << "F1" << 36;
+        OutPutInfo("F1");
         QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
         QWidget *widget1 = QApplication::focusWidget();
         QCoreApplication::postEvent ((QObject*)widget1, event);
@@ -702,7 +708,7 @@ void DialogSpine::KeyRemapping(QKeyEvent *event)
     else if (mKeyPress->key()==Qt::Key_F2)
     {
 //        this->releaseKeyboard();
-        qDebug() << "F2" << 36;
+        OutPutInfo("F2");
         QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
         QWidget *widget1 = QApplication::focusWidget();
         QCoreApplication::postEvent ((QObject*)widget1, event);
@@ -718,7 +724,7 @@ void DialogSpine::FocusFirstWidget()
 void DialogSpine::on_pushButton_clr_clicked()
 {
 //    ui->comboBox_4_ch1Zoom->setFocus();
-    qDebug() << "CLR button been clicked ";
+    OutPutInfo("CLR button been clicked ");
 }
 
 void DialogSpine::EventFilterInit()
@@ -740,10 +746,64 @@ void DialogSpine::on_pushButton_exit_clicked()
 
 void DialogSpine::UpdateTextLabel()
 {
-    ui->label_29_RateCH1->setText(QString::number(ui_data.rate[8], 'f', 2));
+
+    OutPutInfo("the elapsed time for text updating is %.2f" , timer_interval.elapsed());
+    ui->label_senPct1->setText(QString::number(timer_interval.elapsed(), 'f', 3));
+    timer_interval.start();
+
+    ui->label_rate1->setText(QString::number(ui_data.rate[1], 'f', 2));
     ui->label_63_RateCH2->setText(QString::number(ui_data.rate[9], 'f', 2));
     ui->label_50_RateCH3->setText(QString::number(ui_data.rate[7], 'f', 2));
     ui->label_40_RateCH4->setText(QString::number(ui_data.rate[6], 'f', 2));
+
+    ui->label_pwr1->setText(QString::number(ui_data.powerInfo, 'f', 2));
+    ui->label_mode1->setText(ui_data.ctrl_type_info);
+    ui->label_status1->setText(ui_data.chan_info);
+    ui->label_procStatus->setText(ui_data.proc_info);
+    ui->label_layer_th->setText(QString::number(ui_data.thickness_layer[1], 'f', 2));
+
+    ui->label_powerCH2->setText(ui_data.procState);
+
+    //qDebug( "ui_data.thickness_layer[1] is %.2f, ui_data.layerTHAcheived is %d", ui_data.thickness_layer[1],ui_data.layerTHAcheived);
+
+    //if((ui_data.layerTHAcheived == 1) || (ui_data.thickness_layer[1] >= ui->label_layer_th_setval->text().toFloat())) {
+    //    static int kz =0;
+    //    emit sigThicknessAchieved();
+    //    qDebug( "emit sigThicknessAchieved() %d", ++kz);
+    //}
+
+    //switch (thState) {
+    //
+    //    case th_normal:
+    //        if(ui_data.thickness_layer[1] >= ui->label_layer_th_setval->text().toFloat())
+    //        {
+    //            thState = th_achieved_once;
+    //        }
+    //        break;
+    //
+    //    case th_achieved_once:
+    //        static int kz =0;
+    //        emit sigThicknessAchieved();
+    //        thState = th_achieved_more;
+    //        qDebug( "emit sigThicknessAchieved() %d", ++kz);
+    //        break;
+    //
+    //    case th_achieved_more:
+    //        if(ui_data.thickness_layer[1] == 0)
+    //            thState = th_normal;
+    //        break;
+    //
+    //    default:
+    //        break;
+    //}
+
+
+    //kk=!kk;
+    //if(kk==1)   ui->label_status1->setText("OFF");
+    //if(kk==0)   ui->label_status1->setText(">Pwr");
+    //
+    //ui->label_status1->repaint();
+    //QString::fromWCharArray(ui_data.proc_info,wcslen(ui_data.proc_info));
 }
 
 void DialogSpine::CheckYRange(float rate1, float rate2, float rate3, float rate4)
@@ -790,7 +850,7 @@ void DialogSpine::UpdateDeviationLabel()
 {
     float currentRate[4];
 
-    currentRate[0] = ui_data.rate[8];
+    currentRate[0] = ui_data.rate[1];
     currentRate[1] = ui_data.rate[9];
     currentRate[2] = ui_data.rate[7];
     currentRate[3] = ui_data.rate[6];
@@ -901,7 +961,7 @@ void DialogSpine::UpdateSpine()
     UpdateTextLabel();
 
     if(ui->comboBox_yRangeSel->currentIndex() == 0)    //AutoRangeYIsON
-       CheckYRange(ui_data.rate[8],ui_data.rate[9],ui_data.rate[7],ui_data.rate[6]);
+       CheckYRange(ui_data.rate[1],ui_data.rate[9],ui_data.rate[7],ui_data.rate[6]);
 
     if(ui->comboBox_deviation->currentIndex() != 0)
        UpdateDeviationLabel();
@@ -915,7 +975,7 @@ void DialogSpine::UpdateSpine()
 void DialogSpine::on_comboBox_ch4Zoom_currentIndexChanged(int index)
 {
         float maxY = yRangeGroup[index];
-        qDebug() << 18 << maxY;
+        OutPutInfo("maxY" ,maxY);
 
         m_axisY4->setRange(-0.1*maxY, maxY);
 }

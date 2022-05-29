@@ -5,6 +5,7 @@ Datathread *worker = new Datathread;
 QThread *mthread = new QThread();
 //worker->moveToThread(mthread);
 
+
 Datathread::Datathread(): QObject()
 {
 //    QObject::connect(&m_timer, &QTimer::timeout, this, &Datathread::DataSamplingTimerFunc);
@@ -28,13 +29,14 @@ Datathread::Datathread(): QObject()
 
 void Datathread::dataObtained()
 {
+    //not use
     static float i=0;
     i=i+0.1;
 
     //read fifo data and emit signal to show spine
     ret = read(fd, &ui_data, sizeof(ui_data));
     if(ret >= 0){
-        qDebug() << 11 << ui_data.freq_new_raw[8];
+        OutPutInfo( " 11 %.2f" , ui_data.freq_new_raw[8]);
             init_display_queue(q);
 //        if(q.size()<=3)
 //        {
@@ -75,8 +77,8 @@ void Datathread::init_notifier()
 //            this, &Datathread::dataObtained);
     #else
         fd=::open("/home/alientek/other/code/Qt/02/01_qfile/topeet", O_RDWR);
-//        int flags = fcntl(fd, F_GETFL, 0);
-//        fcntl(fd, F_SETFL, flags | O_NONBLOCK);
+        //int flags = fcntl(fd, F_GETFL, 0);
+        //fcntl(fd, F_SETFL, flags | O_NONBLOCK);
 
 //        in_fifo_notifier = new QSocketNotifier(fd, QSocketNotifier::Read, this);
 //        connect(in_fifo_notifier, &QSocketNotifier::activated,
@@ -86,11 +88,27 @@ void Datathread::init_notifier()
     int flags = fcntl(fd, F_GETFL, 0);
     fcntl(fd, F_SETFL, flags | O_NONBLOCK);
 
+    //throw the beginning data away, since fifo write will not write any new data if buffer of 4096 byte is full
+    //need to concume the volume of pipe, which is 4096 bytes
+    int clearFifoCount = 4096 / sizeof(ui_data);
+    for(int i=0;i<clearFifoCount;i++)
+        ret = read(fd, &ui_data, sizeof(ui_data));
+
+    //set to block mode
+    flags = fcntl(fd, F_GETFL, 0);
+    flags &= ~O_NONBLOCK;
+    fcntl(fd, F_SETFL, flags);
+
+    //Set fifo as block type again
+    //When setting it as nonblock, the continus reading may faster than
+
+    //Timer for reading the fifo
     m_timer = new QTimer(this);
     QObject::connect(m_timer, &QTimer::timeout, this, &Datathread::DataSamplingTimerFunc);
-    m_timer->setInterval(120);
+    m_timer->setInterval(115);
     m_timer->start();
 
+    //Interval is initialized with 10mins range, this interval is changed if switch to another time range
     xRangeTimer = new QTimer(this);
     QObject::connect(xRangeTimer, &QTimer::timeout, this, &Datathread::PrepareCoordinateData);
     xRangeTimer->setInterval(120*10);
@@ -148,15 +166,23 @@ void Datathread::DataSamplingTimerFunc()
 
     ret = read(fd, &ui_data, sizeof(ui_data));
     if(ret >= 0){
-        qDebug() << "new freq is" <<  QString::number(ui_data.rate[8], 'f', 3);
-        rateToSend[0] = ui_data.rate[8];
+        //qDebug() << "new freq is" <<  QString::number(ui_data.rate[1], 'f', 3);
+        OutPutInfo( " new freq is %.2f" , ui_data.rate[1]);
+        rateToSend[0] = ui_data.rate[1];
         rateToSend[1] = ui_data.rate[9];
         rateToSend[2] = ui_data.rate[7];
         rateToSend[3] = ui_data.rate[6];
+
+        if((ui_data.mainShutterStatus != ButtonStatus.stateMS) && (uiChangeMSFlag == false))
+        {
+            emit ToggleMainShutterSignal();
+        }
+
     }
     else
     {
-        qDebug() << "old freq is" <<  QString::number(rateToSend[0], 'f', 3);
+        //qDebug() << "old freq is" <<  QString::number(rateToSend[0], 'f', 3);
+        OutPutInfo( " new freq is %.2f" , rateToSend[0]);
     }
 
 //    bufferOneMin.append(frequencyToSend[0]);
@@ -260,17 +286,26 @@ void Datathread::DataSamplingTimerFunc()
         }
     }
 
-    qDebug() << "samplingTimerCount" << samplingTimerCount;
+    //qDebug() << "samplingTimerCount" << samplingTimerCount;
+    OutPutInfo( " new freq is %d" , samplingTimerCount);
 
-    qDebug() << "bufferOneMin" << bufferOneMin[0];
-    qDebug() << "bufferThreeMin" << bufferThreeMin[0];
-    qDebug() << "bufferTenMin" << bufferTenMin[0];
-    qDebug() << "bufferThirtyMin" << bufferThirtyMin[0];
-    qDebug() << "bufferSixtyMin" << bufferSixtyMin[0];
-    qDebug() << "bufferThreeHour" << bufferThreeHour[0];
-    qDebug() << "bufferTenHour" << bufferTenHour[0];
-    qDebug() << "bufferThirtyHour" << bufferThirtyHour[0];
+    //OutPutInfo() << "bufferOneMin" << bufferOneMin[0];
+    //OutPutInfo() << "bufferThreeMin" << bufferThreeMin[0];
+    //OutPutInfo() << "bufferTenMin" << bufferTenMin[0];
+    //OutPutInfo() << "bufferThirtyMin" << bufferThirtyMin[0];
+    //OutPutInfo() << "bufferSixtyMin" << bufferSixtyMin[0];
+    //OutPutInfo() << "bufferThreeHour" << bufferThreeHour[0];
+    //OutPutInfo() << "bufferTenHour" << bufferTenHour[0];
+    //OutPutInfo() << "bufferThirtyHour" << bufferThirtyHour[0];
 
+    OutPutListInfo("bufferOneMin",bufferOneMin[0]);
+    OutPutListInfo("bufferThreeMin",bufferThreeMin[0]);
+    OutPutListInfo("bufferTenMin",bufferTenMin[0]);
+    OutPutListInfo("bufferThirtyMin",bufferThirtyMin[0]);
+    OutPutListInfo("bufferSixtyMin",bufferSixtyMin[0]);
+    OutPutListInfo("bufferThreeHour",bufferThreeHour[0]);
+    OutPutListInfo("bufferTenHour",bufferTenHour[0]);
+    OutPutListInfo("bufferThirtyHour",bufferThirtyHour[0]);
 }
 
 void Datathread::OnXRangeChanged()
@@ -308,7 +343,7 @@ void Datathread::OnXRangeChanged()
         xRangeTimer->setInterval(120*1800);
         break;
     default:
-        qDebug() << "abnormal selection";
+        OutPutInfo("abnormal selection");
         break;
     }
 
@@ -322,72 +357,81 @@ void Datathread::PrepareCoordinateData()
 
     int index = dialogSpine->GetXRangeIndex();
 
-    qDebug() << "XRangeIndex" << index;
+    OutPutInfo( "XRangeIndex %d" ,index);
 
     switch (index) {
-    case 0:
-        for(int i=0; i < bufferOneMin[0].length(); i++)
-        {
-//            points[0].append(QPointF(i,bufferOneMin[0].at(i)));
-//            points[1].append(QPointF(i,bufferOneMin[1].at(i)));
-//            points[2].append(QPointF(i,bufferOneMin[2].at(i)));
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferOneMin[j].at(i)));
-        }
-        break;
-    case 1:
-        for(int i=0; i < bufferThreeMin[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferThreeMin[j].at(i)));
-        }
-        break;
-    case 2:
-        for(int i=0; i < bufferTenMin[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferTenMin[j].at(i)));
-        }
-        break;
-    case 3:
-        for(int i=0; i < bufferThirtyMin[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferThirtyMin[j].at(i)));
-        }
-        break;
-    case 4:
-        for(int i=0; i < bufferSixtyMin[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferSixtyMin[j].at(i)));
-        }
-        break;
-    case 5:
-        for(int i=0; i < bufferThreeHour[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferThreeHour[j].at(i)));
-        }
-        break;
-    case 6:
-        for(int i=0; i < bufferTenHour[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferTenHour[j].at(i)));
-        }
-        break;
-    case 7:
-        for(int i=0; i < bufferThirtyHour[0].length(); i++)
-        {
-            for(int j=0; j<channelNum;j++)
-                points[j].append(QPointF(i,bufferThirtyHour[j].at(i)));
-        }
-        break;
-    default:
-        qDebug() << "abnormal selection";
-        break;
+        case 0:
+            for(int i=0; i < bufferOneMin[0].length(); i++)
+            {
+    //            points[0].append(QPointF(i,bufferOneMin[0].at(i)));
+    //            points[1].append(QPointF(i,bufferOneMin[1].at(i)));
+    //            points[2].append(QPointF(i,bufferOneMin[2].at(i)));
+                for(int j=0; j<channelNum;j++)
+                    points[j].append(QPointF(i,bufferOneMin[j].at(i)));
+            }
+            break;
+        case 1:
+            for(int i=0; i < bufferThreeMin[0].length(); i++)
+            {
+                for(int j=0; j<channelNum;j++)
+                    points[j].append(QPointF(i,bufferThreeMin[j].at(i)));
+            }
+            break;
+        case 2:
+            for(int i=0; i < bufferTenMin[0].length(); i++)
+            {
+                for(int j=0; j<channelNum;j++)
+                    points[j].append(QPointF(i,bufferTenMin[j].at(i)));
+            }
+            break;
+        case 3:
+            for(int i=0; i < bufferThirtyMin[0].length(); i++)
+            {
+                for(int j=0; j<channelNum;j++)
+                    points[j].append(QPointF(i,bufferThirtyMin[j].at(i)));
+            }
+            break;
+        case 4:
+            for(int i=0; i < bufferSixtyMin[0].length(); i++)
+            {
+                for(int j=0; j<channelNum;j++)
+                    points[j].append(QPointF(i,bufferSixtyMin[j].at(i)));
+            }
+            break;
+        case 5:
+            for(int i=0; i < bufferThreeHour[0].length(); i++)
+            {
+                for(int j=0; j<channelNum;j++)
+                    points[j].append(QPointF(i,bufferThreeHour[j].at(i)));
+            }
+            break;
+        case 6:
+            for(int i=0; i < bufferTenHour[0].length(); i++)
+            {
+                for(int j=0; j<channelNum;j++)
+                    points[j].append(QPointF(i,bufferTenHour[j].at(i)));
+            }
+            break;
+        case 7:
+            for(int i=0; i < bufferThirtyHour[0].length(); i++)
+            {
+                for(int j=0; j<channelNum;j++)
+                    points[j].append(QPointF(i,bufferThirtyHour[j].at(i)));
+            }
+            break;
+        default:
+            OutPutInfo("abnormal selection");
+            break;
     }
 
     emit CoordinateDataPrepared();
+}
+
+void OutPutListInfo(const char *msg, QList<float> list)
+{
+    OutPutInfoNoLineFeed("%s ",msg);
+    for(int i=0; i< list.size(); ++i) {
+        OutPutInfoNoLineFeed("%.2f ",list.at(i)) ;
+    }
+    OutPutInfoNoLineFeed("\n") ;
 }

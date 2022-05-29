@@ -23,6 +23,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
+#include <QElapsedTimer>
 
 //#include <QQueue>
 
@@ -159,6 +160,8 @@ public:
 
     int movingIDX;
 
+    enum thStateEnum {th_normal = 0,th_achieved_once= 1,th_achieved_more = 2} thState;
+
 //    MainWindow *mWindow;
 
 //    QQueue<Data_to_UI > q ;1
@@ -190,6 +193,8 @@ signals:
     void signal_to_handleTimeout();
     void CloseGraphSetting();
     void XRangeChangeSignal();
+
+    void sigThicknessAchieved();
 
 private slots:
     void on_comboBox_4_ch1Zoom_currentIndexChanged(int index);

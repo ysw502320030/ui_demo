@@ -2,15 +2,20 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include "datathread.h"
+#include "qpainter.h"
 //#include "dialogspine.h"
 
 Data_to_UI ui_data;
 QQueue<Data_to_UI > q;
 
+UIButtonInfo ButtonStatus;
+
 QList<float> bufferOneMin[4],  bufferThreeMin[4], bufferTenMin[4], bufferThirtyMin[4],
              bufferSixtyMin[4],bufferThreeHour[4],bufferTenHour[4],bufferThirtyHour[4];
 
 int channelNum = 4;
+
+bool uiChangeMSFlag = false;
 
 QList<QPointF> points[4];
 
@@ -40,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    stackWidgetInitDelay.setInterval(100);
 //    stackWidgetInitDelay.start();
 
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(ChooseWidgets()));
+    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(ChooseWidgets()));
     connect(ui->pushButton_CFM, SIGNAL(clicked()), this, SLOT(pushButton2Clicked()));
 
 //    QMenu *menu = new QMenu();
@@ -94,7 +99,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(&menuTimer, &QTimer::timeout, this, &MainWindow::MenuInitialStep);
     menuTimer.setInterval(100);
 
-    qDebug() << 39 << "main constructor";
+    OutPutInfo( "main constructor");
 
     QObject::connect(this, &MainWindow::toGraphSettingSignal, dialogSpine, &DialogSpine::FocusFirstWidget);
 
@@ -103,6 +108,28 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(this, &MainWindow::ToPreWidget, dialogSpine, &DialogSpine::FocusToPreWidget);
 
     QObject::connect(this, &MainWindow::ToNextWidget, dialogSpine, &DialogSpine::FocusToNextWidget);
+
+    QObject::connect(dialogSpine, &DialogSpine::sigThicknessAchieved, this, &MainWindow::ChangeMainShutterState);
+
+    QObject::connect(dialogSpine, &DialogSpine::sigThicknessAchieved, this, &MainWindow::ChangeMainShutterState);
+
+    QObject::connect(worker, &Datathread::ToggleMainShutterSignal,this, &MainWindow::ChangeMainShutterState);
+
+    //ToggleMainShutterSignal();
+
+    ButtonStatus.stateMS = 0;
+
+    //Text.setHtml("<p style=\"font-size:50px;text-align:center;white-space: pre\" > X </p>");
+    Text.setHtml("<p style=\"font-size:15px;text-align:center;white-space: pre\" >Main Shutt<br></p>"
+                 " <span style=\"font-size: 15px;white-space: pre;\">      </span> <span style=\"font-size: 50px;\">X</span>");
+    QPixmap pixmap(Text.size().width(), Text.size().height());
+    pixmap.fill( Qt::transparent );
+    QPainter painter( &pixmap );
+    Text.drawContents(&painter, pixmap.rect());
+
+    QIcon ButtonIcon(pixmap);
+    ui->pushButton_mshuttle->setIcon(ButtonIcon);
+    ui->pushButton_mshuttle->setIconSize(pixmap.rect().size());
 
 #if __arm__
 
@@ -125,6 +152,15 @@ MainWindow::MainWindow(QWidget *parent)
 //    in_fifo_notifier_encoder = new QSocketNotifier(fd_encoder, QSocketNotifier::Read, this);
 //    connect(in_fifo_notifier_encoder, &QSocketNotifier::activated,
 //    this, &MainWindow::encoder_handler);
+
+    fd_fifo_button_status = ::open("/temp_using/ButtonStatusFifo",O_RDWR);//以只写方式打开管道文件描述符
+	if(fd_fifo_button_status < 0){
+		perror("open ButtonStatusFifo");
+//		return -1;
+	}
+
+    int flags = fcntl(fd_fifo_button_status, F_GETFL, 0);
+    fcntl(fd_fifo_button_status, F_SETFL, flags | O_NONBLOCK);
 
 #endif
 }
@@ -263,7 +299,7 @@ void MainWindow::encoder_handler()
 //        }
 //        else if(in_ev.value == -1)
 //        {
-            qDebug() << "key is -" << in_ev.value;
+            OutPutInfo("key is -%d", in_ev.value);
             QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
             QWidget *widget1 = QApplication::focusWidget();
             QCoreApplication::postEvent ((QObject*)widget1, event);
@@ -305,12 +341,12 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 
     if(event->type()==QEvent::KeyPress)
     {
-        qDebug() << "36" << 36;
+        OutPutInfo("36");
         QKeyEvent *mKeyPress = (QKeyEvent *)event;
 
         if(mKeyPress->key()==Qt::Key_F1)
         {
-            qDebug() << "F1" << 36;
+            OutPutInfo("F1 36");
             QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
             QWidget *widget1 = QApplication::focusWidget();
             QCoreApplication::postEvent ((QObject*)widget1, event);
@@ -319,7 +355,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 
         else if (mKeyPress->key()==Qt::Key_F2)
         {
-            qDebug() << "F2" << 36;
+            OutPutInfo("F2 36");
             QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
             QWidget *widget1 = QApplication::focusWidget();
             QCoreApplication::postEvent ((QObject*)widget1, event);
@@ -361,12 +397,12 @@ void MainWindow::menuClicked(QAction *action)
 
     if(action->text()=="1")
     {
-        qDebug() << "34" << "1 clicked";
+        OutPutInfo("34 1 clicked");
     }
 
     if(action->text()=="2")
     {
-        qDebug() << "35" << "1 clicked";
+        OutPutInfo("35 1 clicked");
         emit toGraphSettingSignal();
     }
 
@@ -406,4 +442,81 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
     emit ToNextWidget();
+}
+
+
+
+void MainWindow::on_pushButton_mshuttle_clicked()
+{
+    uiChangeMSFlag = true;
+    ChangeMainShutterState();
+    QThread::msleep(150);
+    uiChangeMSFlag = false;
+}
+
+void MainWindow::ChangeMainShutterState()
+{
+    static char zz =0;
+
+    if(zz == 0){
+        Text.setHtml("<p style=\"font-size:15px;text-align:center;white-space: pre\" >Main Shutt<br></p>"
+                     " <span style=\"font-size: 15px;white-space: pre;\">   </span> <span style=\"color:green;font-size: 50px;\">●</span>");
+        //" <span style=\"font-size: 15px;white-space: pre;\">       </span> <span style=\"font-size: 50px;\">●</span>"
+        zz =1;
+    }
+    else{
+        Text.setHtml("<p style=\"font-size:15px;text-align:center;white-space: pre\" >Main Shutt<br></p>"
+                     " <span style=\"font-size: 15px;white-space: pre;\">      </span> <span style=\"font-size: 50px;\">X</span>");
+        //<span style="font-size: 15px;white-space: pre;"> </span> <span style="font-size: 50px;">X/-</span>
+        zz =0;
+    }
+
+
+    QPixmap pixmap(Text.size().width(), Text.size().height());
+    pixmap.fill( Qt::transparent );
+    QPainter painter( &pixmap );
+    Text.drawContents(&painter, pixmap.rect());
+
+
+    QIcon ButtonIcon(pixmap);
+    ui->pushButton_mshuttle->setIcon(ButtonIcon);
+    ui->pushButton_mshuttle->setIconSize(pixmap.rect().size());
+
+    ButtonStatus.procStart = -1;
+    ButtonStatus.proStop = -1;
+    //ButtonStatus.stateMS = !ButtonStatus.stateMS;//Toogle this state
+
+    OutPutInfo("ButtonStatus.stateMS before toggle is %d" , ButtonStatus.stateMS);
+
+    if(ButtonStatus.stateMS == 0 || ButtonStatus.stateMS == -1) {
+        ButtonStatus.stateMS = 1;
+        OutPutInfo("ButtonStatus.stateMS after toggle is" , ButtonStatus.stateMS);
+    }
+    else if(ButtonStatus.stateMS == 1) {
+        ButtonStatus.stateMS = 0;
+        OutPutInfo("ButtonStatus.stateMS after toggle is" , ButtonStatus.stateMS);
+    }
+
+    ::write(fd_fifo_button_status, &ButtonStatus, sizeof(ButtonStatus));
+}
+
+void MainWindow::on_pushButton_start_clicked()
+{
+    ButtonStatus.procStart = 1;
+    ButtonStatus.proStop = 0;
+    //ButtonStatus.stateMS = -1;
+    ::write(fd_fifo_button_status, &ButtonStatus, sizeof(ButtonStatus));
+}
+
+void MainWindow::on_pushButton_stop_clicked()
+{
+    ButtonStatus.procStart = 0;
+    ButtonStatus.proStop = 1;
+    //ButtonStatus.stateMS = -1;
+    ::write(fd_fifo_button_status, &ButtonStatus, sizeof(ButtonStatus));
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+
 }

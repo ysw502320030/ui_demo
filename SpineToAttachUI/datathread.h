@@ -56,6 +56,7 @@ signals:
 //    void signal_to_table(QQueue<Data_to_UI> &myQueue);
     void signal_to_table();
     void CoordinateDataPrepared();
+    void ToggleMainShutterSignal();
 
 };
 

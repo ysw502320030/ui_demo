@@ -13,6 +13,8 @@
 
 #include <QMenu>
 
+#include <QTextDocument>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -48,7 +50,10 @@ public:
     QThread qThread;
 
 public:
-    int fd,fd_encoder;
+    void ChangeMainShutterState();
+
+public:
+    int fd,fd_encoder, fd_fifo_button_status;
     int ret = 0,ret_encoder=0;
     struct input_event in_ev = {};
 
@@ -57,6 +62,10 @@ public:
     QMap<QMenu*, QPushButton*> map;
 
     QKeyEvent *event_down = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+
+    QTextDocument Text;
+
+
 
 //    DialogSpine  *dialogSpine ;
 //    DialogTable  *dialogtable ;
@@ -89,5 +98,10 @@ signals:
 private slots:
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
+    void on_pushButton_mshuttle_clicked();
+    void on_pushButton_start_clicked();
+    //void on_pushButton_clicked();
+    void on_pushButton_stop_clicked();
+    void on_pushButton_2_clicked();
 };
 #endif // MAINWINDOW_H
