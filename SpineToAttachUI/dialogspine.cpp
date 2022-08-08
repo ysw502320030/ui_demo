@@ -292,19 +292,22 @@ DialogSpine::DialogSpine(QWidget *parent) :
         ui->label_deviation_test_3->raise();
         ui->label_deviation_test_4->raise();
 
-
+        ui->label_deviation_test->setVisible(false);
+        ui->label_deviation_test_2->setVisible(false);
+        ui->label_deviation_test_3->setVisible(false);
+        ui->label_deviation_test_4->setVisible(false);
 //        RevealDeviationLabel();
 
-        ui->label_setRate1->setText("2");
-        ui->label_64_SettingRateCH2->setText("11");
-        ui->label_51_SettingRateCH3->setText("21");
-        ui->label_36_SettingRateCH4->setText("25");
-//        ui->label_36_SettingRateCH4->setText();
+//        ui->label_setRate1->setText("2");
+//        ui->label_64_SettingRateCH2->setText("11");
+//        ui->label_51_SettingRateCH3->setText("21");
+//        ui->label_36_SettingRateCH4->setText("25");
+////        ui->label_36_SettingRateCH4->setText();
 
-        setRate[0] = ui->label_setRate1->text().toFloat();
-        setRate[1] = ui->label_64_SettingRateCH2->text().toFloat();
-        setRate[2] = ui->label_51_SettingRateCH3->text().toFloat();
-        setRate[3] = ui->label_36_SettingRateCH4->text().toFloat();
+//        setRate[0] = ui->label_setRate1->text().toFloat();
+//        setRate[1] = ui->label_64_SettingRateCH2->text().toFloat();
+//        setRate[2] = ui->label_51_SettingRateCH3->text().toFloat();
+//        setRate[3] = ui->label_36_SettingRateCH4->text().toFloat();
 
         ui->comboBox_5_change_xRange->setCurrentIndex(2);
 
@@ -748,21 +751,25 @@ void DialogSpine::UpdateTextLabel()
 {
 
     OutPutInfo("the elapsed time for text updating is %.2f" , timer_interval.elapsed());
-    ui->label_senPct1->setText(QString::number(timer_interval.elapsed(), 'f', 3));
+    ui->label_senPct1->setText(QString::number(timer_interval.elapsed(), 'f', 2));
     timer_interval.start();
 
-    ui->label_rate1->setText(QString::number(ui_data.rate[1], 'f', 2));
-    ui->label_63_RateCH2->setText(QString::number(ui_data.rate[9], 'f', 2));
-    ui->label_50_RateCH3->setText(QString::number(ui_data.rate[7], 'f', 2));
-    ui->label_40_RateCH4->setText(QString::number(ui_data.rate[6], 'f', 2));
+    ui->label_rate1->setText(chan1_film_sel <= 0? QString(EMPTY_STR) : QString::number(ui_data.rate[film.sens[chan1_film_sel]], 'f', 2));
+    ui->label_rate2->setText(chan2_film_sel <= 0? QString(EMPTY_STR) : QString::number(ui_data.rate[film.sens[chan2_film_sel]], 'f', 2));
+    ui->label_rate3->setText(chan3_film_sel <= 0? QString(EMPTY_STR) : QString::number(ui_data.rate[film.sens[chan3_film_sel]], 'f', 2));
+    ui->label_rate4->setText(chan4_film_sel <= 0? QString(EMPTY_STR) : QString::number(ui_data.rate[film.sens[chan4_film_sel]], 'f', 2));
 
-    ui->label_pwr1->setText(QString::number(ui_data.powerInfo, 'f', 2));
-    ui->label_mode1->setText(ui_data.ctrl_type_info);
-    ui->label_status1->setText(ui_data.chan_info);
+    ui->label_pwr1->setText(QString::number(ui_data.powerInfo[1]*100, 'f', 2));
+    ui->label_pwr2->setText(QString::number(ui_data.powerInfo[2]*100, 'f', 2));
+
+    //ui->label_mode1->setText(ui_data.ctrl_type_info);
+    ui->label_status1->setText(ui_data.chan_info[1]);
+    ui->label_status2->setText(ui_data.chan_info[2]);
+
     ui->label_procStatus->setText(ui_data.proc_info);
     ui->label_layer_th->setText(QString::number(ui_data.thickness_layer[1], 'f', 2));
 
-    ui->label_powerCH2->setText(ui_data.procState);
+    ui->label_powerCH3->setText(ui_data.procState);
 
     //qDebug( "ui_data.thickness_layer[1] is %.2f, ui_data.layerTHAcheived is %d", ui_data.thickness_layer[1],ui_data.layerTHAcheived);
 
@@ -953,10 +960,10 @@ void DialogSpine::UpdateSpine()
 //        break;
 //    }
 
-    m_series->replace(points[0]);
-    m_series_2->replace(points[1]);
-    m_series_3->replace(points[2]);
-    m_series_4->replace(points[3]);
+    if(chan1_film_sel > 0)  m_series->replace(points[0]);
+    if(chan2_film_sel > 0)  m_series_2->replace(points[1]);
+    if(chan3_film_sel > 0)  m_series_3->replace(points[2]);
+    if(chan4_film_sel > 0)  m_series_4->replace(points[3]);
 
     UpdateTextLabel();
 
@@ -982,7 +989,8 @@ void DialogSpine::on_comboBox_ch4Zoom_currentIndexChanged(int index)
 
 int DialogSpine::GetXRangeIndex()
 {
-    return ui->comboBox_5_change_xRange->currentIndex();
+    int retVal = ui->comboBox_5_change_xRange->currentIndex();
+    return retVal;
 }
 
 void DialogSpine::FocusToPreWidget()
@@ -1060,5 +1068,40 @@ void DialogSpine::FocusToNextWidget()
             break;
     }
 //    table->toDownWhole();
+
+}
+
+void DialogSpine::LayerSelect()
+{
+        ui->label_powerCH1->setText(chan1_film_sel <= 0? QString(EMPTY_STR) : QString("1"));
+        ui->label_src1->setText(chan1_film_sel <= 0? QString(EMPTY_STR) : QString::number(film.sour[chan1_film_sel]));
+        ui->label_sen1->setText(chan1_film_sel <= 0? QString(EMPTY_STR) : QString::number(film.sens[chan1_film_sel]));
+        ui->label_material1->setText(chan1_film_sel <= 0? QString(EMPTY_STR) : QString(film.name[chan1_film_sel]));
+        ui->label_setRate1->setText(chan1_film_sel <= 0? QString(EMPTY_STR) : QString::number(proc.lay_chan_sv1[proNum][layerNum][chan1_film_sel], 'f', 2));
+        ui->label_mode1->setText(chan1_film_sel <= 0? QString(EMPTY_STR) : QString(ctrlMode[film.ctype[chan1_film_sel]]));
+        //ui->label_mode1->setText(chan1_film_sel <= 0? QString(EMPTY_STR) : QString(ctrlMode[1]));
+
+        ui->label_powerCH2->setText(chan2_film_sel <= 0? QString(EMPTY_STR) : QString("2"));
+        ui->label_src2->setText(chan2_film_sel <= 0? QString(EMPTY_STR) : QString::number(film.sour[chan2_film_sel]));
+        ui->label_sen2->setText(chan2_film_sel <= 0? QString(EMPTY_STR) : QString::number(film.sens[chan2_film_sel]));
+        ui->label_material2->setText(chan2_film_sel <= 0? QString(EMPTY_STR) : QString(film.name[chan2_film_sel]));
+        ui->label_setRate2->setText(chan2_film_sel <= 0? QString(EMPTY_STR) : QString::number(proc.lay_chan_sv1[proNum][layerNum][chan2_film_sel], 'f', 2));
+        ui->label_mode2->setText(chan2_film_sel <= 0? QString(EMPTY_STR) : QString(ctrlMode[film.ctype[chan2_film_sel]]));
+
+        ui->label_powerCH3->setText(chan3_film_sel <= 0? QString(EMPTY_STR) : QString("3"));
+        ui->label_src3->setText(chan3_film_sel <= 0? QString(EMPTY_STR) : QString::number(film.sour[chan3_film_sel]));
+        ui->label_sen3->setText(chan3_film_sel <= 0? QString(EMPTY_STR) : QString::number(film.sens[chan3_film_sel]));
+        ui->label_material3->setText(chan3_film_sel <= 0? QString(EMPTY_STR) : QString(film.name[chan3_film_sel]));
+        ui->label_setRate3->setText(chan3_film_sel <= 0? QString(EMPTY_STR) : QString::number(proc.lay_chan_sv1[proNum][layerNum][chan3_film_sel], 'f', 2));
+        ui->label_mode3->setText(chan3_film_sel <= 0? QString(EMPTY_STR) : QString(ctrlMode[film.ctype[chan3_film_sel]]));
+
+        ui->label_powerCH4->setText(chan4_film_sel <= 0? QString(EMPTY_STR) : QString("4"));
+        ui->label_src4->setText(chan4_film_sel <= 0? QString(EMPTY_STR) : QString::number(film.sour[chan4_film_sel]));
+        ui->label_sen4->setText(chan4_film_sel <= 0? QString(EMPTY_STR) : QString::number(film.sens[chan4_film_sel]));
+        ui->label_material4->setText(chan4_film_sel <= 0? QString(EMPTY_STR) : QString(film.name[chan4_film_sel]));
+        ui->label_setRate4->setText(chan4_film_sel <= 0? QString(EMPTY_STR) : QString::number(proc.lay_chan_sv1[proNum][layerNum][chan4_film_sel], 'f', 2));
+        ui->label_mode4->setText(chan4_film_sel <= 0? QString(EMPTY_STR) : QString(ctrlMode[film.ctype[chan4_film_sel]]));
+
+        ui->label_layer_th_setval->setText(QString::number(proc.lay_th[proNum][layerNum], 'f', 2));
 
 }

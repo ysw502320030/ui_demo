@@ -37,7 +37,7 @@ public:
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_2;
-    QLabel *label_3;
+    QLabel *label_procStatus;
     QLabel *label_4;
     QLabel *label_5;
     QHBoxLayout *horizontalLayout_graphics;
@@ -53,6 +53,56 @@ public:
     QPushButton *pushButton_exit;
     QWidget *horizontalLayoutWidget_2;
     QHBoxLayout *horizontalLayout_InfoHeader;
+    QWidget *gridLayoutWidget;
+    QGridLayout *gridLayoutInfoContent;
+    QLabel *label_rate4;
+    QLabel *label_pwr3;
+    QLabel *label_senPct2;
+    QLabel *label_sen4;
+    QLabel *label_setTemp2;
+    QLabel *label_setTemp3;
+    QLabel *label_rate1;
+    QLabel *label_material4;
+    QLabel *label_setRate4;
+    QLabel *label_mode3;
+    QLabel *label_temp1;
+    QLabel *label_setRate3;
+    QLabel *label_status4;
+    QLabel *label_material2;
+    QLabel *label_src1;
+    QLabel *label_senPct3;
+    QLabel *label_temp3;
+    QLabel *label_temp2;
+    QLabel *label_setRate1;
+    QLabel *label_src2;
+    QLabel *label_senPct1;
+    QLabel *label_temp4;
+    QLabel *label_pwr4;
+    QLabel *label_status2;
+    QLabel *label_status1;
+    QLabel *label_material3;
+    QLabel *label_rate2;
+    QLabel *label_material1;
+    QLabel *label_pwr1;
+    QLabel *label_src4;
+    QLabel *label_sen3;
+    QLabel *label_setTemp4;
+    QLabel *label_setRate2;
+    QLabel *label_pwr2;
+    QLabel *label_powerCH1;
+    QLabel *label_sen1;
+    QLabel *label_powerCH3;
+    QLabel *label_status3;
+    QLabel *label_mode4;
+    QLabel *label_sen2;
+    QLabel *label_senPct4;
+    QLabel *label_src3;
+    QLabel *label_mode1;
+    QLabel *label_mode2;
+    QLabel *label_setTemp1;
+    QLabel *label_rate3;
+    QLabel *label_powerCH4;
+    QLabel *label_powerCH2;
     QLabel *label_12;
     QLabel *label_15;
     QLabel *label_19;
@@ -65,64 +115,15 @@ public:
     QLabel *label_11;
     QLabel *label_10;
     QLabel *label_9;
-    QWidget *gridLayoutWidget;
-    QGridLayout *gridLayoutInfoContent;
-    QLabel *label_51_SettingRateCH3;
-    QLabel *label_67;
-    QLabel *label_62;
-    QLabel *label_63_RateCH2;
-    QLabel *label_30;
-    QLabel *label_27;
-    QLabel *label_47;
-    QLabel *label_23;
-    QLabel *label_35;
-    QLabel *label_26;
-    QLabel *label_44;
-    QLabel *label_53;
-    QLabel *label_37;
-    QLabel *label_43;
-    QLabel *label_49;
-    QLabel *label_45;
-    QLabel *label_24;
-    QLabel *label_33;
-    QLabel *label_34;
-    QLabel *label_68;
-    QLabel *label_61;
-    QLabel *label_54;
-    QLabel *label_42;
-    QLabel *label_28_SettingRateCH1;
-    QLabel *label_41;
-    QLabel *label_66;
-    QLabel *label_40_RateCH4;
-    QLabel *label_48;
-    QLabel *label_39;
-    QLabel *label_64_SettingRateCH2;
-    QLabel *label_52;
-    QLabel *label_60;
-    QLabel *label_29_RateCH1;
-    QLabel *label_59;
-    QLabel *label_25;
-    QLabel *label_65;
-    QLabel *label_32;
-    QLabel *label_50_RateCH3;
-    QLabel *label_21;
-    QLabel *label_55;
-    QLabel *label_58;
-    QLabel *label_31;
-    QLabel *label_57;
-    QLabel *label_36_SettingRateCH4;
-    QLabel *label_38;
-    QLabel *label_22;
-    QLabel *label_7;
-    QLabel *label_8;
     QWidget *horizontalLayoutWidget_3;
     QHBoxLayout *horizontalLayout_3_ThInfo;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_70;
     QLabel *label_71;
-    QLabel *label_56;
-    QLabel *label_69;
+    QLabel *label_layer_th;
+    QLabel *label_layer_th_setval;
     QLabel *label_46;
+    QLabel *label_th_total;
     QLabel *label_72;
     QWidget *widget;
     QWidget *widget_2;
@@ -185,10 +186,10 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        label_3 = new QLabel(verticalLayoutWidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_procStatus = new QLabel(verticalLayoutWidget);
+        label_procStatus->setObjectName(QString::fromUtf8("label_procStatus"));
 
-        horizontalLayout_2->addWidget(label_3);
+        horizontalLayout_2->addWidget(label_procStatus);
 
         label_4 = new QLabel(verticalLayoutWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
@@ -315,315 +316,416 @@ public:
         horizontalLayout_InfoHeader = new QHBoxLayout(horizontalLayoutWidget_2);
         horizontalLayout_InfoHeader->setObjectName(QString::fromUtf8("horizontalLayout_InfoHeader"));
         horizontalLayout_InfoHeader->setContentsMargins(0, 0, 0, 0);
-        label_12 = new QLabel(horizontalLayoutWidget_2);
-        label_12->setObjectName(QString::fromUtf8("label_12"));
-
-        horizontalLayout_InfoHeader->addWidget(label_12);
-
-        label_15 = new QLabel(horizontalLayoutWidget_2);
-        label_15->setObjectName(QString::fromUtf8("label_15"));
-
-        horizontalLayout_InfoHeader->addWidget(label_15);
-
-        label_19 = new QLabel(horizontalLayoutWidget_2);
-        label_19->setObjectName(QString::fromUtf8("label_19"));
-
-        horizontalLayout_InfoHeader->addWidget(label_19);
-
-        label_20 = new QLabel(horizontalLayoutWidget_2);
-        label_20->setObjectName(QString::fromUtf8("label_20"));
-
-        horizontalLayout_InfoHeader->addWidget(label_20);
-
-        label_18 = new QLabel(horizontalLayoutWidget_2);
-        label_18->setObjectName(QString::fromUtf8("label_18"));
-
-        horizontalLayout_InfoHeader->addWidget(label_18);
-
-        label_17 = new QLabel(horizontalLayoutWidget_2);
-        label_17->setObjectName(QString::fromUtf8("label_17"));
-
-        horizontalLayout_InfoHeader->addWidget(label_17);
-
-        label_16 = new QLabel(horizontalLayoutWidget_2);
-        label_16->setObjectName(QString::fromUtf8("label_16"));
-
-        horizontalLayout_InfoHeader->addWidget(label_16);
-
-        label_14 = new QLabel(horizontalLayoutWidget_2);
-        label_14->setObjectName(QString::fromUtf8("label_14"));
-
-        horizontalLayout_InfoHeader->addWidget(label_14);
-
-        label_13 = new QLabel(horizontalLayoutWidget_2);
-        label_13->setObjectName(QString::fromUtf8("label_13"));
-
-        horizontalLayout_InfoHeader->addWidget(label_13);
-
-        label_11 = new QLabel(horizontalLayoutWidget_2);
-        label_11->setObjectName(QString::fromUtf8("label_11"));
-
-        horizontalLayout_InfoHeader->addWidget(label_11);
-
-        label_10 = new QLabel(horizontalLayoutWidget_2);
-        label_10->setObjectName(QString::fromUtf8("label_10"));
-
-        horizontalLayout_InfoHeader->addWidget(label_10);
-
-        label_9 = new QLabel(horizontalLayoutWidget_2);
-        label_9->setObjectName(QString::fromUtf8("label_9"));
-
-        horizontalLayout_InfoHeader->addWidget(label_9);
-
         gridLayoutWidget = new QWidget(DialogSpine);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(90, 260, 931, 201));
+        gridLayoutWidget->setGeometry(QRect(0, 270, 931, 201));
         gridLayoutInfoContent = new QGridLayout(gridLayoutWidget);
         gridLayoutInfoContent->setObjectName(QString::fromUtf8("gridLayoutInfoContent"));
         gridLayoutInfoContent->setContentsMargins(0, 0, 0, 0);
-        label_51_SettingRateCH3 = new QLabel(gridLayoutWidget);
-        label_51_SettingRateCH3->setObjectName(QString::fromUtf8("label_51_SettingRateCH3"));
+        label_rate4 = new QLabel(gridLayoutWidget);
+        label_rate4->setObjectName(QString::fromUtf8("label_rate4"));
 
-        gridLayoutInfoContent->addWidget(label_51_SettingRateCH3, 2, 7, 1, 1);
+        gridLayoutInfoContent->addWidget(label_rate4, 4, 4, 1, 1);
 
-        label_67 = new QLabel(gridLayoutWidget);
-        label_67->setObjectName(QString::fromUtf8("label_67"));
+        label_pwr3 = new QLabel(gridLayoutWidget);
+        label_pwr3->setObjectName(QString::fromUtf8("label_pwr3"));
 
-        gridLayoutInfoContent->addWidget(label_67, 1, 10, 1, 1);
+        gridLayoutInfoContent->addWidget(label_pwr3, 3, 6, 1, 1);
 
-        label_62 = new QLabel(gridLayoutWidget);
-        label_62->setObjectName(QString::fromUtf8("label_62"));
+        label_senPct2 = new QLabel(gridLayoutWidget);
+        label_senPct2->setObjectName(QString::fromUtf8("label_senPct2"));
+        label_senPct2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_62, 1, 5, 1, 1);
+        gridLayoutInfoContent->addWidget(label_senPct2, 2, 11, 1, 1);
 
-        label_63_RateCH2 = new QLabel(gridLayoutWidget);
-        label_63_RateCH2->setObjectName(QString::fromUtf8("label_63_RateCH2"));
+        label_sen4 = new QLabel(gridLayoutWidget);
+        label_sen4->setObjectName(QString::fromUtf8("label_sen4"));
 
-        gridLayoutInfoContent->addWidget(label_63_RateCH2, 1, 6, 1, 1);
+        gridLayoutInfoContent->addWidget(label_sen4, 4, 2, 1, 1);
 
-        label_30 = new QLabel(gridLayoutWidget);
-        label_30->setObjectName(QString::fromUtf8("label_30"));
+        label_setTemp2 = new QLabel(gridLayoutWidget);
+        label_setTemp2->setObjectName(QString::fromUtf8("label_setTemp2"));
+        label_setTemp2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_30, 0, 5, 1, 1);
+        gridLayoutInfoContent->addWidget(label_setTemp2, 2, 8, 1, 1);
 
-        label_27 = new QLabel(gridLayoutWidget);
-        label_27->setObjectName(QString::fromUtf8("label_27"));
+        label_setTemp3 = new QLabel(gridLayoutWidget);
+        label_setTemp3->setObjectName(QString::fromUtf8("label_setTemp3"));
 
-        gridLayoutInfoContent->addWidget(label_27, 0, 8, 1, 1);
+        gridLayoutInfoContent->addWidget(label_setTemp3, 3, 8, 1, 1);
 
-        label_47 = new QLabel(gridLayoutWidget);
-        label_47->setObjectName(QString::fromUtf8("label_47"));
+        label_rate1 = new QLabel(gridLayoutWidget);
+        label_rate1->setObjectName(QString::fromUtf8("label_rate1"));
+        QSizePolicy sizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(label_rate1->sizePolicy().hasHeightForWidth());
+        label_rate1->setSizePolicy(sizePolicy);
+        label_rate1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_47, 2, 4, 1, 1);
+        gridLayoutInfoContent->addWidget(label_rate1, 1, 4, 1, 1);
 
-        label_23 = new QLabel(gridLayoutWidget);
-        label_23->setObjectName(QString::fromUtf8("label_23"));
+        label_material4 = new QLabel(gridLayoutWidget);
+        label_material4->setObjectName(QString::fromUtf8("label_material4"));
 
-        gridLayoutInfoContent->addWidget(label_23, 3, 0, 1, 1);
+        gridLayoutInfoContent->addWidget(label_material4, 4, 3, 1, 1);
 
-        label_35 = new QLabel(gridLayoutWidget);
-        label_35->setObjectName(QString::fromUtf8("label_35"));
+        label_setRate4 = new QLabel(gridLayoutWidget);
+        label_setRate4->setObjectName(QString::fromUtf8("label_setRate4"));
 
-        gridLayoutInfoContent->addWidget(label_35, 3, 10, 1, 1);
+        gridLayoutInfoContent->addWidget(label_setRate4, 4, 5, 1, 1);
 
-        label_26 = new QLabel(gridLayoutWidget);
-        label_26->setObjectName(QString::fromUtf8("label_26"));
+        label_mode3 = new QLabel(gridLayoutWidget);
+        label_mode3->setObjectName(QString::fromUtf8("label_mode3"));
 
-        gridLayoutInfoContent->addWidget(label_26, 0, 10, 1, 1);
+        gridLayoutInfoContent->addWidget(label_mode3, 3, 9, 1, 1);
 
-        label_44 = new QLabel(gridLayoutWidget);
-        label_44->setObjectName(QString::fromUtf8("label_44"));
+        label_temp1 = new QLabel(gridLayoutWidget);
+        label_temp1->setObjectName(QString::fromUtf8("label_temp1"));
+        sizePolicy.setHeightForWidth(label_temp1->sizePolicy().hasHeightForWidth());
+        label_temp1->setSizePolicy(sizePolicy);
+        label_temp1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_44, 3, 1, 1, 1);
+        gridLayoutInfoContent->addWidget(label_temp1, 1, 7, 1, 1);
 
-        label_53 = new QLabel(gridLayoutWidget);
-        label_53->setObjectName(QString::fromUtf8("label_53"));
+        label_setRate3 = new QLabel(gridLayoutWidget);
+        label_setRate3->setObjectName(QString::fromUtf8("label_setRate3"));
 
-        gridLayoutInfoContent->addWidget(label_53, 2, 9, 1, 1);
+        gridLayoutInfoContent->addWidget(label_setRate3, 3, 5, 1, 1);
 
-        label_37 = new QLabel(gridLayoutWidget);
-        label_37->setObjectName(QString::fromUtf8("label_37"));
+        label_status4 = new QLabel(gridLayoutWidget);
+        label_status4->setObjectName(QString::fromUtf8("label_status4"));
 
-        gridLayoutInfoContent->addWidget(label_37, 3, 3, 1, 1);
+        gridLayoutInfoContent->addWidget(label_status4, 4, 10, 1, 1);
 
-        label_43 = new QLabel(gridLayoutWidget);
-        label_43->setObjectName(QString::fromUtf8("label_43"));
+        label_material2 = new QLabel(gridLayoutWidget);
+        label_material2->setObjectName(QString::fromUtf8("label_material2"));
+        label_material2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_43, 3, 4, 1, 1);
+        gridLayoutInfoContent->addWidget(label_material2, 2, 3, 1, 1);
 
-        label_49 = new QLabel(gridLayoutWidget);
-        label_49->setObjectName(QString::fromUtf8("label_49"));
+        label_src1 = new QLabel(gridLayoutWidget);
+        label_src1->setObjectName(QString::fromUtf8("label_src1"));
+        sizePolicy.setHeightForWidth(label_src1->sizePolicy().hasHeightForWidth());
+        label_src1->setSizePolicy(sizePolicy);
+        label_src1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_49, 2, 2, 1, 1);
+        gridLayoutInfoContent->addWidget(label_src1, 1, 1, 1, 1);
 
-        label_45 = new QLabel(gridLayoutWidget);
-        label_45->setObjectName(QString::fromUtf8("label_45"));
+        label_senPct3 = new QLabel(gridLayoutWidget);
+        label_senPct3->setObjectName(QString::fromUtf8("label_senPct3"));
 
-        gridLayoutInfoContent->addWidget(label_45, 2, 5, 1, 1);
+        gridLayoutInfoContent->addWidget(label_senPct3, 3, 11, 1, 1);
 
-        label_24 = new QLabel(gridLayoutWidget);
-        label_24->setObjectName(QString::fromUtf8("label_24"));
+        label_temp3 = new QLabel(gridLayoutWidget);
+        label_temp3->setObjectName(QString::fromUtf8("label_temp3"));
 
-        gridLayoutInfoContent->addWidget(label_24, 3, 11, 1, 1);
+        gridLayoutInfoContent->addWidget(label_temp3, 3, 7, 1, 1);
 
-        label_33 = new QLabel(gridLayoutWidget);
-        label_33->setObjectName(QString::fromUtf8("label_33"));
+        label_temp2 = new QLabel(gridLayoutWidget);
+        label_temp2->setObjectName(QString::fromUtf8("label_temp2"));
+        label_temp2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_33, 0, 2, 1, 1);
+        gridLayoutInfoContent->addWidget(label_temp2, 2, 7, 1, 1);
 
-        label_34 = new QLabel(gridLayoutWidget);
-        label_34->setObjectName(QString::fromUtf8("label_34"));
+        label_setRate1 = new QLabel(gridLayoutWidget);
+        label_setRate1->setObjectName(QString::fromUtf8("label_setRate1"));
+        sizePolicy.setHeightForWidth(label_setRate1->sizePolicy().hasHeightForWidth());
+        label_setRate1->setSizePolicy(sizePolicy);
+        label_setRate1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_34, 0, 1, 1, 1);
+        gridLayoutInfoContent->addWidget(label_setRate1, 1, 5, 1, 1);
 
-        label_68 = new QLabel(gridLayoutWidget);
-        label_68->setObjectName(QString::fromUtf8("label_68"));
+        label_src2 = new QLabel(gridLayoutWidget);
+        label_src2->setObjectName(QString::fromUtf8("label_src2"));
+        label_src2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_68, 1, 11, 1, 1);
+        gridLayoutInfoContent->addWidget(label_src2, 2, 1, 1, 1);
 
-        label_61 = new QLabel(gridLayoutWidget);
-        label_61->setObjectName(QString::fromUtf8("label_61"));
+        label_senPct1 = new QLabel(gridLayoutWidget);
+        label_senPct1->setObjectName(QString::fromUtf8("label_senPct1"));
+        sizePolicy.setHeightForWidth(label_senPct1->sizePolicy().hasHeightForWidth());
+        label_senPct1->setSizePolicy(sizePolicy);
+        label_senPct1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_61, 1, 4, 1, 1);
+        gridLayoutInfoContent->addWidget(label_senPct1, 1, 11, 1, 1);
 
-        label_54 = new QLabel(gridLayoutWidget);
-        label_54->setObjectName(QString::fromUtf8("label_54"));
+        label_temp4 = new QLabel(gridLayoutWidget);
+        label_temp4->setObjectName(QString::fromUtf8("label_temp4"));
 
-        gridLayoutInfoContent->addWidget(label_54, 2, 10, 1, 1);
+        gridLayoutInfoContent->addWidget(label_temp4, 4, 7, 1, 1);
 
-        label_42 = new QLabel(gridLayoutWidget);
-        label_42->setObjectName(QString::fromUtf8("label_42"));
+        label_pwr4 = new QLabel(gridLayoutWidget);
+        label_pwr4->setObjectName(QString::fromUtf8("label_pwr4"));
 
-        gridLayoutInfoContent->addWidget(label_42, 3, 9, 1, 1);
+        gridLayoutInfoContent->addWidget(label_pwr4, 4, 6, 1, 1);
 
-        label_28_SettingRateCH1 = new QLabel(gridLayoutWidget);
-        label_28_SettingRateCH1->setObjectName(QString::fromUtf8("label_28_SettingRateCH1"));
+        label_status2 = new QLabel(gridLayoutWidget);
+        label_status2->setObjectName(QString::fromUtf8("label_status2"));
+        QFont font2;
+        font2.setPointSize(4);
+        label_status2->setFont(font2);
+        label_status2->setFrameShape(QFrame::Box);
+        label_status2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
+        label_status2->setWordWrap(true);
 
-        gridLayoutInfoContent->addWidget(label_28_SettingRateCH1, 0, 7, 1, 1);
+        gridLayoutInfoContent->addWidget(label_status2, 2, 10, 1, 1);
 
-        label_41 = new QLabel(gridLayoutWidget);
-        label_41->setObjectName(QString::fromUtf8("label_41"));
+        label_status1 = new QLabel(gridLayoutWidget);
+        label_status1->setObjectName(QString::fromUtf8("label_status1"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(label_status1->sizePolicy().hasHeightForWidth());
+        label_status1->setSizePolicy(sizePolicy1);
+        label_status1->setFont(font2);
+        label_status1->setFrameShape(QFrame::Box);
+        label_status1->setWordWrap(true);
 
-        gridLayoutInfoContent->addWidget(label_41, 3, 2, 1, 1);
+        gridLayoutInfoContent->addWidget(label_status1, 1, 10, 1, 1);
 
-        label_66 = new QLabel(gridLayoutWidget);
-        label_66->setObjectName(QString::fromUtf8("label_66"));
+        label_material3 = new QLabel(gridLayoutWidget);
+        label_material3->setObjectName(QString::fromUtf8("label_material3"));
 
-        gridLayoutInfoContent->addWidget(label_66, 1, 9, 1, 1);
+        gridLayoutInfoContent->addWidget(label_material3, 3, 3, 1, 1);
 
-        label_40_RateCH4 = new QLabel(gridLayoutWidget);
-        label_40_RateCH4->setObjectName(QString::fromUtf8("label_40_RateCH4"));
+        label_rate2 = new QLabel(gridLayoutWidget);
+        label_rate2->setObjectName(QString::fromUtf8("label_rate2"));
+        label_rate2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_40_RateCH4, 3, 6, 1, 1);
+        gridLayoutInfoContent->addWidget(label_rate2, 2, 4, 1, 1);
 
-        label_48 = new QLabel(gridLayoutWidget);
-        label_48->setObjectName(QString::fromUtf8("label_48"));
+        label_material1 = new QLabel(gridLayoutWidget);
+        label_material1->setObjectName(QString::fromUtf8("label_material1"));
+        sizePolicy.setHeightForWidth(label_material1->sizePolicy().hasHeightForWidth());
+        label_material1->setSizePolicy(sizePolicy);
+        label_material1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_48, 2, 3, 1, 1);
+        gridLayoutInfoContent->addWidget(label_material1, 1, 3, 1, 1);
 
-        label_39 = new QLabel(gridLayoutWidget);
-        label_39->setObjectName(QString::fromUtf8("label_39"));
+        label_pwr1 = new QLabel(gridLayoutWidget);
+        label_pwr1->setObjectName(QString::fromUtf8("label_pwr1"));
+        sizePolicy.setHeightForWidth(label_pwr1->sizePolicy().hasHeightForWidth());
+        label_pwr1->setSizePolicy(sizePolicy);
+        label_pwr1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_39, 3, 8, 1, 1);
+        gridLayoutInfoContent->addWidget(label_pwr1, 1, 6, 1, 1);
 
-        label_64_SettingRateCH2 = new QLabel(gridLayoutWidget);
-        label_64_SettingRateCH2->setObjectName(QString::fromUtf8("label_64_SettingRateCH2"));
+        label_src4 = new QLabel(gridLayoutWidget);
+        label_src4->setObjectName(QString::fromUtf8("label_src4"));
 
-        gridLayoutInfoContent->addWidget(label_64_SettingRateCH2, 1, 7, 1, 1);
+        gridLayoutInfoContent->addWidget(label_src4, 4, 1, 1, 1);
 
-        label_52 = new QLabel(gridLayoutWidget);
-        label_52->setObjectName(QString::fromUtf8("label_52"));
+        label_sen3 = new QLabel(gridLayoutWidget);
+        label_sen3->setObjectName(QString::fromUtf8("label_sen3"));
 
-        gridLayoutInfoContent->addWidget(label_52, 2, 8, 1, 1);
+        gridLayoutInfoContent->addWidget(label_sen3, 3, 2, 1, 1);
 
-        label_60 = new QLabel(gridLayoutWidget);
-        label_60->setObjectName(QString::fromUtf8("label_60"));
+        label_setTemp4 = new QLabel(gridLayoutWidget);
+        label_setTemp4->setObjectName(QString::fromUtf8("label_setTemp4"));
 
-        gridLayoutInfoContent->addWidget(label_60, 1, 3, 1, 1);
+        gridLayoutInfoContent->addWidget(label_setTemp4, 4, 8, 1, 1);
 
-        label_29_RateCH1 = new QLabel(gridLayoutWidget);
-        label_29_RateCH1->setObjectName(QString::fromUtf8("label_29_RateCH1"));
+        label_setRate2 = new QLabel(gridLayoutWidget);
+        label_setRate2->setObjectName(QString::fromUtf8("label_setRate2"));
+        label_setRate2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_29_RateCH1, 0, 6, 1, 1);
+        gridLayoutInfoContent->addWidget(label_setRate2, 2, 5, 1, 1);
 
-        label_59 = new QLabel(gridLayoutWidget);
-        label_59->setObjectName(QString::fromUtf8("label_59"));
+        label_pwr2 = new QLabel(gridLayoutWidget);
+        label_pwr2->setObjectName(QString::fromUtf8("label_pwr2"));
+        label_pwr2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_59, 1, 2, 1, 1);
+        gridLayoutInfoContent->addWidget(label_pwr2, 2, 6, 1, 1);
 
-        label_25 = new QLabel(gridLayoutWidget);
-        label_25->setObjectName(QString::fromUtf8("label_25"));
+        label_powerCH1 = new QLabel(gridLayoutWidget);
+        label_powerCH1->setObjectName(QString::fromUtf8("label_powerCH1"));
+        sizePolicy.setHeightForWidth(label_powerCH1->sizePolicy().hasHeightForWidth());
+        label_powerCH1->setSizePolicy(sizePolicy);
+        label_powerCH1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_25, 0, 9, 1, 1);
+        gridLayoutInfoContent->addWidget(label_powerCH1, 1, 0, 1, 1);
 
-        label_65 = new QLabel(gridLayoutWidget);
-        label_65->setObjectName(QString::fromUtf8("label_65"));
+        label_sen1 = new QLabel(gridLayoutWidget);
+        label_sen1->setObjectName(QString::fromUtf8("label_sen1"));
+        sizePolicy.setHeightForWidth(label_sen1->sizePolicy().hasHeightForWidth());
+        label_sen1->setSizePolicy(sizePolicy);
+        label_sen1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_65, 1, 8, 1, 1);
+        gridLayoutInfoContent->addWidget(label_sen1, 1, 2, 1, 1);
 
-        label_32 = new QLabel(gridLayoutWidget);
-        label_32->setObjectName(QString::fromUtf8("label_32"));
+        label_powerCH3 = new QLabel(gridLayoutWidget);
+        label_powerCH3->setObjectName(QString::fromUtf8("label_powerCH3"));
+        QFont font3;
+        font3.setPointSize(6);
+        label_powerCH3->setFont(font3);
 
-        gridLayoutInfoContent->addWidget(label_32, 0, 3, 1, 1);
+        gridLayoutInfoContent->addWidget(label_powerCH3, 3, 0, 1, 1);
 
-        label_50_RateCH3 = new QLabel(gridLayoutWidget);
-        label_50_RateCH3->setObjectName(QString::fromUtf8("label_50_RateCH3"));
+        label_status3 = new QLabel(gridLayoutWidget);
+        label_status3->setObjectName(QString::fromUtf8("label_status3"));
 
-        gridLayoutInfoContent->addWidget(label_50_RateCH3, 2, 6, 1, 1);
+        gridLayoutInfoContent->addWidget(label_status3, 3, 10, 1, 1);
 
-        label_21 = new QLabel(gridLayoutWidget);
-        label_21->setObjectName(QString::fromUtf8("label_21"));
+        label_mode4 = new QLabel(gridLayoutWidget);
+        label_mode4->setObjectName(QString::fromUtf8("label_mode4"));
 
-        gridLayoutInfoContent->addWidget(label_21, 0, 0, 1, 1);
+        gridLayoutInfoContent->addWidget(label_mode4, 4, 9, 1, 1);
 
-        label_55 = new QLabel(gridLayoutWidget);
-        label_55->setObjectName(QString::fromUtf8("label_55"));
+        label_sen2 = new QLabel(gridLayoutWidget);
+        label_sen2->setObjectName(QString::fromUtf8("label_sen2"));
+        label_sen2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_55, 2, 11, 1, 1);
+        gridLayoutInfoContent->addWidget(label_sen2, 2, 2, 1, 1);
 
-        label_58 = new QLabel(gridLayoutWidget);
-        label_58->setObjectName(QString::fromUtf8("label_58"));
+        label_senPct4 = new QLabel(gridLayoutWidget);
+        label_senPct4->setObjectName(QString::fromUtf8("label_senPct4"));
 
-        gridLayoutInfoContent->addWidget(label_58, 1, 1, 1, 1);
+        gridLayoutInfoContent->addWidget(label_senPct4, 4, 11, 1, 1);
 
-        label_31 = new QLabel(gridLayoutWidget);
-        label_31->setObjectName(QString::fromUtf8("label_31"));
+        label_src3 = new QLabel(gridLayoutWidget);
+        label_src3->setObjectName(QString::fromUtf8("label_src3"));
 
-        gridLayoutInfoContent->addWidget(label_31, 0, 4, 1, 1);
+        gridLayoutInfoContent->addWidget(label_src3, 3, 1, 1, 1);
 
-        label_57 = new QLabel(gridLayoutWidget);
-        label_57->setObjectName(QString::fromUtf8("label_57"));
+        label_mode1 = new QLabel(gridLayoutWidget);
+        label_mode1->setObjectName(QString::fromUtf8("label_mode1"));
+        sizePolicy.setHeightForWidth(label_mode1->sizePolicy().hasHeightForWidth());
+        label_mode1->setSizePolicy(sizePolicy);
+        label_mode1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_57, 1, 0, 1, 1);
+        gridLayoutInfoContent->addWidget(label_mode1, 1, 9, 1, 1);
 
-        label_36_SettingRateCH4 = new QLabel(gridLayoutWidget);
-        label_36_SettingRateCH4->setObjectName(QString::fromUtf8("label_36_SettingRateCH4"));
+        label_mode2 = new QLabel(gridLayoutWidget);
+        label_mode2->setObjectName(QString::fromUtf8("label_mode2"));
+        label_mode2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_36_SettingRateCH4, 3, 7, 1, 1);
+        gridLayoutInfoContent->addWidget(label_mode2, 2, 9, 1, 1);
 
-        label_38 = new QLabel(gridLayoutWidget);
-        label_38->setObjectName(QString::fromUtf8("label_38"));
+        label_setTemp1 = new QLabel(gridLayoutWidget);
+        label_setTemp1->setObjectName(QString::fromUtf8("label_setTemp1"));
+        sizePolicy.setHeightForWidth(label_setTemp1->sizePolicy().hasHeightForWidth());
+        label_setTemp1->setSizePolicy(sizePolicy);
+        label_setTemp1->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_38, 3, 5, 1, 1);
+        gridLayoutInfoContent->addWidget(label_setTemp1, 1, 8, 1, 1);
 
-        label_22 = new QLabel(gridLayoutWidget);
-        label_22->setObjectName(QString::fromUtf8("label_22"));
+        label_rate3 = new QLabel(gridLayoutWidget);
+        label_rate3->setObjectName(QString::fromUtf8("label_rate3"));
 
-        gridLayoutInfoContent->addWidget(label_22, 0, 11, 1, 1);
+        gridLayoutInfoContent->addWidget(label_rate3, 3, 4, 1, 1);
 
-        label_7 = new QLabel(gridLayoutWidget);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
+        label_powerCH4 = new QLabel(gridLayoutWidget);
+        label_powerCH4->setObjectName(QString::fromUtf8("label_powerCH4"));
 
-        gridLayoutInfoContent->addWidget(label_7, 2, 0, 1, 1);
+        gridLayoutInfoContent->addWidget(label_powerCH4, 4, 0, 1, 1);
 
-        label_8 = new QLabel(gridLayoutWidget);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
+        label_powerCH2 = new QLabel(gridLayoutWidget);
+        label_powerCH2->setObjectName(QString::fromUtf8("label_powerCH2"));
+        label_powerCH2->setFont(font3);
+        label_powerCH2->setFrameShape(QFrame::Box);
 
-        gridLayoutInfoContent->addWidget(label_8, 2, 1, 1, 1);
+        gridLayoutInfoContent->addWidget(label_powerCH2, 2, 0, 1, 1);
+
+        label_12 = new QLabel(gridLayoutWidget);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+        sizePolicy.setHeightForWidth(label_12->sizePolicy().hasHeightForWidth());
+        label_12->setSizePolicy(sizePolicy);
+        label_12->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_12, 0, 0, 1, 1);
+
+        label_15 = new QLabel(gridLayoutWidget);
+        label_15->setObjectName(QString::fromUtf8("label_15"));
+        sizePolicy.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
+        label_15->setSizePolicy(sizePolicy);
+        label_15->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_15, 0, 1, 1, 1);
+
+        label_19 = new QLabel(gridLayoutWidget);
+        label_19->setObjectName(QString::fromUtf8("label_19"));
+        sizePolicy.setHeightForWidth(label_19->sizePolicy().hasHeightForWidth());
+        label_19->setSizePolicy(sizePolicy);
+        label_19->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_19, 0, 2, 1, 1);
+
+        label_20 = new QLabel(gridLayoutWidget);
+        label_20->setObjectName(QString::fromUtf8("label_20"));
+        sizePolicy.setHeightForWidth(label_20->sizePolicy().hasHeightForWidth());
+        label_20->setSizePolicy(sizePolicy);
+        label_20->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_20, 0, 3, 1, 1);
+
+        label_18 = new QLabel(gridLayoutWidget);
+        label_18->setObjectName(QString::fromUtf8("label_18"));
+        sizePolicy.setHeightForWidth(label_18->sizePolicy().hasHeightForWidth());
+        label_18->setSizePolicy(sizePolicy);
+        label_18->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_18, 0, 4, 1, 1);
+
+        label_17 = new QLabel(gridLayoutWidget);
+        label_17->setObjectName(QString::fromUtf8("label_17"));
+        sizePolicy.setHeightForWidth(label_17->sizePolicy().hasHeightForWidth());
+        label_17->setSizePolicy(sizePolicy);
+        label_17->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_17, 0, 5, 1, 1);
+
+        label_16 = new QLabel(gridLayoutWidget);
+        label_16->setObjectName(QString::fromUtf8("label_16"));
+        sizePolicy.setHeightForWidth(label_16->sizePolicy().hasHeightForWidth());
+        label_16->setSizePolicy(sizePolicy);
+        label_16->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_16, 0, 6, 1, 1);
+
+        label_14 = new QLabel(gridLayoutWidget);
+        label_14->setObjectName(QString::fromUtf8("label_14"));
+        sizePolicy.setHeightForWidth(label_14->sizePolicy().hasHeightForWidth());
+        label_14->setSizePolicy(sizePolicy);
+        label_14->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_14, 0, 7, 1, 1);
+
+        label_13 = new QLabel(gridLayoutWidget);
+        label_13->setObjectName(QString::fromUtf8("label_13"));
+        sizePolicy.setHeightForWidth(label_13->sizePolicy().hasHeightForWidth());
+        label_13->setSizePolicy(sizePolicy);
+        label_13->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_13, 0, 8, 1, 1);
+
+        label_11 = new QLabel(gridLayoutWidget);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
+        sizePolicy.setHeightForWidth(label_11->sizePolicy().hasHeightForWidth());
+        label_11->setSizePolicy(sizePolicy);
+        label_11->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_11, 0, 9, 1, 1);
+
+        label_10 = new QLabel(gridLayoutWidget);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+        sizePolicy.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
+        label_10->setSizePolicy(sizePolicy);
+        label_10->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_10, 0, 10, 1, 1);
+
+        label_9 = new QLabel(gridLayoutWidget);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+        sizePolicy.setHeightForWidth(label_9->sizePolicy().hasHeightForWidth());
+        label_9->setSizePolicy(sizePolicy);
+        label_9->setFrameShape(QFrame::Box);
+
+        gridLayoutInfoContent->addWidget(label_9, 0, 11, 1, 1);
 
         horizontalLayoutWidget_3 = new QWidget(DialogSpine);
         horizontalLayoutWidget_3->setObjectName(QString::fromUtf8("horizontalLayoutWidget_3"));
-        horizontalLayoutWidget_3->setGeometry(QRect(30, 470, 258, 80));
+        horizontalLayoutWidget_3->setGeometry(QRect(30, 470, 331, 80));
         horizontalLayout_3_ThInfo = new QHBoxLayout(horizontalLayoutWidget_3);
         horizontalLayout_3_ThInfo->setObjectName(QString::fromUtf8("horizontalLayout_3_ThInfo"));
         horizontalLayout_3_ThInfo->setContentsMargins(0, 0, 0, 0);
@@ -642,20 +744,25 @@ public:
 
         horizontalLayout_3_ThInfo->addLayout(verticalLayout_2);
 
-        label_56 = new QLabel(horizontalLayoutWidget_3);
-        label_56->setObjectName(QString::fromUtf8("label_56"));
+        label_layer_th = new QLabel(horizontalLayoutWidget_3);
+        label_layer_th->setObjectName(QString::fromUtf8("label_layer_th"));
 
-        horizontalLayout_3_ThInfo->addWidget(label_56);
+        horizontalLayout_3_ThInfo->addWidget(label_layer_th);
 
-        label_69 = new QLabel(horizontalLayoutWidget_3);
-        label_69->setObjectName(QString::fromUtf8("label_69"));
+        label_layer_th_setval = new QLabel(horizontalLayoutWidget_3);
+        label_layer_th_setval->setObjectName(QString::fromUtf8("label_layer_th_setval"));
 
-        horizontalLayout_3_ThInfo->addWidget(label_69);
+        horizontalLayout_3_ThInfo->addWidget(label_layer_th_setval);
 
         label_46 = new QLabel(horizontalLayoutWidget_3);
         label_46->setObjectName(QString::fromUtf8("label_46"));
 
         horizontalLayout_3_ThInfo->addWidget(label_46);
+
+        label_th_total = new QLabel(horizontalLayoutWidget_3);
+        label_th_total->setObjectName(QString::fromUtf8("label_th_total"));
+
+        horizontalLayout_3_ThInfo->addWidget(label_th_total);
 
         label_72 = new QLabel(DialogSpine);
         label_72->setObjectName(QString::fromUtf8("label_72"));
@@ -800,6 +907,7 @@ public:
         palette1.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush9);
 #endif
         widget_2->setPalette(palette1);
+        widget_2->setFont(font2);
         widget_2->setAutoFillBackground(false);
         label_73_YAxis = new QLabel(DialogSpine);
         label_73_YAxis->setObjectName(QString::fromUtf8("label_73_YAxis"));
@@ -815,32 +923,32 @@ public:
         horizontalLayout_3_deviation->setContentsMargins(0, 0, 0, 0);
         label_deviation1 = new DeviationLabel(horizontalLayoutWidget_4);
         label_deviation1->setObjectName(QString::fromUtf8("label_deviation1"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(label_deviation1->sizePolicy().hasHeightForWidth());
-        label_deviation1->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(label_deviation1->sizePolicy().hasHeightForWidth());
+        label_deviation1->setSizePolicy(sizePolicy2);
 
         horizontalLayout_3_deviation->addWidget(label_deviation1);
 
         label_deviation2 = new DeviationLabel(horizontalLayoutWidget_4);
         label_deviation2->setObjectName(QString::fromUtf8("label_deviation2"));
-        sizePolicy.setHeightForWidth(label_deviation2->sizePolicy().hasHeightForWidth());
-        label_deviation2->setSizePolicy(sizePolicy);
+        sizePolicy2.setHeightForWidth(label_deviation2->sizePolicy().hasHeightForWidth());
+        label_deviation2->setSizePolicy(sizePolicy2);
 
         horizontalLayout_3_deviation->addWidget(label_deviation2);
 
         label_deviation3 = new DeviationLabel(horizontalLayoutWidget_4);
         label_deviation3->setObjectName(QString::fromUtf8("label_deviation3"));
-        sizePolicy.setHeightForWidth(label_deviation3->sizePolicy().hasHeightForWidth());
-        label_deviation3->setSizePolicy(sizePolicy);
+        sizePolicy2.setHeightForWidth(label_deviation3->sizePolicy().hasHeightForWidth());
+        label_deviation3->setSizePolicy(sizePolicy2);
 
         horizontalLayout_3_deviation->addWidget(label_deviation3);
 
         label_deviation4 = new DeviationLabel(horizontalLayoutWidget_4);
         label_deviation4->setObjectName(QString::fromUtf8("label_deviation4"));
-        sizePolicy.setHeightForWidth(label_deviation4->sizePolicy().hasHeightForWidth());
-        label_deviation4->setSizePolicy(sizePolicy);
+        sizePolicy2.setHeightForWidth(label_deviation4->sizePolicy().hasHeightForWidth());
+        label_deviation4->setSizePolicy(sizePolicy2);
 
         horizontalLayout_3_deviation->addWidget(label_deviation4);
 
@@ -869,8 +977,8 @@ public:
         toolButton_2->setText(QApplication::translate("DialogSpine", "-", nullptr));
         label->setText(QApplication::translate("DialogSpine", "4565", nullptr));
         label_2->setText(QApplication::translate("DialogSpine", "TextLabel", nullptr));
-        pushButton->setText(QApplication::translate("DialogSpine", "PushButton", nullptr));
-        label_3->setText(QApplication::translate("DialogSpine", "READY TO START", nullptr));
+        pushButton->setText(QApplication::translate("DialogSpine", "Nomad", nullptr));
+        label_procStatus->setText(QApplication::translate("DialogSpine", "READY TO START", nullptr));
         label_4->setText(QApplication::translate("DialogSpine", "-", nullptr));
         label_5->setText(QApplication::translate("DialogSpine", "Time", nullptr));
         comboBox_yRangeSel->setItemText(0, QApplication::translate("DialogSpine", "Auto/ON", nullptr));
@@ -928,71 +1036,72 @@ public:
         label_6->setText(QApplication::translate("DialogSpine", "A/sec", nullptr));
         pushButton_clr->setText(QApplication::translate("DialogSpine", "CLR", nullptr));
         pushButton_exit->setText(QApplication::translate("DialogSpine", "EXIT", nullptr));
-        label_12->setText(QApplication::translate("DialogSpine", "TextLabel", nullptr));
-        label_15->setText(QApplication::translate("DialogSpine", "TextLabel", nullptr));
-        label_19->setText(QApplication::translate("DialogSpine", "Src", nullptr));
-        label_20->setText(QApplication::translate("DialogSpine", "Sens", nullptr));
-        label_18->setText(QApplication::translate("DialogSpine", "Material", nullptr));
-        label_17->setText(QApplication::translate("DialogSpine", "TextLabel", nullptr));
-        label_16->setText(QApplication::translate("DialogSpine", "R [A/S]", nullptr));
-        label_14->setText(QApplication::translate("DialogSpine", "SV", nullptr));
-        label_13->setText(QApplication::translate("DialogSpine", "PWR [%]", nullptr));
-        label_11->setText(QApplication::translate("DialogSpine", "TextLabel", nullptr));
-        label_10->setText(QApplication::translate("DialogSpine", "TextLabel", nullptr));
-        label_9->setText(QApplication::translate("DialogSpine", "TextLabel", nullptr));
-        label_51_SettingRateCH3->setText(QString());
-        label_67->setText(QString());
-        label_62->setText(QString());
-        label_63_RateCH2->setText(QString());
-        label_30->setText(QString());
-        label_27->setText(QString());
-        label_47->setText(QString());
-        label_23->setText(QString());
-        label_35->setText(QString());
-        label_26->setText(QString());
-        label_44->setText(QString());
-        label_53->setText(QString());
-        label_37->setText(QString());
-        label_43->setText(QString());
-        label_49->setText(QString());
-        label_45->setText(QString());
-        label_24->setText(QString());
-        label_33->setText(QString());
-        label_34->setText(QString());
-        label_68->setText(QString());
-        label_61->setText(QString());
-        label_54->setText(QString());
-        label_42->setText(QString());
-        label_28_SettingRateCH1->setText(QString());
-        label_41->setText(QString());
-        label_66->setText(QString());
-        label_40_RateCH4->setText(QString());
-        label_48->setText(QString());
-        label_39->setText(QString());
-        label_64_SettingRateCH2->setText(QString());
-        label_52->setText(QString());
-        label_60->setText(QString());
-        label_29_RateCH1->setText(QApplication::translate("DialogSpine", "1.22", nullptr));
-        label_59->setText(QString());
-        label_25->setText(QString());
-        label_65->setText(QString());
-        label_32->setText(QString());
-        label_50_RateCH3->setText(QString());
-        label_21->setText(QString());
-        label_55->setText(QString());
-        label_58->setText(QString());
-        label_31->setText(QString());
-        label_57->setText(QString());
-        label_36_SettingRateCH4->setText(QString());
-        label_38->setText(QString());
-        label_22->setText(QString());
-        label_7->setText(QString());
-        label_8->setText(QString());
+        label_rate4->setText(QString());
+        label_pwr3->setText(QString());
+        label_senPct2->setText(QString());
+        label_sen4->setText(QString());
+        label_setTemp2->setText(QString());
+        label_setTemp3->setText(QString());
+        label_rate1->setText(QApplication::translate("DialogSpine", "1.22", nullptr));
+        label_material4->setText(QString());
+        label_setRate4->setText(QString());
+        label_mode3->setText(QString());
+        label_temp1->setText(QApplication::translate("DialogSpine", "10", nullptr));
+        label_setRate3->setText(QString());
+        label_status4->setText(QString());
+        label_material2->setText(QString());
+        label_src1->setText(QApplication::translate("DialogSpine", "0", nullptr));
+        label_senPct3->setText(QString());
+        label_temp3->setText(QString());
+        label_temp2->setText(QString());
+        label_setRate1->setText(QApplication::translate("DialogSpine", "2", nullptr));
+        label_src2->setText(QString());
+        label_senPct1->setText(QString());
+        label_temp4->setText(QString());
+        label_pwr4->setText(QString());
+        label_status2->setText(QString());
+        label_status1->setText(QApplication::translate("DialogSpine", "RAMP1", nullptr));
+        label_material3->setText(QString());
+        label_rate2->setText(QString());
+        label_material1->setText(QApplication::translate("DialogSpine", "aka", nullptr));
+        label_pwr1->setText(QApplication::translate("DialogSpine", "20", nullptr));
+        label_src4->setText(QString());
+        label_sen3->setText(QString());
+        label_setTemp4->setText(QString());
+        label_setRate2->setText(QString());
+        label_pwr2->setText(QString());
+        label_powerCH1->setText(QApplication::translate("DialogSpine", "1", nullptr));
+        label_sen1->setText(QApplication::translate("DialogSpine", "1", nullptr));
+        label_powerCH3->setText(QString());
+        label_status3->setText(QString());
+        label_mode4->setText(QString());
+        label_sen2->setText(QString());
+        label_senPct4->setText(QString());
+        label_src3->setText(QString());
+        label_mode1->setText(QApplication::translate("DialogSpine", "Man P", nullptr));
+        label_mode2->setText(QString());
+        label_setTemp1->setText(QApplication::translate("DialogSpine", "30", nullptr));
+        label_rate3->setText(QString());
+        label_powerCH4->setText(QString());
+        label_powerCH2->setText(QString());
+        label_12->setText(QApplication::translate("DialogSpine", "CH", nullptr));
+        label_15->setText(QApplication::translate("DialogSpine", "Src", nullptr));
+        label_19->setText(QApplication::translate("DialogSpine", "Sens", nullptr));
+        label_20->setText(QApplication::translate("DialogSpine", "Material", nullptr));
+        label_18->setText(QApplication::translate("DialogSpine", "R [A/S]", nullptr));
+        label_17->setText(QApplication::translate("DialogSpine", "R/SV", nullptr));
+        label_16->setText(QApplication::translate("DialogSpine", "PWR [%]", nullptr));
+        label_14->setText(QApplication::translate("DialogSpine", "T[C]", nullptr));
+        label_13->setText(QApplication::translate("DialogSpine", "T/SV", nullptr));
+        label_11->setText(QApplication::translate("DialogSpine", "Mode", nullptr));
+        label_10->setText(QApplication::translate("DialogSpine", "Status", nullptr));
+        label_9->setText(QApplication::translate("DialogSpine", "%", nullptr));
         label_70->setText(QApplication::translate("DialogSpine", "TextLabel", nullptr));
         label_71->setText(QApplication::translate("DialogSpine", "TextLabel", nullptr));
-        label_56->setText(QApplication::translate("DialogSpine", "0.00A", nullptr));
-        label_69->setText(QApplication::translate("DialogSpine", "99999.00", nullptr));
-        label_46->setText(QApplication::translate("DialogSpine", "Total 0.00", nullptr));
+        label_layer_th->setText(QApplication::translate("DialogSpine", "0.00A", nullptr));
+        label_layer_th_setval->setText(QApplication::translate("DialogSpine", "99999.00", nullptr));
+        label_46->setText(QApplication::translate("DialogSpine", "Total", nullptr));
+        label_th_total->setText(QApplication::translate("DialogSpine", "TextLabel", nullptr));
         label_72->setText(QApplication::translate("DialogSpine", "0", nullptr));
         label_73_YAxis->setText(QApplication::translate("DialogSpine", "R\n"
 "A\n"

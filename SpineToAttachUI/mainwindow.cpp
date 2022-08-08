@@ -4,11 +4,18 @@
 #include "datathread.h"
 #include "qpainter.h"
 //#include "dialogspine.h"
+#include "string.h"
 
 Data_to_UI ui_data;
 QQueue<Data_to_UI > q;
 
 UIButtonInfo ButtonStatus;
+
+struct Films film;
+
+struct Processes proc;
+
+char ctrlMode[6][10] = {"man p","semi p","auto p","man t","semi t","auto t"};
 
 QList<float> bufferOneMin[4],  bufferThreeMin[4], bufferTenMin[4], bufferThirtyMin[4],
              bufferSixtyMin[4],bufferThreeHour[4],bufferTenHour[4],bufferThirtyHour[4];
@@ -23,6 +30,8 @@ DialogSpine *dialogSpine;
 
 //encoder *mEncoder = new encoder;
 
+int proNum,layerNum,chan1_film_sel,chan2_film_sel,chan3_film_sel,chan4_film_sel;
+
 QString button_text[6]={NULL,NULL,"RNG","EDG","IG"};
 
 MainWindow::MainWindow(QWidget *parent)
@@ -35,17 +44,22 @@ MainWindow::MainWindow(QWidget *parent)
     DialogTable  *dialogtable = new DialogTable(this);
     DialogTable2 *dialogtable2 = new DialogTable2(this);
 
-//    mEncoder = new encoder();
-    ui->stackedWidget->addWidget(dialogSpine);
-    ui->stackedWidget->addWidget(dialogtable);
-    ui->stackedWidget->addWidget(dialogtable2);
+////    mEncoder = new encoder();
+//    ui->stackedWidget->addWidget(dialogSpine);
+//    ui->stackedWidget->addWidget(dialogtable);
+//    ui->stackedWidget->addWidget(dialogtable2);
+//    ui->stackedWidget->setCurrentWidget(dialogSpine);
+
+    //process page and film page is created by UI. Insert main page here as 1st page
+    ui->stackedWidget->insertWidget(0,dialogSpine);
+
     ui->stackedWidget->setCurrentWidget(dialogSpine);
 
 //    QObject::connect(&stackWidgetInitDelay, &QTimer::timeout, this, &MainWindow::StackWidgetInit);
 //    stackWidgetInitDelay.setInterval(100);
 //    stackWidgetInitDelay.start();
 
-    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(ChooseWidgets()));
+    connect(ui->pushButton_r2, SIGNAL(clicked()), this, SLOT(ChooseWidgets()));
     connect(ui->pushButton_CFM, SIGNAL(clicked()), this, SLOT(pushButton2Clicked()));
 
 //    QMenu *menu = new QMenu();
@@ -83,19 +97,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     QObject::connect(&m_timer, &QTimer::timeout, this, &MainWindow::pushButton2Clicked);
     m_timer.setInterval(1000);
-//    m_timer.start();
+    //m_timer.start();
 
     ui->pushButton_menu->setMenu(menu);
     menu->addAction("1");
     menu->addAction( "2");
     menu->addAction( "3");
-    menu->installEventFilter(this);
+    menu->installEventFilter(this);     //"menu" will response if any event like menu appearing happens
 
     connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(menuClicked(QAction*)));
 
     map.insert(menu,ui->pushButton_menu);
     ui->pushButton_menu->setStyleSheet("QPushButton::menu-indicator{image:None;}");
 
+    //menuTimer to make the highlight mark to locate to 1st place of menu
     QObject::connect(&menuTimer, &QTimer::timeout, this, &MainWindow::MenuInitialStep);
     menuTimer.setInterval(100);
 
@@ -115,6 +130,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     QObject::connect(worker, &Datathread::ToggleMainShutterSignal,this, &MainWindow::ChangeMainShutterState);
 
+    QObject::connect(ui->stackedWidget, &QStackedWidget::currentChanged, this, &MainWindow::StackedWidgetPageChanged);
+
+    QObject::connect(ui->comboBox_proc, &ComboBoxClickable::menuClicked, this, &MainWindow::proc_combobox_clicked);
+    QObject::connect(ui->comboBox_layer, &ComboBoxClickable::menuClicked, this, &MainWindow::proc_combobox_clicked);
+
+    QObject::connect(ui->comboBox_filmSelection, &ComboBoxClickable::menuClicked, this, &MainWindow::BeforeChangingFilmNo);
+
+    QObject::connect(this, &MainWindow::layerSelSingal, dialogSpine, &DialogSpine::LayerSelect);
+
     //ToggleMainShutterSignal();
 
     ButtonStatus.stateMS = 0;
@@ -130,6 +154,25 @@ MainWindow::MainWindow(QWidget *parent)
     QIcon ButtonIcon(pixmap);
     ui->pushButton_mshuttle->setIcon(ButtonIcon);
     ui->pushButton_mshuttle->setIconSize(pixmap.rect().size());
+
+    //ui->tableWidget_test->setRowCount(2);
+    //ui->tableWidget_test->setColumnCount(2);
+
+    //ui->proc_basic_info_table->item(0,9)->setText(QString::number(5.5));
+
+    //set combobox to some table item
+    SetOtherWidgetToTableItem();
+
+    //read 1st film table data to variable, could be commented
+    ReadCurrentFilmDataToVaraibles();
+
+    ReadProcDataToVariables();
+
+    //ConnectFilmTableChange();
+
+    InitVariables();
+
+    //TestFunction();
 
 #if __arm__
 
@@ -161,6 +204,25 @@ MainWindow::MainWindow(QWidget *parent)
 
     int flags = fcntl(fd_fifo_button_status, F_GETFL, 0);
     fcntl(fd_fifo_button_status, F_SETFL, flags | O_NONBLOCK);
+
+    fd_fifo_film_data = ::open("/temp_using/FilmFifo",O_RDWR);//以只写方式打开管道文件描述符
+	if(fd_fifo_film_data < 0){
+		perror("open FilmFifo");
+	}
+    int flags_film = fcntl(fd_fifo_film_data, F_GETFL, 0);
+    fcntl(fd_fifo_film_data, F_SETFL, flags_film | O_NONBLOCK);
+
+    fd_fifo_proc_data = ::open("/temp_using/ProcFifo",O_RDWR);//以只写方式打开管道文件描述符
+	if(fd_fifo_proc_data < 0){
+		perror("open ProcFifo");
+	}
+    int flags_proc = fcntl(fd_fifo_proc_data, F_GETFL, 0);
+    fcntl(fd_fifo_proc_data, F_SETFL, flags_proc | O_NONBLOCK);
+
+#endif
+    ::write(fd_fifo_film_data, &film, sizeof(film));
+    ::write(fd_fifo_proc_data, &proc, sizeof(proc));
+#if __arm__
 
 #endif
 }
@@ -203,7 +265,7 @@ MainWindow::~MainWindow()
 //////    control->setReadOnly(true);
 //}
 
-//切换页面
+//navigate main page <-> process page <-> film page
 void MainWindow::ChooseWidgets()
 {
 
@@ -317,6 +379,7 @@ void MainWindow::MenuInitialStep()
     menuTimer.stop();
 }
 
+/*After remap the encoder turn to F1 and F2,*/
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
     QPushButton* parentButton = dynamic_cast<QPushButton*>(map[dynamic_cast<QMenu*>(watched)]);
@@ -327,6 +390,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
     if (!menu)
         return false;
 
+    //after showing the menu,move the highlight mark to locate to 1st place of menu
     if (event->type() == QEvent::Show)
     {
         QPoint pos = menu->pos();
@@ -518,5 +582,463 @@ void MainWindow::on_pushButton_stop_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
+
+}
+
+void MainWindow::on_pushButton_r3_clicked()
+{
+    //qDebug() << "index is "<< ui->stackedWidget->currentIndex();
+
+    if(ui->stackedWidget->currentIndex() == 2) {
+
+        int page=ui->stackedWidget_film->currentIndex();
+        if(++page>=ui->stackedWidget_film->count())
+            page=0;
+        ui->stackedWidget_film->setCurrentIndex(page);
+
+    }
+}
+
+void MainWindow::TestFunction()
+{
+
+}
+
+void MainWindow::SetOtherWidgetToTableItem()
+{
+    ui->proc_basic_info_table->setCellWidget(0,10,ui->comboBox_TH_meas1);
+    ui->proc_basic_info_table->setCellWidget(1,10,ui->comboBox_TH_meas2);
+    ui->proc_basic_info_table->setCellWidget(2,10,ui->comboBox_TH_meas3);
+    ui->proc_basic_info_table->setCellWidget(3,10,ui->comboBox_TH_meas4);
+
+    ui->proc_adv_info_table->setCellWidget(0,1,ui->comboBox_final_layer);
+    ui->proc_adv_info_table->setCellWidget(1,1,ui->comboBox_adv_setting);
+    ui->proc_adv_info_table->setCellWidget(3,1,ui->comboBox_issue_signal);
+    ui->proc_adv_info_table->setCellWidget(4,1,ui->comboBox_wait_operation);
+
+    ui->filmTable1_1->setCellWidget(0,1,ui->comboBox_ctrl_type);
+}
+
+void MainWindow::InitVariables()
+{
+    for(int procNum =1; procNum<9;procNum++)
+        sprintf(proc.name[procNum],"Proc%i", procNum);
+
+    for(int procNum =1; procNum<9;procNum++)
+        for(int layerNum= 1;layerNum < 33;layerNum++)
+            sprintf(proc.lay_name[procNum][layerNum],"Layer%i", layerNum);
+
+    //for(int i=0;i<6;i++)
+
+    //currently using film1 and film2,film1 is init by ui
+    int filmNo = 2;
+    film.ctype[filmNo] = 2;
+    strncpy(film.name[filmNo], "film2",sizeof(film.name[filmNo]) - 1);
+    film.dens[filmNo] = 1;
+    film.Zf[filmNo] = 1;
+    film.sour[filmNo] = 2;
+    film.sens[filmNo] = 2;
+    film.tool[filmNo] = 100;
+
+    film.r_pid_p[filmNo] = 0.6;
+    film.r_pid_i[filmNo] = 46;
+    film.r_pid_d[filmNo] = 0;
+    film.pwr_max[filmNo] = 86;
+    film.rate_max[filmNo] = 60;
+
+    film.t_pid_p[filmNo] = 10;
+    film.t_pid_i[filmNo] = 10;
+    film.t_pid_d[filmNo] = 0;
+    film.temp_max[filmNo] = 1000;
+
+    film.ini[filmNo] = 0.5;
+    film.ramp1[filmNo] = 5;
+    film.pwr1[filmNo] = 1;
+    film.soak1[filmNo] = 3;
+    film.ramp2[filmNo] = 5;
+    film.pwr2[filmNo] =2;
+    film.soak2[filmNo] = 3;
+
+    film.capture_ramp[filmNo] = 0.02;
+    film.capture_rate_perc[filmNo] = 20;
+    film.reduction_perc[filmNo] = 0;
+    film.ready_deviation[filmNo] = 70;
+    film.shut_delay_sec[filmNo] = 300;
+    film.alarm_deviation[filmNo] = 90;
+    film.error_deviation[filmNo] = 200;
+
+    film.ramp3[filmNo] = 1;
+    film.pwr3[filmNo] = 1;
+    film.soak3[filmNo] =2;
+    film.idle[filmNo] = 0;
+
+}
+
+void MainWindow::on_pushButton_r2_clicked()
+{
+
+}
+
+void MainWindow::ConnectFilmTableChange()
+{
+    //QObject::connect(ui->filmTable1_1, &QTableWidget::itemChanged, this, &MainWindow::WriteFilmTableData);
+    //QObject::connect(ui->filmTable1_2, &QTableWidget::itemChanged, this, &MainWindow::WriteFilmTableData);
+    //QObject::connect(ui->filmTable1_3, &QTableWidget::itemChanged, this, &MainWindow::WriteFilmTableData);
+    //QObject::connect(ui->filmTable1_4, &QTableWidget::itemChanged, this, &MainWindow::WriteFilmTableData);
+    //QObject::connect(ui->filmTable1_5, &QTableWidget::itemChanged, this, &MainWindow::WriteFilmTableData);
+    //QObject::connect(ui->filmTable1_6, &QTableWidget::itemChanged, this, &MainWindow::WriteFilmTableData);
+
+    //QList<QTableWidget*> tableList = this->findChildren<QTableWidget*>();
+    //foreach(auto table, tableList)
+    //{
+    //    QObject::connect(table, &QTableWidget::itemChanged, this, &MainWindow::WriteTableData);
+    //}
+
+    //QObject::connect(ui->lineEdit_th_setVal, &QLineEdit::editingFinished, this, &MainWindow::ReadProcDataToVariables);
+
+}
+
+//void MainWindow::WriteTableData(QTableWidgetItem* item)
+//{
+//    ReadCurrentFilmDataToVaraibles();
+//
+//    int i = item->column();
+//    bool j = item->tableWidget()->objectName() == ui->proc_basic_info_table->objectName();
+//
+//    if(item->column() == 3 && (item->tableWidget()->objectName() == ui->proc_basic_info_table->objectName()))     //film number changed
+//    {
+//        LoadProcVariableToTable();
+//    }
+//
+//    ReadProcDataToVariables();
+//    ::write(fd_fifo_film_data, &film, sizeof(film));
+//    ::write(fd_fifo_proc_data, &proc, sizeof(proc));
+//}
+
+void MainWindow::LoadProcVariableToTable()
+{
+
+    int filmNum[5] = {0};
+    int procSel = ui->comboBox_proc->currentText().toInt();
+    int layerSel = ui->comboBox_layer->currentText().toInt();
+
+    //qDebug("page is %d", ui->stackedWidget->currentIndex());
+
+    //inital process name as proc%d, init layer name as layer%d
+    ui->lineEdit_proc_name->setText(proc.name[procSel]);
+    ui->lineEdit_layer_name->setText(proc.lay_name[procSel][layerSel]);
+    ui->lineEdit_th_setVal->setText(proc.lay_th[procSel][layerSel] == DASH_VAL ? QString(DASH_VAL) : QString::number(proc.lay_th[procSel][layerSel]));
+
+    for(int chan =1; chan<5; chan++){
+
+        filmNum[chan] = proc.lay_chan_film[procSel][layerSel][chan];
+        ui->proc_basic_info_table->item(chan -1,1)->setText(filmNum[chan] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(film.sour[filmNum[chan]]));
+        ui->proc_basic_info_table->item(chan -1,2)->setText(filmNum[chan] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(film.sens[filmNum[chan]]));
+        ui->proc_basic_info_table->item(chan -1,3)->setText(filmNum[chan] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(filmNum[chan]));
+        ui->proc_basic_info_table->item(chan -1,4)->setText(filmNum[chan] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString(film.name[filmNum[chan]]));
+        ui->proc_basic_info_table->item(chan -1,5)->setText(filmNum[chan] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString(ctrlMode[film.ctype[filmNum[chan]]]));
+        ui->proc_basic_info_table->item(chan -1,6)->setText(proc.lay_chan_sv1[procSel][layerSel][chan] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(proc.lay_chan_sv1[procSel][layerSel][chan]));
+        ui->proc_basic_info_table->item(chan -1,7)->setText(proc.lay_chan_soak[procSel][layerSel][chan] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(proc.lay_chan_soak[procSel][layerSel][chan]));
+        ui->proc_basic_info_table->item(chan -1,8)->setText(proc.lay_chan_ramp[procSel][layerSel][chan] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(proc.lay_chan_ramp[procSel][layerSel][chan]));
+        ui->proc_basic_info_table->item(chan -1,9)->setText(proc.lay_chan_sv2[procSel][layerSel][chan] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(proc.lay_chan_sv2[procSel][layerSel][chan]));
+        //ui->proc_basic_info_table->item(chan -1,10)->setText(proc.lay_chan_meas_th[procSel][layerSel][chan] == NULL_VAL? \
+        //                                            QString(DASH_VAL) : QString(boolVal[proc.lay_chan_meas_th[procSel][layerSel][chan]]));
+    }
+
+    ui->comboBox_TH_meas1->setCurrentText(proc.lay_chan_meas_th[procSel][layerSel][1] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString(boolVal[proc.lay_chan_meas_th[procSel][layerSel][1]]));
+    ui->comboBox_TH_meas2->setCurrentText(proc.lay_chan_meas_th[procSel][layerSel][2] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString(boolVal[proc.lay_chan_meas_th[procSel][layerSel][2]]));
+    ui->comboBox_TH_meas3->setCurrentText(proc.lay_chan_meas_th[procSel][layerSel][3] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString(boolVal[proc.lay_chan_meas_th[procSel][layerSel][3]]));
+    ui->comboBox_TH_meas4->setCurrentText(proc.lay_chan_meas_th[procSel][layerSel][4] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString(boolVal[proc.lay_chan_meas_th[procSel][layerSel][4]]));
+
+    //ui->proc_adv_info_table->item(0,1)->setText(proc.lay_is_last_L[procSel][layerSel] == NULL_VAL? \
+    //                                                QString(DASH_VAL) : QString(boolVal[proc.lay_is_last_L[procSel][layerSel]]));
+    ui->comboBox_final_layer->setCurrentText(proc.lay_is_last_L[procSel][layerSel] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString(boolVal[proc.lay_is_last_L[procSel][layerSel]]));
+    ui->comboBox_adv_setting->setCurrentText(proc.lay_use_advanced_lay_par[procSel][layerSel] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString(boolVal[proc.lay_use_advanced_lay_par[procSel][layerSel]]));
+    ui->proc_adv_info_table->item(2,1)->setText(proc.lay_add_sec[procSel][layerSel] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(proc.lay_add_sec[procSel][layerSel]));
+    ui->comboBox_issue_signal->setCurrentText(proc.lay_add_signal[procSel][layerSel] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString(boolVal[proc.lay_add_signal[procSel][layerSel]]));
+    ui->comboBox_wait_operation->setCurrentText(proc.lay_wait_operator[procSel][layerSel] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString(boolVal[proc.lay_wait_operator[procSel][layerSel]]));
+    ui->proc_adv_info_table->item(5,1)->setText(proc.lay_add_automation[procSel][layerSel] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(proc.lay_add_automation[procSel][layerSel]));
+    ui->proc_adv_info_table->item(6,1)->setText(proc.lay_next_L[procSel][layerSel] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(proc.lay_next_L[procSel][layerSel]));
+    ui->proc_adv_info_table->item(7,1)->setText(proc.lay_jumps_L[procSel][layerSel] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(proc.lay_jumps_L[procSel][layerSel]));
+    ui->proc_adv_info_table->item(8,1)->setText(proc.lay_pass_N[procSel][layerSel] == NULL_VAL? \
+                                                    QString(DASH_VAL) : QString::number(proc.lay_pass_N[procSel][layerSel]));
+
+}
+
+//Read data from ui table
+void MainWindow::ReadProcDataToVariables()
+{
+    int procSel = ui->comboBox_proc->currentText().toInt();
+    int layerSel = ui->comboBox_layer->currentText().toInt();
+
+    strncpy(proc.name[procSel], ui->lineEdit_proc_name->text().toStdString().c_str(),sizeof(proc.name[procSel]) - 1);
+    strncpy(proc.lay_name[procSel][layerSel], ui->lineEdit_layer_name->text().toStdString().c_str(),sizeof(proc.lay_name[procSel][layerSel]) - 1);
+    proc.lay_th[procSel][layerSel] = ui->lineEdit_th_setVal->text().toFloat();
+
+    for(int chan =1; chan<5; chan++){
+
+        proc.lay_chan_film[procSel][layerSel][chan] = ui->proc_basic_info_table->item(chan -1,3)->text().toInt();
+        proc.lay_chan_sv1[procSel][layerSel][chan] = ui->proc_basic_info_table->item(chan -1,6)->text().toFloat();
+        proc.lay_chan_soak[procSel][layerSel][chan] = ui->proc_basic_info_table->item(chan -1,7)->text().toFloat();
+        proc.lay_chan_ramp[procSel][layerSel][chan] = ui->proc_basic_info_table->item(chan -1,8)->text().toFloat();
+        proc.lay_chan_sv2[procSel][layerSel][chan] = ui->proc_basic_info_table->item(chan -1,9)->text().toFloat();
+
+    }
+
+    proc.lay_chan_meas_th[procSel][layerSel][1] = ui->comboBox_TH_meas1 ->currentText() == 'Y' ? 1:0;
+    proc.lay_chan_meas_th[procSel][layerSel][2] = ui->comboBox_TH_meas2 ->currentText() == 'Y' ? 1:0;
+    proc.lay_chan_meas_th[procSel][layerSel][3] = ui->comboBox_TH_meas3 ->currentText() == 'Y' ? 1:0;
+    proc.lay_chan_meas_th[procSel][layerSel][4] = ui->comboBox_TH_meas4 ->currentText() == 'Y' ? 1:0;
+
+    proc.lay_is_last_L[procSel][layerSel] = ui->comboBox_final_layer->currentText() == 'Y' ? 1:0;
+    proc.lay_use_advanced_lay_par[procSel][layerSel] = ui->comboBox_adv_setting->currentText() == 'Y' ? 1:0;
+    proc.lay_add_sec[procSel][layerSel] = ui->proc_adv_info_table->item(2,1)->text().toFloat();
+    proc.lay_add_signal[procSel][layerSel] = ui->comboBox_issue_signal->currentText() == 'Y' ? 1:0;
+    proc.lay_wait_operator[procSel][layerSel] = ui->comboBox_wait_operation->currentText() == 'Y' ? 1:0;
+    proc.lay_add_automation[procSel][layerSel] = ui->proc_adv_info_table->item(5,1)->text().toInt();
+    proc.lay_next_L[procSel][layerSel] = ui->proc_adv_info_table->item(6,1)->text().toInt();
+    proc.lay_jumps_L[procSel][layerSel] = ui->proc_adv_info_table->item(7,1)->text().toInt();
+    proc.lay_pass_N[procSel][layerSel] = ui->proc_adv_info_table->item(8,1)->text().toInt();
+
+}
+
+void MainWindow::ReadCurrentFilmDataToVaraibles()
+{
+    /*USe a combobox to navigate film number
+     * use button r3 to navigate different page inside a film*/
+
+    //QString patternFilm("filmTable(\d)_(\d)");
+    QRegExp filmCheck("filmTable(\\d)_(\\d)");
+
+    QList<QTableWidget*> tableList = this->findChildren<QTableWidget*>();
+
+    int filmNo,tableNo;
+
+    foreach(auto table, tableList)
+    {
+        OutPutInfo("the table is %s ",qUtf8Printable(table->objectName()));
+
+        int retCheck = filmCheck.indexIn(table->objectName());  //check if is film table
+        if(retCheck >= 0)
+        {
+            //qDebug("%s,%s", qUtf8Printable(filmCheck.cap(1)), qUtf8Printable(filmCheck.cap(2)));
+            //filmNo = filmCheck.cap(1).toInt();
+
+            /*film No. from combobox,tableNo from 2nd int of table name,
+            table named is obtained by regex method*/
+            filmNo = ui->comboBox_filmSelection->currentText().toInt();
+            tableNo = filmCheck.cap(2).toInt();
+            OutPutInfo("%d,%d", filmNo, tableNo);
+
+            if(tableNo == basic_info_part){
+                film.ctype[filmNo] = ui->comboBox_ctrl_type->currentIndex();
+                //film.name[1] =
+                strncpy(film.name[filmNo], table->item(1, 1)->text().toStdString().c_str(),sizeof(film.name[filmNo]) - 1);
+                film.dens[filmNo] = table->item(2, 1)->text().toFloat();
+                film.Zf[filmNo] =   table->item(3, 1)->text().toFloat();
+                film.sour[filmNo] = table->item(4, 1)->text().toInt();
+                film.sens[filmNo] = table->item(5, 1)->text().toInt();
+                film.tool[filmNo] = table->item(6, 1)->text().toFloat();
+            }
+            else if(tableNo == rate_pid_part){
+                film.r_pid_p[filmNo] =   table->item(0, 1)->text().toFloat();
+                film.r_pid_i[filmNo] =   table->item(1, 1)->text().toFloat();
+                film.r_pid_d[filmNo] =   table->item(2, 1)->text().toFloat();
+                film.pwr_max[filmNo] =   table->item(3, 1)->text().toFloat();
+                film.rate_max[filmNo] =  table->item(4, 1)->text().toFloat();
+            }
+            else if(tableNo == temp_pid_part){
+                film.t_pid_p[filmNo] =   table->item(0, 1)->text().toFloat();
+                film.t_pid_i[filmNo] =   table->item(1, 1)->text().toFloat();
+                film.t_pid_d[filmNo] =   table->item(2, 1)->text().toFloat();
+                film.temp_max[filmNo] =  table->item(3, 1)->text().toFloat();
+            }
+            else if(tableNo == precon_part){
+                film.ini[filmNo] =   table->item(0, 1)->text().toFloat();
+                film.ramp1[filmNo] =   table->item(1, 1)->text().toFloat();
+                film.pwr1[filmNo] =   table->item(2, 1)->text().toFloat();
+                film.soak1[filmNo] =   table->item(3, 1)->text().toFloat();
+                film.ramp2[filmNo] =   table->item(4, 1)->text().toFloat();
+                film.pwr2[filmNo] =   table->item(5, 1)->text().toFloat();
+                film.soak2[filmNo] =   table->item(6, 1)->text().toFloat();
+            }
+            else if(tableNo == cap_depo_part){
+                film.capture_ramp[filmNo] =   table->item(0, 1)->text().toFloat();
+                film.capture_rate_perc[filmNo] =   table->item(1, 1)->text().toFloat();
+                film.reduction_perc[filmNo] =   table->item(2, 1)->text().toFloat();
+                film.ready_deviation[filmNo] =   table->item(3, 1)->text().toFloat();
+                film.shut_delay_sec[filmNo] =   table->item(4, 1)->text().toFloat();
+                film.alarm_deviation[filmNo] =   table->item(5, 1)->text().toFloat();
+                film.error_deviation[filmNo] =   table->item(6, 1)->text().toFloat();
+            }
+            else if(tableNo == postcon_part){
+                film.ramp3[filmNo] =   table->item(0, 1)->text().toFloat();
+                film.pwr3[filmNo] =   table->item(1, 1)->text().toFloat();
+                film.soak3[filmNo] =   table->item(2, 1)->text().toFloat();
+                film.idle[filmNo] =   table->item(3, 1)->text().toFloat();
+            }
+        }
+    }
+}
+
+void MainWindow::LoadFilmVariablesToTable()
+{
+    int filmNo = ui->comboBox_filmSelection->currentText().toInt();
+
+    //ui->filmTable1_1->item(0,1)->setText("Auto P");    //film.ctype[filmNo] = 2 -> auto p
+    ui->comboBox_ctrl_type->setCurrentIndex(film.ctype[filmNo]);
+    //film.name[1] =
+    ui->filmTable1_1->item(1, 1)->setText(film.name[filmNo]);
+    ui->filmTable1_1->item(2, 1)->setText(QString::number(film.dens[filmNo], 'f', 2));
+    ui->filmTable1_1->item(3, 1)->setText(QString::number(film.Zf[filmNo], 'f', 2));
+    ui->filmTable1_1->item(4, 1)->setText(QString::number(film.sour[filmNo]));
+    ui->filmTable1_1->item(5, 1)->setText(QString::number(film.sens[filmNo]));
+    ui->filmTable1_1->item(6, 1)->setText(QString::number(film.tool[filmNo], 'f', 2));
+
+    ui->filmTable1_2->item(0, 1)->setText(QString::number(film.r_pid_p[filmNo], 'f', 2));
+    ui->filmTable1_2->item(1, 1)->setText(QString::number(film.r_pid_i[filmNo], 'f', 2));
+    ui->filmTable1_2->item(2, 1)->setText(QString::number(film.r_pid_d[filmNo], 'f', 2));
+    ui->filmTable1_2->item(3, 1)->setText(QString::number(film.pwr_max[filmNo], 'f', 2));
+    ui->filmTable1_2->item(4, 1)->setText(QString::number(film.rate_max[filmNo], 'f', 2));
+
+    ui->filmTable1_3->item(0, 1)->setText(QString::number(film.t_pid_p[filmNo], 'f', 2));
+    ui->filmTable1_3->item(1, 1)->setText(QString::number(film.t_pid_i[filmNo], 'f', 2));
+    ui->filmTable1_3->item(2, 1)->setText(QString::number(film.t_pid_d[filmNo], 'f', 2));
+    ui->filmTable1_3->item(3, 1)->setText(QString::number(film.temp_max[filmNo], 'f', 2));
+
+    ui->filmTable1_4->item(0, 1)->setText(QString::number(film.ini[filmNo], 'f', 2));
+    ui->filmTable1_4->item(1, 1)->setText(QString::number(film.ramp1[filmNo], 'f', 2));
+    ui->filmTable1_4->item(2, 1)->setText(QString::number(film.pwr1[filmNo], 'f', 2));
+    ui->filmTable1_4->item(3, 1)->setText(QString::number(film.soak1[filmNo], 'f', 2));
+    ui->filmTable1_4->item(4, 1)->setText(QString::number(film.ramp2[filmNo], 'f', 2));
+    ui->filmTable1_4->item(5, 1)->setText(QString::number(film.pwr2[filmNo], 'f', 2));
+    ui->filmTable1_4->item(6, 1)->setText(QString::number(film.soak2[filmNo], 'f', 2));
+
+    ui->filmTable1_5->item(0, 1)->setText(QString::number(film.capture_ramp[filmNo], 'f', 2));
+    ui->filmTable1_5->item(1, 1)->setText(QString::number(film.capture_rate_perc[filmNo], 'f', 2));
+    ui->filmTable1_5->item(2, 1)->setText(QString::number(film.reduction_perc[filmNo], 'f', 2));
+    ui->filmTable1_5->item(3, 1)->setText(QString::number(film.ready_deviation[filmNo], 'f', 2));
+    ui->filmTable1_5->item(4, 1)->setText(QString::number(film.shut_delay_sec[filmNo], 'f', 2));
+    ui->filmTable1_5->item(5, 1)->setText(QString::number(film.alarm_deviation[filmNo], 'f', 2));
+    ui->filmTable1_5->item(6, 1)->setText(QString::number(film.error_deviation[filmNo], 'f', 2));
+
+    ui->filmTable1_6->item(0, 1)->setText(QString::number(film.ramp3[filmNo], 'f', 2));
+    ui->filmTable1_6->item(1, 1)->setText(QString::number(film.pwr3[filmNo], 'f', 2));
+    ui->filmTable1_6->item(2, 1)->setText(QString::number(film.soak3[filmNo], 'f', 2));
+    ui->filmTable1_6->item(3, 1)->setText(QString::number(film.idle[filmNo], 'f', 2));
+
+}
+
+//after the r2 button clicked, change to proc page
+void MainWindow::StackedWidgetPageChanged()
+{
+    if(ui->stackedWidget->currentIndex() == 1) {
+        LoadProcVariableToTable();
+    }
+}
+
+void MainWindow::proc_combobox_clicked()
+{
+    ReadProcDataToVariables();
+}
+
+//void MainWindow::on_combobox_indexChanged()
+//{
+//    LoadProcVariableToTable();
+//}
+
+//1).If stackedWidget is already in proc page, save current proc data before going to film page.
+//2).The reasonable way to update the film&struct, is updating after chaning of each item,
+//but when load variable to table, such action will be trigger by too many times.
+void MainWindow::on_pushButton_r2_pressed()
+{
+    if(ui->stackedWidget->currentIndex() == 1) {
+        ReadProcDataToVariables();
+        ::write(fd_fifo_proc_data, &proc, sizeof(proc));
+    }
+    if(ui->stackedWidget->currentIndex() == 2) {
+        ReadCurrentFilmDataToVaraibles();
+        ::write(fd_fifo_film_data, &film, sizeof(film));
+    }
+}
+
+void MainWindow::on_comboBox_proc_currentIndexChanged(int index)
+{
+    LoadProcVariableToTable();
+}
+
+void MainWindow::on_comboBox_layer_currentIndexChanged(int index)
+{
+    LoadProcVariableToTable();
+}
+
+void MainWindow::on_proc_basic_info_table_itemChanged(QTableWidgetItem *item)
+{
+    //film No. changed
+    if(item->column() == 3){
+
+        bool ok;
+        int num = item->text().toInt(&ok,10);
+
+        if(ok & num>0){
+
+            int chan = item->row();
+            ui->proc_basic_info_table->item(chan,1)->setText(QString::number(film.sour[num]));
+            ui->proc_basic_info_table->item(chan,2)->setText(QString::number(film.sens[num]));
+            ui->proc_basic_info_table->item(chan,4)->setText(QString(film.name[num]));
+            ui->proc_basic_info_table->item(chan,5)->setText(QString(ctrlMode[film.ctype[num]]));
+        }
+    }
+}
+
+void MainWindow::BeforeChangingFilmNo()
+{
+    ReadCurrentFilmDataToVaraibles();
+}
+
+void MainWindow::on_comboBox_filmSelection_currentIndexChanged(int index)
+{
+    LoadFilmVariablesToTable();
+}
+
+void MainWindow::on_pushButton_r1_clicked()
+{
+    ReadProcDataToVariables();
+
+    //used to notify layer info to Main UI
+    proNum = ui->comboBox_proc->currentText().toInt();
+    layerNum = ui->comboBox_layer->currentText().toInt();
+
+    //used to notify layer info to target program
+    proc.proNum = ui->comboBox_proc->currentText().toInt();
+    proc.layerNum = ui->comboBox_layer->currentText().toInt();
+
+    chan1_film_sel = ui->proc_basic_info_table->item(0,3)->text().toInt();
+    chan2_film_sel = ui->proc_basic_info_table->item(1,3)->text().toInt();
+    chan3_film_sel = ui->proc_basic_info_table->item(2,3)->text().toInt();
+    chan4_film_sel = ui->proc_basic_info_table->item(3,3)->text().toInt();
+
+    emit layerSelSingal();
 
 }

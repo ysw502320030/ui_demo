@@ -115,8 +115,2235 @@ Proceed</string>
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>-1</number>
+          <number>0</number>
          </property>
+         <widget class="QWidget" name="page_proc_setting">
+          <widget class="QWidget" name="layoutWidget">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>30</y>
+             <width>834</width>
+             <height>471</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetDefaultConstraint</enum>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_13">
+                  <property name="text">
+                   <string>Process No.</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="ComboBoxClickable" name="comboBox_proc">
+                  <item>
+                   <property name="text">
+                    <string>1</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>2</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_14">
+                  <property name="text">
+                   <string>Name:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_proc_name"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>60</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetDefaultConstraint</enum>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_15">
+                  <property name="text">
+                   <string>Layer No.   </string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="ComboBoxClickable" name="comboBox_layer">
+                  <item>
+                   <property name="text">
+                    <string>1</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>2</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_16">
+                  <property name="text">
+                   <string>Name:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_layer_name"/>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_17">
+                  <property name="text">
+                   <string>Thickness(A)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_th_setVal">
+                  <property name="text">
+                   <string>16</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>100</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QLabel" name="label_23">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string> Channel</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_24">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string> Src No.</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_26">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string> Sen No.</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_32">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Material No.</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_27">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Material name</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_29">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Ctrl mode</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_25">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Set rate</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_31">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>soak</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_28">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>ramp</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_30">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Set rate</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_33">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Thickn mea</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="proc_basic_info_table">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>101</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>101</height>
+               </size>
+              </property>
+              <property name="verticalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
+              </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
+              </property>
+              <property name="autoScroll">
+               <bool>false</bool>
+              </property>
+              <attribute name="horizontalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="horizontalHeaderDefaultSectionSize">
+               <number>75</number>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderMinimumSectionSize">
+               <number>25</number>
+              </attribute>
+              <attribute name="verticalHeaderDefaultSectionSize">
+               <number>25</number>
+              </attribute>
+              <attribute name="verticalHeaderHighlightSections">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <column>
+               <property name="text">
+                <string>Channel</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignLeading|AlignVCenter</set>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Src No.</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Sen No.</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Material No.</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Material Name</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Ctrl Mode</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Set Rate</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Soak</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Ramp</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Set Rate</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Thn Meas.</string>
+               </property>
+              </column>
+              <item row="0" column="0">
+               <property name="text">
+                <string>CH1</string>
+               </property>
+              </item>
+              <item row="0" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="0" column="2">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="0" column="3">
+               <property name="text">
+                <string>1</string>
+               </property>
+              </item>
+              <item row="0" column="4">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="0" column="5">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="0" column="6">
+               <property name="text">
+                <string>2</string>
+               </property>
+              </item>
+              <item row="0" column="7">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </item>
+              <item row="0" column="8">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </item>
+              <item row="0" column="9">
+               <property name="text">
+                <string>2</string>
+               </property>
+              </item>
+              <item row="0" column="10">
+               <property name="text">
+                <string>1</string>
+               </property>
+              </item>
+              <item row="1" column="0">
+               <property name="text">
+                <string>CH2</string>
+               </property>
+              </item>
+              <item row="1" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="1" column="2">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="1" column="3">
+               <property name="text">
+                <string>2</string>
+               </property>
+              </item>
+              <item row="1" column="4">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="1" column="5">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="1" column="6">
+               <property name="text">
+                <string>0.6</string>
+               </property>
+              </item>
+              <item row="1" column="7">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </item>
+              <item row="1" column="8">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </item>
+              <item row="1" column="9">
+               <property name="text">
+                <string>0.6</string>
+               </property>
+              </item>
+              <item row="1" column="10">
+               <property name="text">
+                <string>1</string>
+               </property>
+              </item>
+              <item row="2" column="0">
+               <property name="text">
+                <string>CH3</string>
+               </property>
+              </item>
+              <item row="2" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="2" column="2">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="2" column="3">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="2" column="4">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="2" column="5">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="2" column="6">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="2" column="7">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="2" column="8">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="2" column="9">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="2" column="10">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="0">
+               <property name="text">
+                <string>CH4</string>
+               </property>
+              </item>
+              <item row="3" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="2">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="3">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="4">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="5">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="6">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="7">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="8">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="9">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="10">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="proc_adv_info_table">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>226</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>299</width>
+                <height>226</height>
+               </size>
+              </property>
+              <property name="verticalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
+              </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
+              </property>
+              <property name="autoScroll">
+               <bool>false</bool>
+              </property>
+              <attribute name="horizontalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderMinimumSectionSize">
+               <number>25</number>
+              </attribute>
+              <attribute name="verticalHeaderDefaultSectionSize">
+               <number>25</number>
+              </attribute>
+              <attribute name="verticalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <column>
+               <property name="text">
+                <string>New Column</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>New Column</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>New Column</string>
+               </property>
+              </column>
+              <item row="0" column="0">
+               <property name="text">
+                <string>Final layer?</string>
+               </property>
+              </item>
+              <item row="0" column="1">
+               <property name="text">
+                <string>1</string>
+               </property>
+              </item>
+              <item row="0" column="2">
+               <property name="text">
+                <string>Y/N</string>
+               </property>
+              </item>
+              <item row="1" column="0">
+               <property name="text">
+                <string>Advanced setting</string>
+               </property>
+              </item>
+              <item row="1" column="1">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </item>
+              <item row="1" column="2">
+               <property name="text">
+                <string>Y/N</string>
+               </property>
+              </item>
+              <item row="2" column="0">
+               <property name="text">
+                <string>Add extra layer delay</string>
+               </property>
+              </item>
+              <item row="2" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="2" column="2">
+               <property name="text">
+                <string>Sec</string>
+               </property>
+              </item>
+              <item row="3" column="0">
+               <property name="text">
+                <string>Issue layer signal</string>
+               </property>
+              </item>
+              <item row="3" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="3" column="2">
+               <property name="text">
+                <string>Y/N</string>
+               </property>
+              </item>
+              <item row="4" column="0">
+               <property name="text">
+                <string>Wait for operator</string>
+               </property>
+              </item>
+              <item row="4" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="4" column="2">
+               <property name="text">
+                <string>Y/N</string>
+               </property>
+              </item>
+              <item row="5" column="0">
+               <property name="text">
+                <string>Issue auto seq No.</string>
+               </property>
+              </item>
+              <item row="5" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="5" column="2">
+               <property name="text">
+                <string>1-8</string>
+               </property>
+              </item>
+              <item row="6" column="0">
+               <property name="text">
+                <string>Next layer No.</string>
+               </property>
+              </item>
+              <item row="6" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="6" column="2">
+               <property name="text">
+                <string>1-32</string>
+               </property>
+              </item>
+              <item row="7" column="0">
+               <property name="text">
+                <string>Jump to layer No.</string>
+               </property>
+              </item>
+              <item row="7" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="7" column="2">
+               <property name="text">
+                <string>1-32</string>
+               </property>
+              </item>
+              <item row="8" column="0">
+               <property name="text">
+                <string>Nbr of jumps</string>
+               </property>
+              </item>
+              <item row="8" column="1">
+               <property name="text">
+                <string>-1</string>
+               </property>
+              </item>
+              <item row="8" column="2">
+               <property name="text">
+                <string/>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QComboBox" name="comboBox_TH_meas1">
+           <property name="geometry">
+            <rect>
+             <x>740</x>
+             <y>500</y>
+             <width>79</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>N</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QComboBox" name="comboBox_TH_meas2">
+           <property name="geometry">
+            <rect>
+             <x>740</x>
+             <y>520</y>
+             <width>79</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>N</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QComboBox" name="comboBox_TH_meas3">
+           <property name="geometry">
+            <rect>
+             <x>740</x>
+             <y>550</y>
+             <width>79</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <property name="currentIndex">
+            <number>1</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>N</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QComboBox" name="comboBox_TH_meas4">
+           <property name="geometry">
+            <rect>
+             <x>740</x>
+             <y>570</y>
+             <width>79</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <property name="currentIndex">
+            <number>1</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>N</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QComboBox" name="comboBox_final_layer">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>500</y>
+             <width>79</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>N</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QComboBox" name="comboBox_adv_setting">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>530</y>
+             <width>79</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <property name="currentIndex">
+            <number>1</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>N</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QComboBox" name="comboBox_issue_signal">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>550</y>
+             <width>79</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <property name="currentIndex">
+            <number>1</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>N</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QComboBox" name="comboBox_wait_operation">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>570</y>
+             <width>79</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <property name="currentIndex">
+            <number>1</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>N</string>
+            </property>
+           </item>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="page_film">
+          <widget class="QStackedWidget" name="stackedWidget_film">
+           <property name="geometry">
+            <rect>
+             <x>9</x>
+             <y>9</y>
+             <width>831</width>
+             <height>581</height>
+            </rect>
+           </property>
+           <property name="currentIndex">
+            <number>1</number>
+           </property>
+           <widget class="QWidget" name="film_page_1">
+            <widget class="QWidget" name="layoutWidget">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>30</y>
+               <width>301</width>
+               <height>493</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QLabel" name="label_18">
+                  <property name="text">
+                   <string>  Film   </string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="ComboBoxClickable" name="comboBox_filmSelection">
+                  <item>
+                   <property name="text">
+                    <string>1</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>2</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>3</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>4</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>5</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>10</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="filmTable1_1">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>176</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>176</height>
+                 </size>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="autoScroll">
+                 <bool>false</bool>
+                </property>
+                <attribute name="horizontalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderCascadingSectionResizes">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="verticalHeaderCascadingSectionResizes">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="verticalHeaderMinimumSectionSize">
+                 <number>25</number>
+                </attribute>
+                <attribute name="verticalHeaderDefaultSectionSize">
+                 <number>25</number>
+                </attribute>
+                <attribute name="verticalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <item row="0" column="0">
+                 <property name="text">
+                  <string>Control Type</string>
+                 </property>
+                </item>
+                <item row="0" column="1">
+                 <property name="text">
+                  <string>Auto P</string>
+                 </property>
+                </item>
+                <item row="0" column="2">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item row="1" column="0">
+                 <property name="text">
+                  <string>Film/Material Name</string>
+                 </property>
+                </item>
+                <item row="1" column="1">
+                 <property name="text">
+                  <string>Org 1.0</string>
+                 </property>
+                </item>
+                <item row="2" column="0">
+                 <property name="text">
+                  <string>Density</string>
+                 </property>
+                </item>
+                <item row="2" column="1">
+                 <property name="text">
+                  <string>1.00</string>
+                 </property>
+                </item>
+                <item row="2" column="2">
+                 <property name="text">
+                  <string>g/cc</string>
+                 </property>
+                </item>
+                <item row="3" column="0">
+                 <property name="text">
+                  <string>Z-Factor</string>
+                 </property>
+                </item>
+                <item row="3" column="1">
+                 <property name="text">
+                  <string>1.00</string>
+                 </property>
+                </item>
+                <item row="4" column="0">
+                 <property name="text">
+                  <string>Source No.</string>
+                 </property>
+                </item>
+                <item row="4" column="1">
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                </item>
+                <item row="4" column="2">
+                 <property name="text">
+                  <string>1-32</string>
+                 </property>
+                </item>
+                <item row="5" column="0">
+                 <property name="text">
+                  <string>Sensor No.</string>
+                 </property>
+                </item>
+                <item row="5" column="1">
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                </item>
+                <item row="5" column="2">
+                 <property name="text">
+                  <string>1-4</string>
+                 </property>
+                </item>
+                <item row="6" column="0">
+                 <property name="text">
+                  <string>Tooling</string>
+                 </property>
+                </item>
+                <item row="6" column="1">
+                 <property name="text">
+                  <string>100.0</string>
+                 </property>
+                </item>
+                <item row="6" column="2">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Rate PID</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="filmTable1_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>126</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>126</height>
+                 </size>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="autoScroll">
+                 <bool>false</bool>
+                </property>
+                <attribute name="horizontalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="verticalHeaderMinimumSectionSize">
+                 <number>25</number>
+                </attribute>
+                <attribute name="verticalHeaderDefaultSectionSize">
+                 <number>25</number>
+                </attribute>
+                <attribute name="verticalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <item row="0" column="0">
+                 <property name="text">
+                  <string>P Therm</string>
+                 </property>
+                </item>
+                <item row="0" column="1">
+                 <property name="text">
+                  <string>0.5</string>
+                 </property>
+                </item>
+                <item row="1" column="0">
+                 <property name="text">
+                  <string>I Therm</string>
+                 </property>
+                </item>
+                <item row="1" column="1">
+                 <property name="text">
+                  <string>45</string>
+                 </property>
+                </item>
+                <item row="2" column="0">
+                 <property name="text">
+                  <string>D Therm</string>
+                 </property>
+                </item>
+                <item row="2" column="1">
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </item>
+                <item row="3" column="0">
+                 <property name="text">
+                  <string>Max Power</string>
+                 </property>
+                </item>
+                <item row="3" column="1">
+                 <property name="text">
+                  <string>88.6</string>
+                 </property>
+                </item>
+                <item row="4" column="0">
+                 <property name="text">
+                  <string>Max Rate</string>
+                 </property>
+                </item>
+                <item row="4" column="1">
+                 <property name="text">
+                  <string>100</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Temp PID</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="filmTable1_3">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>101</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>101</height>
+                 </size>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="autoScroll">
+                 <bool>false</bool>
+                </property>
+                <attribute name="horizontalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="verticalHeaderMinimumSectionSize">
+                 <number>25</number>
+                </attribute>
+                <attribute name="verticalHeaderDefaultSectionSize">
+                 <number>25</number>
+                </attribute>
+                <attribute name="verticalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <item row="0" column="0">
+                 <property name="text">
+                  <string>P Therm</string>
+                 </property>
+                </item>
+                <item row="0" column="1">
+                 <property name="text">
+                  <string>10</string>
+                 </property>
+                </item>
+                <item row="1" column="0">
+                 <property name="text">
+                  <string>I Therm</string>
+                 </property>
+                </item>
+                <item row="1" column="1">
+                 <property name="text">
+                  <string>10</string>
+                 </property>
+                </item>
+                <item row="2" column="0">
+                 <property name="text">
+                  <string>D Therm</string>
+                 </property>
+                </item>
+                <item row="2" column="1">
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </item>
+                <item row="3" column="0">
+                 <property name="text">
+                  <string>Max Temperature</string>
+                 </property>
+                </item>
+                <item row="3" column="1">
+                 <property name="text">
+                  <string>1000</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QComboBox" name="comboBox_ctrl_type">
+             <property name="geometry">
+              <rect>
+               <x>340</x>
+               <y>70</y>
+               <width>79</width>
+               <height>22</height>
+              </rect>
+             </property>
+             <property name="currentIndex">
+              <number>2</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>Man P</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Semi P</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Auto P</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Man T</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Semi T</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Auto T</string>
+              </property>
+             </item>
+            </widget>
+           </widget>
+           <widget class="QWidget" name="film_page_2">
+            <widget class="QWidget" name="layoutWidget">
+             <property name="geometry">
+              <rect>
+               <x>31</x>
+               <y>20</y>
+               <width>531</width>
+               <height>556</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QLabel" name="label_10">
+                  <property name="text">
+                   <string>  Film   </string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_filmNo">
+                  <property name="text">
+                   <string>TextLabel</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>13</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="filmTable1_4">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>176</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>176</height>
+                 </size>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="autoScroll">
+                 <bool>false</bool>
+                </property>
+                <attribute name="horizontalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderCascadingSectionResizes">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="verticalHeaderCascadingSectionResizes">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="verticalHeaderMinimumSectionSize">
+                 <number>25</number>
+                </attribute>
+                <attribute name="verticalHeaderDefaultSectionSize">
+                 <number>25</number>
+                </attribute>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <item row="0" column="0">
+                 <property name="text">
+                  <string>Initial Power</string>
+                 </property>
+                </item>
+                <item row="0" column="1">
+                 <property name="text">
+                  <string>0.5</string>
+                 </property>
+                </item>
+                <item row="0" column="2">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item row="1" column="0">
+                 <property name="text">
+                  <string>Ramp 1</string>
+                 </property>
+                </item>
+                <item row="1" column="1">
+                 <property name="text">
+                  <string>5</string>
+                 </property>
+                </item>
+                <item row="2" column="0">
+                 <property name="text">
+                  <string>Power 1</string>
+                 </property>
+                </item>
+                <item row="2" column="1">
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                </item>
+                <item row="3" column="0">
+                 <property name="text">
+                  <string>Soak 1 Time</string>
+                 </property>
+                </item>
+                <item row="3" column="1">
+                 <property name="text">
+                  <string>3</string>
+                 </property>
+                </item>
+                <item row="4" column="0">
+                 <property name="text">
+                  <string>Ramp 2</string>
+                 </property>
+                </item>
+                <item row="4" column="1">
+                 <property name="text">
+                  <string>5</string>
+                 </property>
+                </item>
+                <item row="5" column="0">
+                 <property name="text">
+                  <string>Power 2</string>
+                 </property>
+                </item>
+                <item row="5" column="1">
+                 <property name="text">
+                  <string>2</string>
+                 </property>
+                </item>
+                <item row="6" column="0">
+                 <property name="text">
+                  <string>Soak 2 Time</string>
+                 </property>
+                </item>
+                <item row="6" column="1">
+                 <property name="text">
+                  <string>3</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_11">
+                <property name="text">
+                 <string>Film Capture and Deposite</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="filmTable1_5">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>176</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>176</height>
+                 </size>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="autoScroll">
+                 <bool>false</bool>
+                </property>
+                <attribute name="horizontalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="verticalHeaderMinimumSectionSize">
+                 <number>25</number>
+                </attribute>
+                <attribute name="verticalHeaderDefaultSectionSize">
+                 <number>25</number>
+                </attribute>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <item row="0" column="0">
+                 <property name="text">
+                  <string>Capture Ramp</string>
+                 </property>
+                </item>
+                <item row="0" column="1">
+                 <property name="text">
+                  <string>0.02</string>
+                 </property>
+                </item>
+                <item row="1" column="0">
+                 <property name="text">
+                  <string>Capture Level</string>
+                 </property>
+                </item>
+                <item row="1" column="1">
+                 <property name="text">
+                  <string>50</string>
+                 </property>
+                </item>
+                <item row="2" column="0">
+                 <property name="text">
+                  <string>Power Reduction</string>
+                 </property>
+                </item>
+                <item row="2" column="1">
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </item>
+                <item row="3" column="0">
+                 <property name="text">
+                  <string>Ready Deviation</string>
+                 </property>
+                </item>
+                <item row="3" column="1">
+                 <property name="text">
+                  <string>30.0</string>
+                 </property>
+                </item>
+                <item row="3" column="2">
+                 <property name="text">
+                  <string>Distance from sv,if set 99,ready imediately</string>
+                 </property>
+                </item>
+                <item row="4" column="0">
+                 <property name="text">
+                  <string>Deviation Timeout</string>
+                 </property>
+                </item>
+                <item row="4" column="1">
+                 <property name="text">
+                  <string>200.0</string>
+                 </property>
+                </item>
+                <item row="5" column="0">
+                 <property name="text">
+                  <string>Alarm Deviation</string>
+                 </property>
+                </item>
+                <item row="5" column="1">
+                 <property name="text">
+                  <string>70.0</string>
+                 </property>
+                </item>
+                <item row="6" column="0">
+                 <property name="text">
+                  <string>Error Deviation</string>
+                 </property>
+                </item>
+                <item row="6" column="1">
+                 <property name="text">
+                  <string>200.0</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_12">
+                <property name="text">
+                 <string>Film Postconditioning</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="filmTable1_6">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>101</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>101</height>
+                 </size>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="autoScroll">
+                 <bool>false</bool>
+                </property>
+                <attribute name="horizontalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="verticalHeaderMinimumSectionSize">
+                 <number>25</number>
+                </attribute>
+                <attribute name="verticalHeaderDefaultSectionSize">
+                 <number>25</number>
+                </attribute>
+                <attribute name="verticalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <row>
+                 <property name="text">
+                  <string>New Row</string>
+                 </property>
+                </row>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <item row="0" column="0">
+                 <property name="text">
+                  <string>Ramp 3</string>
+                 </property>
+                </item>
+                <item row="0" column="1">
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                </item>
+                <item row="1" column="0">
+                 <property name="text">
+                  <string>Power 3</string>
+                 </property>
+                </item>
+                <item row="1" column="1">
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                </item>
+                <item row="2" column="0">
+                 <property name="text">
+                  <string>Soak 3</string>
+                 </property>
+                </item>
+                <item row="2" column="1">
+                 <property name="text">
+                  <string>2</string>
+                 </property>
+                </item>
+                <item row="3" column="0">
+                 <property name="text">
+                  <string>Idle Power</string>
+                 </property>
+                </item>
+                <item row="3" column="1">
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </widget>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -127,7 +2354,7 @@ Proceed</string>
         <enum>QLayout::SetMinimumSize</enum>
        </property>
        <item>
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="pushButton_r1">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -140,7 +2367,7 @@ Proceed</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="pushButton_r2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -153,7 +2380,7 @@ Proceed</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_5">
+        <widget class="QPushButton" name="pushButton_r3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -166,7 +2393,7 @@ Proceed</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_6">
+        <widget class="QPushButton" name="pushButton_r4">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -179,7 +2406,7 @@ Proceed</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="pushButton_r5">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -197,6 +2424,13 @@ Proceed</string>
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ComboBoxClickable</class>
+   <extends>QComboBox</extends>
+   <header location="global">comboboxclickable.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

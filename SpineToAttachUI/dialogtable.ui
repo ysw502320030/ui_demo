@@ -40,6 +40,31 @@
      <height>281</height>
     </size>
    </property>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <column>
+    <property name="text">
+     <string>New Column</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>New Column</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>New Column</string>
+    </property>
+   </column>
   </widget>
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">

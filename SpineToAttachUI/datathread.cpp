@@ -88,6 +88,7 @@ void Datathread::init_notifier()
     int flags = fcntl(fd, F_GETFL, 0);
     fcntl(fd, F_SETFL, flags | O_NONBLOCK);
 
+    //memo 1:
     //throw the beginning data away, since fifo write will not write any new data if buffer of 4096 byte is full
     //need to concume the volume of pipe, which is 4096 bytes
     int clearFifoCount = 4096 / sizeof(ui_data);
@@ -169,9 +170,9 @@ void Datathread::DataSamplingTimerFunc()
         //qDebug() << "new freq is" <<  QString::number(ui_data.rate[1], 'f', 3);
         OutPutInfo( " new freq is %.2f" , ui_data.rate[1]);
         rateToSend[0] = ui_data.rate[1];
-        rateToSend[1] = ui_data.rate[9];
-        rateToSend[2] = ui_data.rate[7];
-        rateToSend[3] = ui_data.rate[6];
+        rateToSend[1] = ui_data.rate[2];
+        rateToSend[2] = ui_data.rate[3];
+        rateToSend[3] = ui_data.rate[4];
 
         if((ui_data.mainShutterStatus != ButtonStatus.stateMS) && (uiChangeMSFlag == false))
         {
@@ -352,8 +353,15 @@ void Datathread::OnXRangeChanged()
 
 void Datathread::PrepareCoordinateData()
 {
-    for(int i=0;i<channelNum;i++)
+    int chanExist[4] = {chan1_film_sel,chan2_film_sel,chan3_film_sel,chan4_film_sel};
+
+    for(int i=0;i<channelNum;i++) {
+
+        if(chanExist[i] <= 0)
+            continue;
+
         points[i].clear();
+    }
 
     int index = dialogSpine->GetXRangeIndex();
 
@@ -361,61 +369,93 @@ void Datathread::PrepareCoordinateData()
 
     switch (index) {
         case 0:
-            for(int i=0; i < bufferOneMin[0].length(); i++)
-            {
-    //            points[0].append(QPointF(i,bufferOneMin[0].at(i)));
-    //            points[1].append(QPointF(i,bufferOneMin[1].at(i)));
-    //            points[2].append(QPointF(i,bufferOneMin[2].at(i)));
-                for(int j=0; j<channelNum;j++)
-                    points[j].append(QPointF(i,bufferOneMin[j].at(i)));
+    //        for(int i=0; i < bufferOneMin[0].length(); i++)
+    //        {
+    ////            points[0].append(QPointF(i,bufferOneMin[0].at(i)));
+    ////            points[1].append(QPointF(i,bufferOneMin[1].at(i)));
+    ////            points[2].append(QPointF(i,bufferOneMin[2].at(i)));
+    //            for(int j=0; j<channelNum;j++)
+    //                points[j].append(QPointF(i,bufferOneMin[j].at(i)));
+    //        }
+
+            for(int j=0; j<channelNum;j++) {
+
+                if(chanExist[j] <= 0)           //If channel not used,go to next
+                    continue;
+
+                for (int i = 0; i < bufferOneMin[0].length(); i++)
+                    points[j].append(QPointF(i, bufferOneMin[j].at(i)));
             }
             break;
         case 1:
-            for(int i=0; i < bufferThreeMin[0].length(); i++)
+            for(int j=0; j<channelNum;j++)
             {
-                for(int j=0; j<channelNum;j++)
+                if(chanExist[j] <= 0)
+                    continue;
+
+                for(int i=0; i < bufferThreeMin[0].length(); i++)
                     points[j].append(QPointF(i,bufferThreeMin[j].at(i)));
             }
             break;
         case 2:
-            for(int i=0; i < bufferTenMin[0].length(); i++)
-            {
-                for(int j=0; j<channelNum;j++)
+            //for(int i=0; i < bufferTenMin[0].length(); i++)
+            //{
+            //    for(int j=0; j<channelNum;j++)
+            //        points[j].append(QPointF(i,bufferTenMin[j].at(i)));
+            //}
+
+            for(int j=0; j<channelNum;j++){
+
+                if(chanExist[j] <= 0)
+                    continue;
+
+                for(int i=0; i < bufferTenMin[0].length(); i++)
                     points[j].append(QPointF(i,bufferTenMin[j].at(i)));
             }
+
             break;
         case 3:
-            for(int i=0; i < bufferThirtyMin[0].length(); i++)
+            for(int j=0; j<channelNum;j++)
             {
-                for(int j=0; j<channelNum;j++)
+                if(chanExist[j] <= 0)
+                    continue;
+                for(int i=0; i < bufferThirtyMin[0].length(); i++)
                     points[j].append(QPointF(i,bufferThirtyMin[j].at(i)));
             }
             break;
         case 4:
-            for(int i=0; i < bufferSixtyMin[0].length(); i++)
+            for(int j=0; j<channelNum;j++)
             {
-                for(int j=0; j<channelNum;j++)
+                if(chanExist[j] <= 0)
+                    continue;
+                for(int i=0; i < bufferSixtyMin[0].length(); i++)
                     points[j].append(QPointF(i,bufferSixtyMin[j].at(i)));
             }
             break;
         case 5:
-            for(int i=0; i < bufferThreeHour[0].length(); i++)
+            for(int j=0; j<channelNum;j++)
             {
-                for(int j=0; j<channelNum;j++)
+                if(chanExist[j] <= 0)
+                    continue;
+                for(int i=0; i < bufferThreeHour[0].length(); i++)
                     points[j].append(QPointF(i,bufferThreeHour[j].at(i)));
             }
             break;
         case 6:
-            for(int i=0; i < bufferTenHour[0].length(); i++)
+            for(int j=0; j<channelNum;j++)
             {
-                for(int j=0; j<channelNum;j++)
+                if(chanExist[j] <= 0)
+                    continue;
+                for(int i=0; i < bufferTenHour[0].length(); i++)
                     points[j].append(QPointF(i,bufferTenHour[j].at(i)));
             }
             break;
         case 7:
-            for(int i=0; i < bufferThirtyHour[0].length(); i++)
+            for(int j=0; j<channelNum;j++)
             {
-                for(int j=0; j<channelNum;j++)
+                if(chanExist[j] <= 0)
+                    continue;
+                for(int i=0; i < bufferThirtyHour[0].length(); i++)
                     points[j].append(QPointF(i,bufferThirtyHour[j].at(i)));
             }
             break;

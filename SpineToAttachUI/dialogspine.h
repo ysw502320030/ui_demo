@@ -79,6 +79,8 @@ public slots:
     void FocusToPreWidget();
     void FocusToNextWidget();
 
+    void LayerSelect();
+
 public:
     Ui::DialogSpine *ui;
     QChart *chart;

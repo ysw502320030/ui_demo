@@ -11,13 +11,15 @@ encoder::encoder()
 
     fd=open("/dev/btn_key", O_RDWR);
     if(fd < 0) {
-        OutPutInfo( "open failed");
+        OutPutInfo( "btn_key open failed");
+        qDebug( "btn_key open failed");
         return;
     }
 
     fd_encoder=open("/dev/input/event2", O_RDWR);
     if(fd_encoder < 0) {
         OutPutInfo( "fd_encoder open failed");
+        qDebug( "fd_encoder open failed");
         return;
     }
 
